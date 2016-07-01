@@ -12,6 +12,7 @@ following API packages:
 * CapabilitiesCore https://github.com/gigaherz/CapabilityCore
 * COFH's RedstoneFlux-API, unofficially updated
     https://github.com/Parker8283/RedstoneFlux-API
+* Tesla API https://github.com/Darkhax-Minecraft/Tesla
 
 # Contributing
 * Tabs for indentation
