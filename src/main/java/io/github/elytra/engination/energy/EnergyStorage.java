@@ -30,6 +30,7 @@ import com.google.common.collect.Lists;
 
 import io.github.elytra.engination.Listener;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.fml.common.Optional;
 
 public class EnergyStorage {
 	private long rf = 0;
@@ -125,7 +126,11 @@ public class EnergyStorage {
 	public void setEnergy(long energy) {
 		rf = energy;
 	}
-
+	@Optional.InterfaceList ({
+			@Optional.Interface(iface = "net.darkhax.tesla.api.ITeslaHolder", modid = "Tesla"),
+			@Optional.Interface(iface = "net.darkhax.tesla.api.ITeslaProducer", modid = "Tesla"),
+			@Optional.Interface(iface = "net.darkhax.tesla.api.ITeslaConsumer", modid = "Tesla")
+	})
 	private static class TeslaWrapper implements net.darkhax.tesla.api.ITeslaHolder, net.darkhax.tesla.api.ITeslaProducer, net.darkhax.tesla.api.ITeslaConsumer {
 		private final EnergyStorage delegate;
 		
@@ -155,6 +160,8 @@ public class EnergyStorage {
 		
 	}
 	
+	//@Optional.Interface(iface = "cofh.api.energy.IEnergyHandler", modid = "CoFHAPI")
+	//^ This probably won't work
 	private static class RedstoneFluxWrapper implements cofh.api.energy.IEnergyHandler {
 		private final EnergyStorage delegate;
 		
@@ -189,13 +196,14 @@ public class EnergyStorage {
 		
 	}
 	
+	//@Optional.Interface(iface = "gigaherz.capabilities.api.energy.IEnergyHandler", modid = "CapabilityCore")
+	//TODO: This mod would be fairly friendly to link against more weakly, if I linked against it via gradle instead.
 	private static class CapabilityCoreWrapper implements gigaherz.capabilities.api.energy.IEnergyHandler {
 		private final EnergyStorage delegate;
 		
 		public CapabilityCoreWrapper(EnergyStorage delegate) {
 			this.delegate = delegate;
 		}
-		
 		
 		@Override
 		public int getCapacity() {

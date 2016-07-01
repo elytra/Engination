@@ -12,7 +12,8 @@ following API packages:
 * CapabilitiesCore https://github.com/gigaherz/CapabilityCore
 * COFH's RedstoneFlux-API, unofficially updated
     https://github.com/Parker8283/RedstoneFlux-API
-* Tesla API https://github.com/Darkhax-Minecraft/Tesla
+
+Tesla API is now included via gradle, so you can compile without copying it in
 
 # Contributing
 * Tabs for indentation
@@ -29,12 +30,15 @@ The following kinds of pull request will automatically be denied:
 
 # Making Friends
 If you want your automation to be as friendly as possible to this mod,
-and interact as quickly as possible, use Capabilities. POJO interface
-APIs like the official-RF are just passthrough methods to help legacy
-mods hang on until their authors adapt. Support for these legacy APIs
-will eventually be dropped! On the other hand, support for additional
-well-envisioned energy APIs could happen in the near future. (I'm
-looking at you, Tesla!)
+and interact as quickly as possible, use some form of Capabilities. Support
+for legacy APIs like cofh.api.energy.IEnergyHandler will eventually be
+dropped! Tesla and CapabilitiesCore are safe to use and will be supported for
+as long as the APIs are.
+
+
+In the Capabilities vein, take advantage of ITweakable in your wrench logic. Ever
+made like five wrenches before you found the right one? Ideally all machines
+should be ITweakable, and then we can disable all the extra wrenches in our modpacks.
 
 
 RF cables in this mod have a minimum granularity. On the one hand, this
@@ -51,6 +55,7 @@ permission to include the mod in a horribly broken modpack that ignores
 all these rules. I just won't certify it as fair and balanced.
 * No ore tripling, quadrupling, quintupling. Ever. At most, on average, each iron ore can yield 1.6 ingots of iron ingot.
 * A single block can store no more than 36 items - that is, a single-chest with an extra row.
+* Where an item can be used as furnace fuel, it should generally offer 30RF per fuel tick.
 * Wireless interactions are premitted, and in fact, encouraged. Most wireless is good for servers.
 * Time is not a balancing mechanic. Free energy that takes a long time to generate is still free energy.
 * Material cost is not a balancing mechanic. An overpowered machine that requires 26 expensive casing blocks is overpowered.
