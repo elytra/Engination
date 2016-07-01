@@ -24,21 +24,21 @@
 
 package io.github.elytra.engination.client.gui;
 
+import io.github.elytra.engination.inventory.InventorySimple;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ContainerHopper;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiGenerator extends GuiContainer {
 	private static final ResourceLocation BACKGROUND = new ResourceLocation("engination:textures/gui/generator.png");
 	
-	private IInventory playerInventory;
-	private IInventory generatorInventory;
+	private InventoryPlayer playerInventory;
+	private InventorySimple generatorInventory;
 	
-	public GuiGenerator(InventoryPlayer playerInv, IInventory blockInv) {
+	public GuiGenerator(InventoryPlayer playerInv, InventorySimple blockInv) {
 		super(new ContainerHopper(playerInv, blockInv, Minecraft.getMinecraft().thePlayer));
         this.playerInventory = playerInv;
         this.generatorInventory = blockInv;

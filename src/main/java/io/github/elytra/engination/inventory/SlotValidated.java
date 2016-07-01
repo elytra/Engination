@@ -26,6 +26,7 @@ package io.github.elytra.engination.inventory;
 
 import javax.annotation.Nullable;
 
+import io.github.elytra.engination.Engination;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -38,6 +39,7 @@ public class SlotValidated extends Slot {
 
 	
 	public boolean isItemValid(@Nullable ItemStack stack) {
+		Engination.LOG.info("isItemValid? "+inventory.getClass());
         return inventory.isItemValidForSlot(this.getSlotIndex(), stack);
     }
 }

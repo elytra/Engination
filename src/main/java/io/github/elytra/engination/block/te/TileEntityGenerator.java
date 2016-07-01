@@ -25,7 +25,6 @@
 package io.github.elytra.engination.block.te;
 
 import cofh.api.energy.IEnergyProvider;
-import io.github.elytra.engination.Engination;
 import io.github.elytra.engination.block.BlockGenerator;
 import io.github.elytra.engination.block.EnginationBlocks;
 import io.github.elytra.engination.energy.EnergyStorage;
@@ -57,10 +56,11 @@ public class TileEntityGenerator extends TileEntity implements IEnergyProvider, 
 	
 	@CapabilityInject(gigaherz.capabilities.api.energy.IEnergyHandler.class)
 	static Capability<gigaherz.capabilities.api.energy.IEnergyHandler> CAPABILITY_CORE_ENERGY = null;
-	@CapabilityInject(net.darkhax.tesla.api.ITeslaHolder.class)
-	static Capability<net.darkhax.tesla.api.ITeslaHolder> TESLA_ENERGY_STORAGE = null;
-	@CapabilityInject(net.darkhax.tesla.api.ITeslaProducer.class)
-	static Capability<net.darkhax.tesla.api.ITeslaProducer> TESLA_ENERGY_PRODUCER = null;
+	
+	//@CapabilityInject(net.darkhax.tesla.api.ITeslaHolder.class)
+	//static Capability<net.darkhax.tesla.api.ITeslaHolder> TESLA_ENERGY_STORAGE = null;
+	//@CapabilityInject(net.darkhax.tesla.api.ITeslaProducer.class)
+	//static Capability<net.darkhax.tesla.api.ITeslaProducer> TESLA_ENERGY_PRODUCER = null;
 	
 	private int fuelTicks = 0;
 	
@@ -99,12 +99,12 @@ public class TileEntityGenerator extends TileEntity implements IEnergyProvider, 
 		if (capability == CAPABILITY_CORE_ENERGY) {
 			return true;
 		}
-		if (capability == TESLA_ENERGY_STORAGE) {
-			return true;
-		}
-		if (capability == TESLA_ENERGY_PRODUCER) {
-			return true;
-		}
+		//if (capability == TESLA_ENERGY_STORAGE) {
+		//	return true;
+		//}
+		//if (capability == TESLA_ENERGY_PRODUCER) {
+		//	return true;
+		//}
 		return super.hasCapability(capability, facing);
 	}
 	
@@ -120,9 +120,9 @@ public class TileEntityGenerator extends TileEntity implements IEnergyProvider, 
 			return (T) energy.getCapabilityCoreWrapper();
 		}
 		
-		if (capability == TESLA_ENERGY_STORAGE || capability == TESLA_ENERGY_PRODUCER) {
-			return (T) energy.getTeslaWrapper();
-		}
+		//if (capability == TESLA_ENERGY_STORAGE || capability == TESLA_ENERGY_PRODUCER) {
+		//	return (T) energy.getTeslaWrapper();
+		//}
 		
 		return super.getCapability(capability, facing);
 	}
@@ -152,7 +152,7 @@ public class TileEntityGenerator extends TileEntity implements IEnergyProvider, 
 		return energyProxy.getMaxEnergyStored(from);
 	}
 	
-	public IInventory getInventory() {
+	public InventorySimple getInventory() {
 		return inventory;
 	}
 

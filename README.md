@@ -38,7 +38,7 @@ as long as the APIs are.
 
 In the Capabilities vein, take advantage of ITweakable in your wrench logic. Ever
 made like five wrenches before you found the right one? Ideally all machines
-should be ITweakable, and then we can disable all the extra wrenches in our modpacks.
+should support ITweakable, and then we can disable all the extra wrenches in our modpacks.
 
 
 RF cables in this mod have a minimum granularity. On the one hand, this

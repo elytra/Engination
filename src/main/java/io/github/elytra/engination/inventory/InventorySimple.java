@@ -94,6 +94,12 @@ public class InventorySimple extends ItemStackHandler implements IInventory {
 		this.setStackInSlot(index, null);
 		return result;
 	}
+	
+	@Override
+	public ItemStack getStackInSlot(int index) {
+		if (index<0 || index>=this.stacks.length) return null;
+		return this.stacks[index];
+	}
 
 	@Override
 	public void setInventorySlotContents(int index, ItemStack stack) {

@@ -27,10 +27,11 @@ package io.github.elytra.engination.energy;
 import java.util.List;
 
 import com.google.common.collect.Lists;
+import com.google.common.primitives.Ints;
 
 import io.github.elytra.engination.Listener;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.fml.common.Optional;
+//import net.minecraftforge.fml.common.Optional;
 
 public class EnergyStorage {
 	private long rf = 0;
@@ -39,7 +40,7 @@ public class EnergyStorage {
 	
 	private CapabilityCoreWrapper capabilityCoreProxy = null;
 	private RedstoneFluxWrapper redstoneFluxProxy = null;
-	private TeslaWrapper teslaProxy = null;
+	//private TeslaWrapper teslaProxy = null;
 	
 	private List<Listener<EnergyStorage>> listeners = Lists.newArrayList();
 	
@@ -79,10 +80,11 @@ public class EnergyStorage {
 		return redstoneFluxProxy;
 	}
 	
+	/*
 	public net.darkhax.tesla.api.ITeslaHolder getTeslaWrapper() {
 		if (teslaProxy==null) teslaProxy = new TeslaWrapper(this);
 		return teslaProxy;
-	}
+	}*/
 	
 	/*
 	 * -----BEGIN direct compatibility-----
@@ -126,6 +128,9 @@ public class EnergyStorage {
 	public void setEnergy(long energy) {
 		rf = energy;
 	}
+	
+	
+	/*
 	@Optional.InterfaceList ({
 			@Optional.Interface(iface = "net.darkhax.tesla.api.ITeslaHolder", modid = "Tesla"),
 			@Optional.Interface(iface = "net.darkhax.tesla.api.ITeslaProducer", modid = "Tesla"),
@@ -158,7 +163,7 @@ public class EnergyStorage {
 			return delegate.insertEnergy(power, simulated);
 		}
 		
-	}
+	}*/
 	
 	//@Optional.Interface(iface = "cofh.api.energy.IEnergyHandler", modid = "CoFHAPI")
 	//^ This probably won't work
@@ -171,7 +176,7 @@ public class EnergyStorage {
 		
 		@Override
 		public int extractEnergy(EnumFacing from, int maxExtract, boolean simulate) {
-			return satcast(delegate.extractEnergy(maxExtract, simulate));
+			return Ints.saturatedCast(delegate.extractEnergy(maxExtract, simulate));
 		}
 
 		@Override
@@ -181,17 +186,17 @@ public class EnergyStorage {
 
 		@Override
 		public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate) {
-			return satcast(delegate.insertEnergy(maxReceive, simulate));
+			return Ints.saturatedCast(delegate.insertEnergy(maxReceive, simulate));
 		}
 
 		@Override
 		public int getEnergyStored(EnumFacing from) {
-			return satcast(delegate.getEnergy());
+			return Ints.saturatedCast(delegate.getEnergy());
 		}
 
 		@Override
 		public int getMaxEnergyStored(EnumFacing from) {
-			return satcast(delegate.getCapacity());
+			return Ints.saturatedCast(delegate.getCapacity());
 		}
 		
 	}
@@ -207,34 +212,23 @@ public class EnergyStorage {
 		
 		@Override
 		public int getCapacity() {
-			return satcast(delegate.getCapacity());
+			return Ints.saturatedCast(delegate.getCapacity());
 		}
 
 		@Override
 		public int getEnergy() {
-			return satcast(delegate.getEnergy());
+			return Ints.saturatedCast(delegate.getEnergy());
 		}
 
 		@Override
 		public int extractEnergy(int maxExtract, boolean simulate) {
-			return satcast(delegate.extractEnergy(maxExtract, simulate));
+			return Ints.saturatedCast(delegate.extractEnergy(maxExtract, simulate));
 		}
 
 		@Override
 		public int insertEnergy(int maxReceive, boolean simulate) {
-			return satcast(delegate.insertEnergy(maxReceive, simulate));
+			return Ints.saturatedCast(delegate.insertEnergy(maxReceive, simulate));
 		}
 		
-	}
-	
-	/**
-	 * Translate as much information as possible from a long into an int. For example, if the capacity
-	 * or energy transfer rate of a storage device is larger than Integer.MAX_VALUE, we want to
-	 * report as much storage or transfer as the integer-limited interface can handle.
-	 * 
-	 * <p>The name is short for "saturate and cast to int"
-	 */
-	private static int satcast(long i) {
-		return (int)Math.max(Math.min(i, Integer.MAX_VALUE), Integer.MIN_VALUE);
 	}
 }

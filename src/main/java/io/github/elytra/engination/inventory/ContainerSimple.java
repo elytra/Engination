@@ -28,16 +28,15 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
 public class ContainerSimple extends Container {
 
 	InventoryPlayer playerInventory;
-	IInventory blockInventory;
+	InventorySimple blockInventory;
 	
-	public ContainerSimple(InventoryPlayer playerInventory, IInventory blockInventory, EntityPlayer player) {
+	public ContainerSimple(InventoryPlayer playerInventory, InventorySimple blockInventory, EntityPlayer player) {
         this.blockInventory = blockInventory;
         blockInventory.openInventory(player);
         this.playerInventory = playerInventory;

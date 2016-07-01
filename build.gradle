@@ -39,7 +39,7 @@ dependencies {
 
 group = "io.github.elytra"
 archivesBaseName = "Engination"
-version = "1.02b"
+version = "1.03"
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -50,7 +50,7 @@ retrolambda {
 }
 
 minecraft {
-  version = "1.9.4-12.17.0.1910-1.9.4"
+  version = "1.9.4-12.17.0.1965"
   mappings = "snapshot_20160522"
 
   runDir = "minecraft"
