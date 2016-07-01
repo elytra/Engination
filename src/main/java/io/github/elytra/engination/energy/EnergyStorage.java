@@ -28,17 +28,19 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import gigaherz.capabilities.api.energy.IEnergyHandler;
-import gigaherz.capabilities.api.energy.IEnergyPersist;
 import io.github.elytra.engination.Listener;
 import net.minecraft.util.EnumFacing;
 
-public class EnergyStorage implements IEnergyHandler, IEnergyPersist, cofh.api.energy.IEnergyHandler {
-	private int rf = 0;
-	private int max = 0;
-	private int perTick = 30;
+public class EnergyStorage {
+	private long rf = 0;
+	private long max = 0;
+	private long perTick = 30;
 	
-	private List<Listener<IEnergyHandler>> listeners = Lists.newArrayList();
+	private CapabilityCoreWrapper capabilityCoreProxy = null;
+	private RedstoneFluxWrapper redstoneFluxProxy = null;
+	private TeslaWrapper teslaProxy = null;
+	
+	private List<Listener<EnergyStorage>> listeners = Lists.newArrayList();
 	
 	public EnergyStorage(int limit) {
 		max = limit;
@@ -49,40 +51,52 @@ public class EnergyStorage implements IEnergyHandler, IEnergyPersist, cofh.api.e
 		this.perTick = perTick;
 	}
 
-	public static int min(int a, int b, int c) {
+	public static long min(long a, long b, long c) {
 		if (a<b && a<c) return a;
 		if (b<a && b<c) return b;
 		return c;
 	}
 	
 	public void markDirty() {
-		for(Listener<IEnergyHandler> l : listeners) {
+		for(Listener<EnergyStorage> l : listeners) {
 			l.changed(this);
 		}
 	}
 	
-	public EnergyStorage listen(Listener<IEnergyHandler> l) {
+	public EnergyStorage listen(Listener<EnergyStorage> l) {
 		listeners.add(l);
 		return this;
 	}
 	
+	public gigaherz.capabilities.api.energy.IEnergyHandler getCapabilityCoreWrapper() {
+		if (capabilityCoreProxy==null) capabilityCoreProxy = new CapabilityCoreWrapper(this);
+		return capabilityCoreProxy;
+	}
+	
+	public cofh.api.energy.IEnergyHandler getRedstoneFluxWrapper() {
+		if (redstoneFluxProxy==null) redstoneFluxProxy = new RedstoneFluxWrapper(this);
+		return redstoneFluxProxy;
+	}
+	
+	public net.darkhax.tesla.api.ITeslaHolder getTeslaWrapper() {
+		if (teslaProxy==null) teslaProxy = new TeslaWrapper(this);
+		return teslaProxy;
+	}
+	
 	/*
-	 * -----BEGIN capability IEnergyHandler-----
+	 * -----BEGIN direct compatibility-----
 	 */
 	
-	@Override
-	public int getCapacity() {
+	public long getCapacity() {
 		return max;
 	}
 
-	@Override
-	public int getEnergy() {
+	public long getEnergy() {
 		return rf;
 	}
 
-	@Override
-	public int extractEnergy(int maxExtract, boolean simulate) {
-		int toExtract = min(maxExtract, rf, perTick);
+	public long extractEnergy(long maxExtract, boolean simulate) {
+		long toExtract = min(maxExtract, rf, perTick);
 		if (!simulate) {
 			rf -= toExtract;
 		}
@@ -92,9 +106,8 @@ public class EnergyStorage implements IEnergyHandler, IEnergyPersist, cofh.api.e
 		return toExtract;
 	}
 
-	@Override
-	public int insertEnergy(int maxReceive, boolean simulate) {
-		int toInsert = min(maxReceive, max-rf, perTick);
+	public long insertEnergy(long maxReceive, boolean simulate) {
+		long toInsert = min(maxReceive, max-rf, perTick);
 		if (!simulate) {
 			rf += toInsert;
 		}
@@ -108,44 +121,112 @@ public class EnergyStorage implements IEnergyHandler, IEnergyPersist, cofh.api.e
 	 * @deprecated	This method is for internal deserialization only. Use {@link #insertEnergy} for
 	 * 				automation or player interaction
 	 */
-	@Override
 	@Deprecated
-	public void setEnergy(int energy) {
+	public void setEnergy(long energy) {
 		rf = energy;
 	}
+
+	private static class TeslaWrapper implements net.darkhax.tesla.api.ITeslaHolder, net.darkhax.tesla.api.ITeslaProducer, net.darkhax.tesla.api.ITeslaConsumer {
+		private final EnergyStorage delegate;
+		
+		public TeslaWrapper(EnergyStorage delegate) {
+			this.delegate = delegate;
+		}
+		
+		@Override
+		public long getStoredPower() {
+			return delegate.getEnergy();
+		}
+
+		@Override
+		public long getCapacity() {
+			return delegate.getCapacity();
+		}
+
+		@Override
+		public long takePower(long power, boolean simulated) {
+			return delegate.extractEnergy(power, simulated);	
+		}
+
+		@Override
+		public long givePower(long power, boolean simulated) {
+			return delegate.insertEnergy(power, simulated);
+		}
+		
+	}
 	
-	/*
-	 * ----- END capability IEnergyHandler -----
-	 * -----   BEGIN cofh IEnergyHandler   -----
-	 * forwards to capability methods for more centralized debugging
+	private static class RedstoneFluxWrapper implements cofh.api.energy.IEnergyHandler {
+		private final EnergyStorage delegate;
+		
+		public RedstoneFluxWrapper(EnergyStorage delegate) {
+			this.delegate = delegate;
+		}
+		
+		@Override
+		public int extractEnergy(EnumFacing from, int maxExtract, boolean simulate) {
+			return satcast(delegate.extractEnergy(maxExtract, simulate));
+		}
+
+		@Override
+		public boolean canConnectEnergy(EnumFacing from) {
+			return true;
+		}
+
+		@Override
+		public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate) {
+			return satcast(delegate.insertEnergy(maxReceive, simulate));
+		}
+
+		@Override
+		public int getEnergyStored(EnumFacing from) {
+			return satcast(delegate.getEnergy());
+		}
+
+		@Override
+		public int getMaxEnergyStored(EnumFacing from) {
+			return satcast(delegate.getCapacity());
+		}
+		
+	}
+	
+	private static class CapabilityCoreWrapper implements gigaherz.capabilities.api.energy.IEnergyHandler {
+		private final EnergyStorage delegate;
+		
+		public CapabilityCoreWrapper(EnergyStorage delegate) {
+			this.delegate = delegate;
+		}
+		
+		
+		@Override
+		public int getCapacity() {
+			return satcast(delegate.getCapacity());
+		}
+
+		@Override
+		public int getEnergy() {
+			return satcast(delegate.getEnergy());
+		}
+
+		@Override
+		public int extractEnergy(int maxExtract, boolean simulate) {
+			return satcast(delegate.extractEnergy(maxExtract, simulate));
+		}
+
+		@Override
+		public int insertEnergy(int maxReceive, boolean simulate) {
+			return satcast(delegate.insertEnergy(maxReceive, simulate));
+		}
+		
+	}
+	
+	/**
+	 * Translate as much information as possible from a long into an int. For example, if the capacity
+	 * or energy transfer rate of a storage device is larger than Integer.MAX_VALUE, we want to
+	 * report as much storage or transfer as the integer-limited interface can handle.
+	 * 
+	 * <p>The name is short for "saturate and cast to int"
 	 */
-
-	@Override
-	public int extractEnergy(EnumFacing from, int maxExtract, boolean simulate) {
-		return extractEnergy(maxExtract, simulate);
+	private static int satcast(long i) {
+		return (int)Math.max(Math.min(i, Integer.MAX_VALUE), Integer.MIN_VALUE);
 	}
-
-	@Override
-	public boolean canConnectEnergy(EnumFacing from) {
-		return true;
-	}
-
-	@Override
-	public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate) {
-		return insertEnergy(maxReceive, simulate);
-	}
-
-	@Override
-	public int getEnergyStored(EnumFacing from) {
-		return getEnergy();
-	}
-
-	@Override
-	public int getMaxEnergyStored(EnumFacing from) {
-		return getCapacity();
-	}
-
-	
-	
-	
 }

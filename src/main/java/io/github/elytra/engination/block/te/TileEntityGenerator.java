@@ -41,20 +41,27 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.items.CapabilityItemHandler;
 
 public class TileEntityGenerator extends TileEntity implements IEnergyProvider, ITickable {
 	public static final int CONVERSION_TICKS_TO_RF = 30; //1,600 ticks of coal -> 48,000 RF == 30 RF/t
 	
-	final InventorySimple inventory = new InventorySimple(1, "tile.machine.generator.name")
+	private final InventorySimple inventory = new InventorySimple(1, "tile.machine.generator.name")
 			.listen((it)->this.markDirty())
 			.setStackValidator(0, TileEntityFurnace::isItemFuel); //TODO: May explode
 	
-	final EnergyStorage energy = new EnergyStorage(50000, 30)
+	private final EnergyStorage energy = new EnergyStorage(50000, 30)
 			.listen((it)->this.markDirty());
+	private final IEnergyProvider energyProxy = energy.getRedstoneFluxWrapper();
 	
-	//private int maxRf = 50000;
-	//private int rf = 0;
+	@CapabilityInject(gigaherz.capabilities.api.energy.IEnergyHandler.class)
+	static Capability<gigaherz.capabilities.api.energy.IEnergyHandler> CAPABILITY_CORE_ENERGY = null;
+	@CapabilityInject(net.darkhax.tesla.api.ITeslaHolder.class)
+	static Capability<net.darkhax.tesla.api.ITeslaHolder> TESLA_ENERGY_STORAGE = null;
+	@CapabilityInject(net.darkhax.tesla.api.ITeslaProducer.class)
+	static Capability<net.darkhax.tesla.api.ITeslaProducer> TESLA_ENERGY_PRODUCER = null;
+	
 	private int fuelTicks = 0;
 	
 	public TileEntityGenerator() {}
@@ -64,7 +71,7 @@ public class TileEntityGenerator extends TileEntity implements IEnergyProvider, 
 		super.writeToNBT(tag);
 		
 		tag.setTag("inventory", inventory.serializeNBT());
-		tag.setInteger("rf", energy.getEnergy());
+		tag.setLong("rf", energy.getEnergy());
 		tag.setInteger("fuelTicks", fuelTicks);
 		
 		return tag;
@@ -77,14 +84,25 @@ public class TileEntityGenerator extends TileEntity implements IEnergyProvider, 
 		
 		inventory.deserializeNBT(tag.getCompoundTag("inventory"));
 		
-		energy.setEnergy(tag.getInteger("rf"));
+		energy.setEnergy(tag.getLong("rf"));
 		fuelTicks = tag.getInteger("fuelTicks");
 	}
 	
 	
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+		if (capability==null) return false;
+		
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+			return true;
+		}
+		if (capability == CAPABILITY_CORE_ENERGY) {
+			return true;
+		}
+		if (capability == TESLA_ENERGY_STORAGE) {
+			return true;
+		}
+		if (capability == TESLA_ENERGY_PRODUCER) {
 			return true;
 		}
 		return super.hasCapability(capability, facing);
@@ -93,9 +111,19 @@ public class TileEntityGenerator extends TileEntity implements IEnergyProvider, 
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+		if (capability==null) return null;
+		
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
 			return (T) inventory;
 		}
+		if (capability == CAPABILITY_CORE_ENERGY) {
+			return (T) energy.getCapabilityCoreWrapper();
+		}
+		
+		if (capability == TESLA_ENERGY_STORAGE || capability == TESLA_ENERGY_PRODUCER) {
+			return (T) energy.getTeslaWrapper();
+		}
+		
 		return super.getCapability(capability, facing);
 	}
 	
@@ -111,26 +139,17 @@ public class TileEntityGenerator extends TileEntity implements IEnergyProvider, 
 
 	@Override
 	public int extractEnergy(EnumFacing from, int maxExtract, boolean simulate) {
-		return energy.extractEnergy(from, maxExtract, simulate);
-		/*
-		int toExtract = maxExtract;
-		if (toExtract>energy.getEnergy()) toExtract = rf;
-		if (simulate) return toExtract;
-		
-		rf -= toExtract;
-		return toExtract;*/
+		return energyProxy.extractEnergy(from, maxExtract, simulate);
 	}
 
 	@Override
 	public int getEnergyStored(EnumFacing from) {
-		return energy.getEnergyStored(from);
-		//return rf;
+		return energyProxy.getEnergyStored(from);
 	}
 
 	@Override
 	public int getMaxEnergyStored(EnumFacing from) {
-		return energy.getMaxEnergyStored(from);
-		//return maxRf;
+		return energyProxy.getMaxEnergyStored(from);
 	}
 	
 	public IInventory getInventory() {

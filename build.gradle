@@ -10,6 +10,9 @@ buildscript {
       name = "sonatype"
       url = "https://oss.sonatype.org/content/repositories/snapshots/"
     }
+    //maven {
+    //  url "http://maven.epoxide.xyz"
+    //}
   }
   dependencies {
     classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
@@ -43,10 +46,9 @@ minecraft {
   replace '@VERSION@', project.version
 }
 
-//dependencies {
-    //compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
-    //testCompile group: 'junit', name: 'junit', version: '4.+'
-//}
+dependencies {
+  //compile "net.darkhax.tesla:Tesla:1.9.4-1.1.0.24"
+}
 
 processResources {
   // this will ensure that this task is redone when the versions change.
