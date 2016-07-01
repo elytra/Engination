@@ -1,0 +1,69 @@
+buildscript {
+  repositories {
+    mavenCentral()
+    jcenter()
+    maven {
+      name = "forge"
+      url = "http://files.minecraftforge.net/maven"
+    }
+    maven {
+      name = "sonatype"
+      url = "https://oss.sonatype.org/content/repositories/snapshots/"
+    }
+  }
+  dependencies {
+    classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+    classpath 'me.tatarka:gradle-retrolambda:3.2.0'
+  }
+}
+
+apply plugin: 'java'
+apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'me.tatarka.retrolambda'
+
+group = "io.github.elytra"
+archivesBaseName = "Engination"
+version = "1.02b"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+retrolambda {
+  javaVersion JavaVersion.VERSION_1_6
+  defaultMethods true
+}
+
+minecraft {
+  version = "1.9.4-12.17.0.1910-1.9.4"
+  mappings = "snapshot_20160522"
+
+  runDir = "minecraft"
+
+  replaceIn 'src/main/java/io/github/elytra/engination/Engination.java'
+  replace '@VERSION@', project.version
+}
+
+//dependencies {
+    //compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
+    //testCompile group: 'junit', name: 'junit', version: '4.+'
+//}
+
+processResources {
+  // this will ensure that this task is redone when the versions change.
+  inputs.property "version", project.version
+  inputs.property "mcversion", project.minecraft.version
+
+  // replace stuff in mcmod.info, nothing else
+  from(sourceSets.main.resources.srcDirs) {
+    include 'mcmod.info'
+
+    // replace version and mcversion
+    expand 'version':project.version, 'mcversion':project.minecraft.version
+  }
+
+  // copy everything else, thats not the mcmod.info
+  from(sourceSets.main.resources.srcDirs) {
+    exclude 'mcmod.info'
+    exclude '*.xcf'
+  }
+}

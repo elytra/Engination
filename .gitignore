@@ -1,0 +1,11 @@
+/bin/
+/build/
+/.gradle/
+/.classpath
+/.project
+/.settings/
+/*.launch
+/libs/
+/minecraft/
+/src/main/java/cofh/
+/src/main/java/gigaherz/

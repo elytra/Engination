@@ -1,0 +1,38 @@
+{
+	"forge_marker":1,
+	
+	"defaults":{
+		"model":"minecraft:cube",
+		"transform":"forge:default-block",
+		"uvlock":false,
+		"textures":{
+			"up":"engination:blocks/machine.top",
+			"down":"engination:blocks/machine.top",
+			"west":"engination:blocks/machine.side",
+			"east":"engination:blocks/machine.side",
+			"south":"engination:blocks/machine.side",
+			"north":"engination:blocks/machine.front.generator.off"
+		}
+	},
+	"variants":{
+		"facing":{
+			"north":{"x":0, "y":  0},
+			"east": {"x":0, "y": 90},
+			"south":{"x":0, "y":180},
+			"west": {"x":0, "y":270},
+			"up":   {"x":90, "y":  0},
+			"down": {"x":270,"y":  0}
+		},
+		"on":{
+			true:{
+				"textures":{
+					"north":"engination:blocks/machine.front.generator.on"
+				}
+			},
+			false:{}
+		},
+		"inventory": {
+			"transform": "forge:default-block"
+		}
+	}
+}

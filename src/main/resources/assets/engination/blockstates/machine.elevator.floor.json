@@ -1,0 +1,27 @@
+{
+	"forge_marker":1,
+	
+	"defaults":{
+		"model":"minecraft:cube",
+		"transform":"forge:default-block",
+		"textures":{
+			"up":"engination:blocks/machine.top",
+			"down":"engination:blocks/machine.top",
+			"north":"engination:blocks/machine.side.elevator.floor",
+			"south":"engination:blocks/machine.side.elevator.floor",
+			"east":"engination:blocks/machine.side.elevator.floor",
+			"west":"engination:blocks/machine.side.elevator.floor",
+			"particle":"engination:blocks/machine.side.elevator.floor"
+		}
+	},
+	"variants":{
+		"normal":{
+			"x":0,
+			"y":0,
+			"uvlock":true
+		},
+		"inventory": {
+			"transform": "forge:default-block"
+		}
+	}
+}

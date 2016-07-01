@@ -1,0 +1,32 @@
+{
+	"forge_marker":1,
+	
+	"defaults":{
+		"model":"minecraft:cube",
+		"transform":"forge:default-block",
+		"uvlock":false,
+		"textures":{
+			"up":   "engination:blocks/machine.conveyor.2",
+			"down": "engination:blocks/machine.top",
+			"north":"engination:blocks/machine.launcher.side",
+			"south":"engination:blocks/machine.launcher.side",
+			"east": "engination:blocks/machine.conveyor.side",
+			"west": "engination:blocks/machine.conveyor.side",
+			
+			"particle":"engination:blocks/machine.conveyor.2"
+		}
+	},
+	"variants":{
+		"facing": {
+			"north":{ "x":0, "y":  0 },
+			"east": { "x":0, "y": 90 },
+			"south":{ "x":0, "y":180 },
+			"west": { "x":0, "y":270 },
+			"up":{},
+			"down":{}
+		},
+		"inventory": {
+			"transform": "forge:default-block"
+		}
+	}
+}

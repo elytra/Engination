@@ -1,0 +1,14 @@
+[{
+  "modid": "engination",
+  "name": "Engination",
+  "description": "Random tools that make life more interesting",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateJSON": "",
+  "authorList": ["Falkreon"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}]

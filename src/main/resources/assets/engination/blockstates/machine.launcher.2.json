@@ -1,0 +1,23 @@
+{
+	"forge_marker":1,
+	
+	"defaults":{
+		"model":"minecraft:cube_column",
+		"transform":"forge:default-block",
+		"textures":{
+			"side":"engination:blocks/machine.launcher.side",
+			"end":"engination:blocks/machine.launcher.2",
+			"particle":"engination:blocks/machine.launcher.2"
+		}
+	},
+	"variants":{
+		"normal":{
+			"x":0,
+			"y":0,
+			"uvlock":true
+		},
+		"inventory": {
+			"transform": "forge:default-block"
+		}
+	}
+}

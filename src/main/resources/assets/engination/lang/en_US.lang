@@ -1,0 +1,24 @@
+item.tomato.name=Tomato
+item.food.celery.name=Celery
+item.wand.relight.name=Chunk Relight Wand
+
+tile.machine.conveyor.2.name=Conveyor
+tile.machine.conveyor.4.name=Fast Conveyor
+tile.machine.conveyor.8.name=Super-Fast Conveyor
+tile.machine.launcher.2.name=Launcher
+tile.machine.launcher.3.name=Forceful Launcher
+tile.machine.launcher.5.name=Ultra-Forceful Launcher
+tile.machine.landingpad.name=Landing Pad
+tile.machine.elevator.controller.name=Elevator Controller
+tile.machine.elevator.selector.name=Elevator Floor Selector
+tile.machine.elevator.floor.name=Elevator Floor Designator
+tile.field.gravity.name=Gravity Field
+tile.machine.generator.name=Generator
+
+itemGroup.engination=Engination
+
+subtitles.engination.tomato.throw=Tomato flies
+subtitles.engination.tomato.squish=Tomato squishes
+subtitles.engination.machine.launcher=Launcher launches
+
+entity.engination.machine.elevator.platform.name=Elevator Platform

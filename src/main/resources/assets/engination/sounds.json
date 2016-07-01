@@ -1,0 +1,26 @@
+{
+	"tomato.throw": {
+		"category": "player",
+		"sounds": [
+			"engination:tomato_throw"
+		],
+		"subtitle": "subtitles.engination.tomato.throw"
+	},
+	"tomato": {
+		"category": "player",
+		"sounds": [
+			"engination:tomato",
+			"engination:tomato.1",
+			"engination:tomato.2",
+			"engination:tomato.3"
+		],
+		"subtitle": "subtitles.engination.tomato.squish"
+	},
+	"machine.launcher": {
+		"category": "block",
+		"sounds": [
+			"engination:launcher"
+		],
+		"subtitle": "subtitles.engination.machine.launcher"
+	}
+}
