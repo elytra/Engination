@@ -31,26 +31,34 @@ import com.google.common.primitives.Ints;
 
 import io.github.elytra.engination.Listener;
 import net.minecraft.util.EnumFacing;
-//import net.minecraftforge.fml.common.Optional;
+import net.minecraftforge.fml.common.Optional;
 
 public class EnergyStorage {
 	private long rf = 0;
 	private long max = 0;
-	private long perTick = 30;
+	private long outPerTick = 30;
+	private long inPerTick = 30;
 	
 	private CapabilityCoreWrapper capabilityCoreProxy = null;
 	private RedstoneFluxWrapper redstoneFluxProxy = null;
-	//private TeslaWrapper teslaProxy = null;
+	private TeslaWrapper teslaProxy = null;
 	
 	private List<Listener<EnergyStorage>> listeners = Lists.newArrayList();
 	
 	public EnergyStorage(int limit) {
 		max = limit;
 	}
-
+	
 	public EnergyStorage(int limit, int perTick) {
 		max=limit;
-		this.perTick = perTick;
+		this.outPerTick = perTick;
+		this.inPerTick = perTick;
+	}
+	
+	public EnergyStorage(int limit, int in, int out) {
+		this.max=limit;
+		this.inPerTick = in;
+		this.outPerTick = out;
 	}
 
 	public static long min(long a, long b, long c) {
@@ -70,6 +78,7 @@ public class EnergyStorage {
 		return this;
 	}
 	
+	@Optional.Method(modid = "CapabilityCore")
 	public gigaherz.capabilities.api.energy.IEnergyHandler getCapabilityCoreWrapper() {
 		if (capabilityCoreProxy==null) capabilityCoreProxy = new CapabilityCoreWrapper(this);
 		return capabilityCoreProxy;
@@ -80,11 +89,12 @@ public class EnergyStorage {
 		return redstoneFluxProxy;
 	}
 	
-	/*
+	
+	@Optional.Method(modid = "Tesla")
 	public net.darkhax.tesla.api.ITeslaHolder getTeslaWrapper() {
 		if (teslaProxy==null) teslaProxy = new TeslaWrapper(this);
 		return teslaProxy;
-	}*/
+	}
 	
 	/*
 	 * -----BEGIN direct compatibility-----
@@ -99,7 +109,7 @@ public class EnergyStorage {
 	}
 
 	public long extractEnergy(long maxExtract, boolean simulate) {
-		long toExtract = min(maxExtract, rf, perTick);
+		long toExtract = min(maxExtract, rf, outPerTick);
 		if (!simulate) {
 			rf -= toExtract;
 		}
@@ -110,7 +120,7 @@ public class EnergyStorage {
 	}
 
 	public long insertEnergy(long maxReceive, boolean simulate) {
-		long toInsert = min(maxReceive, max-rf, perTick);
+		long toInsert = min(maxReceive, max-rf, inPerTick);
 		if (!simulate) {
 			rf += toInsert;
 		}
@@ -130,7 +140,7 @@ public class EnergyStorage {
 	}
 	
 	
-	/*
+	
 	@Optional.InterfaceList ({
 			@Optional.Interface(iface = "net.darkhax.tesla.api.ITeslaHolder", modid = "Tesla"),
 			@Optional.Interface(iface = "net.darkhax.tesla.api.ITeslaProducer", modid = "Tesla"),
@@ -163,7 +173,7 @@ public class EnergyStorage {
 			return delegate.insertEnergy(power, simulated);
 		}
 		
-	}*/
+	}
 	
 	//@Optional.Interface(iface = "cofh.api.energy.IEnergyHandler", modid = "CoFHAPI")
 	//^ This probably won't work

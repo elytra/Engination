@@ -24,13 +24,17 @@
 
 package io.github.elytra.engination.block.te;
 
-import cofh.api.energy.IEnergyProvider;
+import java.util.HashMap;
+
+import cofh.api.energy.IEnergyConnection;
+//import cofh.api.energy.IEnergyProvider;
 import io.github.elytra.engination.block.BlockGenerator;
 import io.github.elytra.engination.block.EnginationBlocks;
 import io.github.elytra.engination.energy.EnergyStorage;
+import io.github.elytra.engination.energy.RedstoneFlux;
+import io.github.elytra.engination.energy.RedstoneFluxAccess;
 import io.github.elytra.engination.inventory.InventorySimple;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -40,29 +44,22 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.items.CapabilityItemHandler;
 
-public class TileEntityGenerator extends TileEntity implements IEnergyProvider, ITickable {
+public class TileEntityGenerator extends TileEntity implements IEnergyConnection, ITickable {
 	public static final int CONVERSION_TICKS_TO_RF = 30; //1,600 ticks of coal -> 48,000 RF == 30 RF/t
 	
 	private final InventorySimple inventory = new InventorySimple(1, "tile.machine.generator.name")
 			.listen((it)->this.markDirty())
-			.setStackValidator(0, TileEntityFurnace::isItemFuel); //TODO: May explode
+			.setStackValidator(0, TileEntityFurnace::isItemFuel);
 	
-	private final EnergyStorage energy = new EnergyStorage(50000, 30)
+	private final EnergyStorage energy = new EnergyStorage(50000, 30, 30)
 			.listen((it)->this.markDirty());
-	private final IEnergyProvider energyProxy = energy.getRedstoneFluxWrapper();
-	
-	@CapabilityInject(gigaherz.capabilities.api.energy.IEnergyHandler.class)
-	static Capability<gigaherz.capabilities.api.energy.IEnergyHandler> CAPABILITY_CORE_ENERGY = null;
-	
-	//@CapabilityInject(net.darkhax.tesla.api.ITeslaHolder.class)
-	//static Capability<net.darkhax.tesla.api.ITeslaHolder> TESLA_ENERGY_STORAGE = null;
-	//@CapabilityInject(net.darkhax.tesla.api.ITeslaProducer.class)
-	//static Capability<net.darkhax.tesla.api.ITeslaProducer> TESLA_ENERGY_PRODUCER = null;
 	
 	private int fuelTicks = 0;
+	
+	private HashMap<EnumFacing, TileEntity> verification = new HashMap<>();
+	private HashMap<EnumFacing, RedstoneFluxAccess> localAccess = new HashMap<>();
 	
 	public TileEntityGenerator() {}
 	
@@ -89,6 +86,7 @@ public class TileEntityGenerator extends TileEntity implements IEnergyProvider, 
 	}
 	
 	
+	
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
 		if (capability==null) return false;
@@ -96,15 +94,15 @@ public class TileEntityGenerator extends TileEntity implements IEnergyProvider, 
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
 			return true;
 		}
-		if (capability == CAPABILITY_CORE_ENERGY) {
+		if (capability == RedstoneFlux.CAPABILITY_CORE_ENERGY) {
 			return true;
 		}
-		//if (capability == TESLA_ENERGY_STORAGE) {
-		//	return true;
-		//}
-		//if (capability == TESLA_ENERGY_PRODUCER) {
-		//	return true;
-		//}
+		if (capability == RedstoneFlux.TESLA_ENERGY_STORAGE) {
+			return true;
+		}
+		if (capability == RedstoneFlux.TESLA_ENERGY_PRODUCER) {
+			return true;
+		}
 		return super.hasCapability(capability, facing);
 	}
 	
@@ -116,13 +114,13 @@ public class TileEntityGenerator extends TileEntity implements IEnergyProvider, 
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
 			return (T) inventory;
 		}
-		if (capability == CAPABILITY_CORE_ENERGY) {
+		if (capability == RedstoneFlux.CAPABILITY_CORE_ENERGY) {
 			return (T) energy.getCapabilityCoreWrapper();
 		}
 		
-		//if (capability == TESLA_ENERGY_STORAGE || capability == TESLA_ENERGY_PRODUCER) {
-		//	return (T) energy.getTeslaWrapper();
-		//}
+		if (capability == RedstoneFlux.TESLA_ENERGY_STORAGE || capability == RedstoneFlux.TESLA_ENERGY_PRODUCER) {
+			return (T) energy.getTeslaWrapper();
+		}
 		
 		return super.getCapability(capability, facing);
 	}
@@ -136,21 +134,6 @@ public class TileEntityGenerator extends TileEntity implements IEnergyProvider, 
 	public boolean canConnectEnergy(EnumFacing from) {
 		return true; //Accept cables from all sides
 	}
-
-	@Override
-	public int extractEnergy(EnumFacing from, int maxExtract, boolean simulate) {
-		return energyProxy.extractEnergy(from, maxExtract, simulate);
-	}
-
-	@Override
-	public int getEnergyStored(EnumFacing from) {
-		return energyProxy.getEnergyStored(from);
-	}
-
-	@Override
-	public int getMaxEnergyStored(EnumFacing from) {
-		return energyProxy.getMaxEnergyStored(from);
-	}
 	
 	public InventorySimple getInventory() {
 		return inventory;
@@ -160,62 +143,69 @@ public class TileEntityGenerator extends TileEntity implements IEnergyProvider, 
 	public void update() {
 		if (this.worldObj==null || this.worldObj.isRemote) return;
 		
+		for(EnumFacing side : EnumFacing.values()) {
+			if (energy.getEnergy()<=0) break;
+			pushEnergy(side);
+		}
+		
 		if (fuelTicks>0) {
 			if (energy.getEnergy()+CONVERSION_TICKS_TO_RF < energy.getCapacity()) {
 				//Keep calm and burn the universe down until there's nothing left but choking clouds of ash.
 				setOn(true);
 				fuelTicks--;
 				energy.insertEnergy(CONVERSION_TICKS_TO_RF, false);
-				//Engination.LOG.info("BurnTick. New RF: "+rf);
 				this.markDirty();
 				return;
 			} else {
-				//Machine is full. Indicate stop to user.
+				//Machine is full.
 				setOn(false);
-				//Engination.LOG.info("Machine is full. Stopping.");
 				return;
 			}
 		} else {
 			//Load a single fuel item into the fuelTicks buffer
-			
-			//ItemStack fuelSlot = inventory.getStackInSlot(0);
-			//ItemStack slotStack = inventory.getStackInSlot(0);
-			//if (slotStack!=null) Engination.LOG.info("Pulling one item from ["+slotStack.getDisplayName()+" x"+slotStack.stackSize+"]");
 			ItemStack oneFuel = inventory.extractItem(0, 1, false); //Pull one fuel item from the zeroth slot
-			
-			
 			
 			if (oneFuel==null || oneFuel.stackSize<=0) {
 				//TODO: Adding the fuel back into the itemslot has the slight chance to dupe or overstack.
 				//Because of this, we're instead eating the fuel for no gain. It should be impossible to
 				//arrive here, but nonetheless we need to keep considering the consequences of destroying
 				//the item and search for better alternatives.
-				//if (isOn()) {
-					//System.out.println("Ran out of fuel! Stopping.");
-				//}
-				
 				
 				setOn(false);
 				return;
 			} else {
-				//slotStack = inventory.getStackInSlot(0);
-				//if (slotStack==null) Engination.LOG.info("None left.");
-				//else Engination.LOG.info("Remaining ["+slotStack.getDisplayName()+" x"+slotStack.stackSize+"]");
-				
 				int ticksForOneFuel = TileEntityFurnace.getItemBurnTime(oneFuel);
-				
-				//Engination.LOG.info("Burning "+oneFuel.getDisplayName()+" for "+ticksForOneFuel+" ticks.");
-				
 				fuelTicks += ticksForOneFuel;
 				setOn(true);
-				//inventory.markDirty();
 				this.markDirty();
 				
 				return;
 			}
 			
 		}
+	}
+	
+	public void pushEnergy(EnumFacing side) {
+		BlockPos neighbor = pos.offset(side);
+		TileEntity te = worldObj.getTileEntity(neighbor);
+		if (te==null) return;
+		if (te!=verification.get(side)) {
+			verification.put(side, te);
+			localAccess.put(side, RedstoneFlux.getAccess(worldObj, neighbor, side));
+		}
 		
+		RedstoneFluxAccess access = localAccess.get(side);
+		if (access==RedstoneFlux.NULL_ACCESS) return;
+		
+		long simulatedEnergyRemoved = access.insertEnergy(energy.getEnergy(), true);
+		if (simulatedEnergyRemoved<=0) return;
+		long pulledFromReserves = energy.extractEnergy(simulatedEnergyRemoved, false);
+		long actualEnergyRemoved = access.insertEnergy(pulledFromReserves, false);
+		//this.markDirty(); not really necessary since EnergyStorage does that for us via callback
+		if (actualEnergyRemoved!=pulledFromReserves) {
+			//TODO: Ideally, mark this tile visually as malfunctioning via IBlockState.
+			//There's not much I could do if this turned out to be dropping RF, but it'd be nice to know.
+		}
 	}
 	
 	public void setOn(boolean on) {
