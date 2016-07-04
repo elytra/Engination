@@ -28,11 +28,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import io.github.elytra.engination.block.BlockConveyor;
+import io.github.elytra.engination.block.BlockEnergyCell;
 import io.github.elytra.engination.block.BlockGenerator;
 import io.github.elytra.engination.block.BlockGravityField;
 import io.github.elytra.engination.block.BlockLandingPad;
 import io.github.elytra.engination.block.BlockLauncher;
 import io.github.elytra.engination.block.EnginationBlocks;
+import io.github.elytra.engination.block.te.TileEntityEnergyCell;
 import io.github.elytra.engination.block.te.TileEntityGenerator;
 import io.github.elytra.engination.client.gui.EnginationGuiHandler;
 import io.github.elytra.engination.entity.EntityTomato;
@@ -106,6 +108,9 @@ public class Engination {
 		registerBlock(new BlockGenerator());
 		GameRegistry.registerTileEntity(TileEntityGenerator.class, "machine.generator");
 		
+		registerBlock(new BlockEnergyCell());
+		GameRegistry.registerTileEntity(TileEntityEnergyCell.class, "machine.energyCell");
+		
 		
 		registerBlock(new BlockGravityField());
 		
@@ -129,39 +134,32 @@ public class Engination {
 		
 	}
 	
+	/* this code has served its purpose.
 	@EventHandler
 	public void onBlockRemap(FMLMissingMappingsEvent e) {
 		for(MissingMapping mapping : e.getAll()) {
-			//System.out.println("Remap issue:"+mapping.resourceLocation);
 			String modid = mapping.resourceLocation.getResourceDomain();
 			String name = mapping.resourceLocation.getResourcePath();
 			
 			if (modid.equals("dendrology")) {
 				
-				
-				//System.out.println("Trying to remap dendrology item: "+name+" of registry type "+mapping.type);
-				
 				if (mapping.type==GameRegistry.Type.BLOCK) {
 					Block remapTo = Block.getBlockFromName(Engination.MODID+":"+name);
 					if (remapTo==null) {
-						//System.out.println("Cannot find a remap.");
 					} else {
-						//System.out.println("Attempting to remap to "+remapTo.getUnlocalizedName());
 						mapping.remap(remapTo);
 					}
 				} else {
 					Item remapTo = Item.getByNameOrId(Engination.MODID+":"+name);
 					if (remapTo==null) {
-						//System.out.println("Cannot find a remap.");
 					} else {
-						//System.out.println("Attempting to remap to "+remapTo.getUnlocalizedName());
 						mapping.remap(remapTo);
 					}
 				}
 			}
 			
 		}
-	}
+	}*/
 	
 	public void registerBlock(Block block) {
 		ItemBlock item = new ItemBlock(block);

@@ -45,4 +45,6 @@ public class EnginationBlocks {
 	public static final BlockLandingPad LANDINGPAD = null;
 	@ObjectHolder("machine.generator")
 	public static final BlockGenerator GENERATOR = null;
+	@ObjectHolder("machine.energyCell")
+	public static final BlockEnergyCell ENERGY_CELL = null;
 }
