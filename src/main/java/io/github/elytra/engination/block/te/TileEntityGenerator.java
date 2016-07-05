@@ -26,11 +26,9 @@ package io.github.elytra.engination.block.te;
 
 import java.util.HashMap;
 
-import cofh.api.energy.IEnergyConnection;
 //import cofh.api.energy.IEnergyProvider;
 import io.github.elytra.engination.block.BlockGenerator;
 import io.github.elytra.engination.block.EnginationBlocks;
-import io.github.elytra.engination.energy.EnergyStorage;
 import io.github.elytra.engination.energy.RedstoneFlux;
 import io.github.elytra.engination.energy.RedstoneFluxAccess;
 import io.github.elytra.engination.inventory.InventorySimple;
@@ -46,15 +44,15 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 
-public class TileEntityGenerator extends TileEntity implements IEnergyConnection, ITickable {
+public class TileEntityGenerator extends TileEntityMachineBase implements ITickable {
 	public static final int CONVERSION_TICKS_TO_RF = 30; //1,600 ticks of coal -> 48,000 RF == 30 RF/t
 	
 	private final InventorySimple inventory = new InventorySimple(1, "tile.machine.generator.name")
 			.listen((it)->this.markDirty())
 			.setStackValidator(0, TileEntityFurnace::isItemFuel);
 	
-	private final EnergyStorage energy = new EnergyStorage(50000, 30, 30)
-			.listen((it)->this.markDirty());
+	//private final EnergyStorage energy = new EnergyStorage(50000, 30, 30)
+	//		.listen((it)->this.markDirty());
 	
 	private int fuelTicks = 0;
 	
@@ -68,20 +66,19 @@ public class TileEntityGenerator extends TileEntity implements IEnergyConnection
 		super.writeToNBT(tag);
 		
 		tag.setTag("inventory", inventory.serializeNBT());
-		tag.setLong("rf", energy.getEnergy());
+		//tag.setLong("rf", energy.getEnergy());
 		tag.setInteger("fuelTicks", fuelTicks);
 		
 		return tag;
 	}
 	
-	@SuppressWarnings("deprecation")
 	@Override
 	public void readFromNBT(NBTTagCompound tag) {
 		super.readFromNBT(tag);
 		
 		inventory.deserializeNBT(tag.getCompoundTag("inventory"));
 		
-		energy.setEnergy(tag.getLong("rf"));
+		//energy.setEnergy(tag.getLong("rf"));
 		fuelTicks = tag.getInteger("fuelTicks");
 	}
 	
@@ -91,18 +88,12 @@ public class TileEntityGenerator extends TileEntity implements IEnergyConnection
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
 		if (capability==null) return false;
 		
-		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ||
+			capability == RedstoneFlux.CAPABILITY_CORE_ENERGY ||
+			capability == RedstoneFlux.TESLA_ENERGY_PRODUCER) {
 			return true;
 		}
-		if (capability == RedstoneFlux.CAPABILITY_CORE_ENERGY) {
-			return true;
-		}
-		if (capability == RedstoneFlux.TESLA_ENERGY_STORAGE) {
-			return true;
-		}
-		if (capability == RedstoneFlux.TESLA_ENERGY_PRODUCER) {
-			return true;
-		}
+		
 		return super.hasCapability(capability, facing);
 	}
 	
@@ -118,7 +109,7 @@ public class TileEntityGenerator extends TileEntity implements IEnergyConnection
 			return (T) energy.getCapabilityCoreWrapper();
 		}
 		
-		if (capability == RedstoneFlux.TESLA_ENERGY_STORAGE || capability == RedstoneFlux.TESLA_ENERGY_PRODUCER) {
+		if (capability == RedstoneFlux.TESLA_ENERGY_PRODUCER) {
 			return (T) energy.getTeslaWrapper();
 		}
 		
@@ -129,24 +120,28 @@ public class TileEntityGenerator extends TileEntity implements IEnergyConnection
 	public boolean isFuel(ItemStack stack) {
 		return true;
 	}
-
-	@Override
-	public boolean canConnectEnergy(EnumFacing from) {
-		return true; //Accept cables from all sides
-	}
 	
 	public InventorySimple getInventory() {
 		return inventory;
 	}
 
+	private void sendUpdatePacket() {
+		IBlockState curState = worldObj.getBlockState(pos);
+		worldObj.notifyBlockUpdate(pos, curState, curState, 6);
+	}
+	
 	@Override
 	public void update() {
+		super.update();
+		
 		if (this.worldObj==null || this.worldObj.isRemote) return;
 		
+		long startEnergy = energy.getEnergy();
 		for(EnumFacing side : EnumFacing.values()) {
 			if (energy.getEnergy()<=0) break;
 			pushEnergy(side);
 		}
+		if (energy.getEnergy()!=startEnergy) sendUpdatePacket();
 		
 		if (fuelTicks>0) {
 			if (energy.getEnergy()+CONVERSION_TICKS_TO_RF < energy.getCapacity()) {
@@ -155,6 +150,7 @@ public class TileEntityGenerator extends TileEntity implements IEnergyConnection
 				fuelTicks--;
 				energy.insertEnergy(CONVERSION_TICKS_TO_RF, false);
 				this.markDirty();
+				//sendUpdatePacket();
 				return;
 			} else {
 				//Machine is full.
@@ -191,7 +187,7 @@ public class TileEntityGenerator extends TileEntity implements IEnergyConnection
 		if (te==null) return;
 		if (te!=verification.get(side)) {
 			verification.put(side, te);
-			localAccess.put(side, RedstoneFlux.getAccess(worldObj, neighbor, side));
+			localAccess.put(side, RedstoneFlux.getAccess(worldObj, neighbor, side.getOpposite()));
 		}
 		
 		RedstoneFluxAccess access = localAccess.get(side);

@@ -41,9 +41,12 @@ public class RedstoneFlux {
 		
 		//Prefer tesla because of datatype concerns
 		if (TESLA_ENERGY_STORAGE!=null) {
-			if (te.hasCapability(TESLA_ENERGY_STORAGE,  side) ||
-				te.hasCapability(TESLA_ENERGY_PRODUCER, side) ||
-				te.hasCapability(TESLA_ENERGY_CONSUMER, side)) {
+			boolean hasStorage = te.hasCapability(TESLA_ENERGY_STORAGE,  side);
+			boolean hasProducer = te.hasCapability(TESLA_ENERGY_PRODUCER, side);
+			boolean hasConsumer = te.hasCapability(TESLA_ENERGY_CONSUMER, side);
+			if (hasStorage || hasProducer || hasConsumer) {
+				
+				System.out.println("Creating Dank wrapper S:"+hasStorage+" P:"+hasProducer+" C:"+hasConsumer);
 				
 				return new RedstoneFluxAccess.TeslaWrapper(te, side);
 			}

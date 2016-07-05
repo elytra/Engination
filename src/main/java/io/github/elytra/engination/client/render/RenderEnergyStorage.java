@@ -22,29 +22,20 @@
  * SOFTWARE.
  */
 
-package io.github.elytra.engination.block;
+package io.github.elytra.engination.client.render;
 
-import io.github.elytra.engination.Engination;
-import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
+import io.github.elytra.engination.block.te.TileEntityBattery;
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.util.ResourceLocation;
 
-@ObjectHolder(Engination.MODID)
-public class EnginationBlocks {
-	@ObjectHolder("machine.conveyor.2")
-	public static final BlockConveyor CONVEYOR = null;
-	@ObjectHolder("machine.conveyor.4")
-	public static final BlockConveyor CONVEYOR_FAST = null;
-	@ObjectHolder("machine.conveyor.8")
-	public static final BlockConveyor CONVEYOR_ULTRAFAST = null;
-	@ObjectHolder("machine.launcher.2")
-	public static final BlockLauncher LAUNCHER = null;
-	@ObjectHolder("machine.launcher.3")
-	public static final BlockLauncher LAUNCHER_FORCEFUL = null;
-	@ObjectHolder("machine.launcher.5")
-	public static final BlockLauncher LAUNCHER_ULTRAFORCEFUL = null;
-	@ObjectHolder("machine.landingpad")
-	public static final BlockLandingPad LANDINGPAD = null;
-	@ObjectHolder("machine.generator")
-	public static final BlockGenerator GENERATOR = null;
-	@ObjectHolder("machine.battery")
-	public static final BlockBattery BATTERY = null;
+public class RenderEnergyStorage extends TileEntitySpecialRenderer<TileEntityBattery> {
+	ResourceLocation FLUID_REDSTONE_FLUX = new ResourceLocation("engination", "");
+	
+	@Override
+	public void renderTileEntityAt(TileEntityBattery te, double x, double y, double z, float partialTicks, int destroyStage) {
+		this.bindTexture(FLUID_REDSTONE_FLUX);
+		
+		
+	}
+	
 }

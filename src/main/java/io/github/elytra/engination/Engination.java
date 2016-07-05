@@ -24,22 +24,28 @@
 
 package io.github.elytra.engination;
 
+import java.io.File;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import io.github.elytra.engination.block.BlockConveyor;
-import io.github.elytra.engination.block.BlockEnergyCell;
+import io.github.elytra.engination.block.BlockBattery;
 import io.github.elytra.engination.block.BlockGenerator;
 import io.github.elytra.engination.block.BlockGravityField;
 import io.github.elytra.engination.block.BlockLandingPad;
 import io.github.elytra.engination.block.BlockLauncher;
+import io.github.elytra.engination.block.BlockMachineBase;
 import io.github.elytra.engination.block.EnginationBlocks;
-import io.github.elytra.engination.block.te.TileEntityEnergyCell;
+import io.github.elytra.engination.block.te.TileEntityBattery;
 import io.github.elytra.engination.block.te.TileEntityGenerator;
+import io.github.elytra.engination.block.te.TileEntityMachineBase;
+import io.github.elytra.engination.client.gui.EnergyWailaDataProvider;
 import io.github.elytra.engination.client.gui.EnginationGuiHandler;
 import io.github.elytra.engination.entity.EntityTomato;
 import io.github.elytra.engination.item.ItemTomato;
 import io.github.elytra.engination.item.ItemWandRelight;
+import mcp.mobius.waila.Waila;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.creativetab.CreativeTabs;
@@ -48,13 +54,15 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemFood;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent;
-import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent.MissingMapping;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
@@ -64,6 +72,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class Engination {
 	public static final String MODID = "engination";
 	public static Logger LOG;
+	public static Configuration CONFIG;
 	
 	public static CreativeTabs TAB_ENGINATION = new CreativeTabs("engination") {
 		@Override
@@ -88,7 +97,12 @@ public class Engination {
 	@EventHandler
 	public void onPreInit(FMLPreInitializationEvent e) {
 		LOG = LogManager.getLogger(Engination.MODID);
+		File config = e.getSuggestedConfigurationFile();
+		CONFIG = new Configuration(config);
+		int updateFrequency = CONFIG.getInt("energyUpdateFrequency", "network", 10, 4, 100, "Affects how frequently energy storage updates are sent to the client.", "config.key.energyUpdateFrequency");
+		TileEntityMachineBase.TICKS_BETWEEN_NETWORK_UPDATES = updateFrequency;
 		
+		CONFIG.save();
 		//LOG.info("");
 		
 		SOUND_TOMATO = createSound("tomato");
@@ -108,8 +122,8 @@ public class Engination {
 		registerBlock(new BlockGenerator());
 		GameRegistry.registerTileEntity(TileEntityGenerator.class, "machine.generator");
 		
-		registerBlock(new BlockEnergyCell());
-		GameRegistry.registerTileEntity(TileEntityEnergyCell.class, "machine.energyCell");
+		registerBlock(new BlockBattery());
+		GameRegistry.registerTileEntity(TileEntityBattery.class, "machine.battery");
 		
 		
 		registerBlock(new BlockGravityField());
@@ -132,6 +146,14 @@ public class Engination {
 	public void onInit(FMLInitializationEvent e) {
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new EnginationGuiHandler());
 		
+	}
+	
+	@EventHandler
+	public void onPostInit(FMLPostInitializationEvent e) {
+		if (Loader.isModLoaded("Waila")) {
+			EnergyWailaDataProvider provider = new EnergyWailaDataProvider();
+			mcp.mobius.waila.api.impl.ModuleRegistrar.instance().registerBodyProvider(provider, BlockMachineBase.class);
+		}
 	}
 	
 	/* this code has served its purpose.

@@ -28,6 +28,7 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 import com.google.common.primitives.Ints;
+import com.google.common.primitives.Longs;
 
 import io.github.elytra.engination.Listener;
 import net.minecraft.util.EnumFacing;
@@ -61,12 +62,6 @@ public class EnergyStorage {
 		this.outPerTick = out;
 	}
 
-	public static long min(long a, long b, long c) {
-		if (a<b && a<c) return a;
-		if (b<a && b<c) return b;
-		return c;
-	}
-	
 	public void markDirty() {
 		for(Listener<EnergyStorage> l : listeners) {
 			l.changed(this);
@@ -109,23 +104,27 @@ public class EnergyStorage {
 	}
 
 	public long extractEnergy(long maxExtract, boolean simulate) {
-		long toExtract = min(maxExtract, rf, outPerTick);
+		long toExtract = Longs.min(maxExtract, rf, outPerTick);
+		if (toExtract<=0) return 0;
+		
 		if (!simulate) {
 			rf -= toExtract;
+			markDirty();
 		}
-		
-		markDirty();
 		
 		return toExtract;
 	}
 
 	public long insertEnergy(long maxReceive, boolean simulate) {
-		long toInsert = min(maxReceive, max-rf, inPerTick);
+		if (maxReceive<=0) return 0;
+		long freeSpace = max-rf;
+		if (freeSpace<=0) return 0;
+		
+		long toInsert = Longs.min(maxReceive, freeSpace, inPerTick);
 		if (!simulate) {
 			rf += toInsert;
+			markDirty();
 		}
-		
-		markDirty();
 		
 		return toInsert;
 	}
@@ -139,7 +138,30 @@ public class EnergyStorage {
 		rf = energy;
 	}
 	
+	/**
+	 * @deprecated	This method is for internal tile initialization only. Do not call for any reason.
+	 */
+	@Deprecated
+	public void setCapacity(long capacity) {
+		max = capacity;
+		if (rf>max) rf=max;
+	}
 	
+	/**
+	 * @deprecated	This method is for internal tile initialization only. Do not call for any reason.
+	 */
+	@Deprecated
+	public void setRateIn(long rateIn) {
+		inPerTick = rateIn;
+	}
+	
+	/**
+	 * @deprecated	This method is for internal tile initialization only. Do not call for any reason.
+	 */
+	@Deprecated
+	public void setRateOut(long rateOut) {
+		outPerTick = rateOut;
+	}
 	
 	@Optional.InterfaceList ({
 			@Optional.Interface(iface = "net.darkhax.tesla.api.ITeslaHolder", modid = "Tesla"),

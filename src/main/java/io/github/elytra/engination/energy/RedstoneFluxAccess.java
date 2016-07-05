@@ -103,17 +103,19 @@ public interface RedstoneFluxAccess {
 			if (tile.hasCapability(RedstoneFlux.TESLA_ENERGY_PRODUCER, side)) producer = tile.getCapability(RedstoneFlux.TESLA_ENERGY_PRODUCER, side);
 			if (tile.hasCapability(RedstoneFlux.TESLA_ENERGY_CONSUMER, side)) consumer = tile.getCapability(RedstoneFlux.TESLA_ENERGY_CONSUMER, side);
 			
-			
+			System.out.println("Created Tesla wrapper for block "+tile.getBlockType().getLocalizedName()+" P:"+(producer!=null)+" H:"+(holder!=null)+" C:"+(consumer!=null));
 		}
 
 		@Override
 		public long getCapacity() {
-			return holder.getCapacity();
+			if (holder!=null) return holder.getCapacity();
+			else return 0L;
 		}
 
 		@Override
 		public long getEnergy() {
-			return holder.getStoredPower();
+			if (holder!=null) return holder.getStoredPower();
+			else return 0L;
 		}
 
 		@Override

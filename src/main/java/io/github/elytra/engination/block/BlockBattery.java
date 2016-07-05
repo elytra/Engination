@@ -24,37 +24,48 @@
 
 package io.github.elytra.engination.block;
 
-import io.github.elytra.engination.block.te.TileEntityGenerator;
-import io.github.elytra.engination.client.gui.EnginationGuiHandler;
+import io.github.elytra.engination.block.te.TileEntityBattery;
 import net.minecraft.block.ITileEntityProvider;
-import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockGenerator extends BlockMachineBase implements ITileEntityProvider {
-	public static PropertyDirection PROPERTY_FACING = PropertyDirection.create("facing");
-	public static PropertyBool PROPERTY_ON = PropertyBool.create("on");
-	
-	public BlockGenerator() {
-		super("generator");
-		
-		this.guiId = EnginationGuiHandler.ID_GENERATOR;
+public class BlockBattery extends BlockMachineBase implements ITileEntityProvider {
+	public BlockBattery() {
+		super("battery");
+	}
+
+	@Override
+	public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+		return this.blockState.getBaseState();
 	}
 	
 	@Override
-	public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-		return this.blockState.getBaseState().withProperty(PROPERTY_FACING, placer.getAdjustedHorizontalFacing().getOpposite());
+	protected BlockStateContainer createBlockState() {
+		return new BlockStateContainer(this);
+	}
+	
+	@Override
+	public IBlockState getStateFromMeta(int meta) {
+		return this.blockState.getBaseState();
+	}
+	
+	@Override
+	public int getMetaFromState(IBlockState state) {
+		return 0;
+	}
+	
+	public void setOn(World world, BlockPos pos, boolean on) {
+		//Energy cells don't really activate like other machines do.
 	}
 
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		return new TileEntityGenerator();
+		return new TileEntityBattery();
 	}
 	
 	@Override
@@ -63,7 +74,20 @@ public class BlockGenerator extends BlockMachineBase implements ITileEntityProvi
 	}
 	
 	@Override
-	public boolean doesSideBlockRendering(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing face) {
-		return false; //Later we can ask state whether it's the left or right face, but for now this is just simpler.
+	public boolean hasComparatorInputOverride(IBlockState state) {
+		return true;
 	}
+	
+	@Override
+	public int getComparatorInputOverride(IBlockState state, World world, BlockPos pos) {
+		TileEntity te = world.getTileEntity(pos);
+		if (te instanceof TileEntityBattery) {
+			return (int)(((TileEntityBattery)te).getStoragePercent() * 15);
+			
+		}
+		
+		return 0;
+	}
+	
+	
 }

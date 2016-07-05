@@ -1,0 +1,23 @@
+{
+	"forge_marker":1,
+	
+	"defaults":{
+		"model":"engination:machine.battery",
+		"transform":"forge:default-block",
+		"uvlock":false,
+		"textures":{
+			"top":   "engination:blocks/machine.material",
+			"side": "engination:blocks/machine.side.battery",
+			"copper": "engination:blocks/metal.copper",
+			"particle":"engination:blocks/machine.material"
+		}
+	},
+	"variants":{
+		"normal": {
+			"x": 0, "y": 0
+		},
+		"inventory": {
+			"transform": "forge:default-block"
+		}
+	}
+}
