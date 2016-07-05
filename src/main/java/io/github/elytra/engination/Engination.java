@@ -45,7 +45,6 @@ import io.github.elytra.engination.client.gui.EnginationGuiHandler;
 import io.github.elytra.engination.entity.EntityTomato;
 import io.github.elytra.engination.item.ItemTomato;
 import io.github.elytra.engination.item.ItemWandRelight;
-import mcp.mobius.waila.Waila;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.creativetab.CreativeTabs;
@@ -55,7 +54,6 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -67,6 +65,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
 
 @Mod(modid=Engination.MODID, name="Engination", version="@VERSION@")
 public class Engination {
@@ -150,10 +149,7 @@ public class Engination {
 	
 	@EventHandler
 	public void onPostInit(FMLPostInitializationEvent e) {
-		if (Loader.isModLoaded("Waila")) {
-			EnergyWailaDataProvider provider = new EnergyWailaDataProvider();
-			mcp.mobius.waila.api.impl.ModuleRegistrar.instance().registerBodyProvider(provider, BlockMachineBase.class);
-		}
+		
 	}
 	
 	/* this code has served its purpose.

@@ -2,19 +2,30 @@ package io.github.elytra.engination.client.gui;
 
 import java.util.List;
 
+import io.github.elytra.engination.block.BlockMachineBase;
 import io.github.elytra.engination.block.te.TileEntityMachineBase;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
+import mcp.mobius.waila.api.IWailaRegistrar;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.Optional;
 
+@Optional.Interface(iface = "mcp.mobius.waila.api.IWailaDataProvider", modid = "Waila")
 public class EnergyWailaDataProvider implements IWailaDataProvider {
 
+	@Optional.Method(modid = "Waila")
+	public static void callbackRegister(final IWailaRegistrar registry) {
+		EnergyWailaDataProvider instance = new EnergyWailaDataProvider();
+
+		registry.registerBodyProvider(instance, BlockMachineBase.class);
+	}
+	
 	@Override
 	public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound nbt, World world, BlockPos pos) {
 		return nbt;

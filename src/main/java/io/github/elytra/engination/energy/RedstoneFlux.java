@@ -46,8 +46,6 @@ public class RedstoneFlux {
 			boolean hasConsumer = te.hasCapability(TESLA_ENERGY_CONSUMER, side);
 			if (hasStorage || hasProducer || hasConsumer) {
 				
-				System.out.println("Creating Dank wrapper S:"+hasStorage+" P:"+hasProducer+" C:"+hasConsumer);
-				
 				return new RedstoneFluxAccess.TeslaWrapper(te, side);
 			}
 		}

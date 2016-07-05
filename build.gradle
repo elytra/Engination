@@ -39,7 +39,7 @@ dependencies {
 
 group = "io.github.elytra"
 archivesBaseName = "Engination"
-version = "1.03"
+version = "1.04"
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
