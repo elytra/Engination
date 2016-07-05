@@ -28,13 +28,10 @@ import com.google.common.primitives.Ints;
 
 import io.github.elytra.engination.energy.RedstoneFlux;
 import io.github.elytra.engination.energy.RedstoneFluxAccess;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.items.CapabilityItemHandler;
 
 public class TileEntityBattery extends TileEntityMachineBase implements cofh.api.energy.IEnergyHandler, ITickable {
 	private TileEntity downTile = null;
@@ -45,6 +42,21 @@ public class TileEntityBattery extends TileEntityMachineBase implements cofh.api
 		energy.setCapacity(2_000_000);
 		energy.setRateIn(1_000);
 		energy.setRateOut(1_000);
+		
+		//energy Capabilities
+		if (RedstoneFlux.CAPABILITY_CORE_ENERGY!=null) {
+			capabilityRegistry.registerProviderForSides(RedstoneFlux.CAPABILITY_CORE_ENERGY, energy::getCapabilityCoreProviderWrapper, EnumFacing.DOWN);
+			capabilityRegistry.registerProviderForSides(RedstoneFlux.CAPABILITY_CORE_ENERGY, energy::getCapabilityCoreConsumerWrapper, EnumFacing.UP);
+		}
+		if (RedstoneFlux.TESLA_ENERGY_PRODUCER!=null) {
+			capabilityRegistry.registerProviderForSides(RedstoneFlux.TESLA_ENERGY_PRODUCER, energy::getTeslaProducerWrapper, EnumFacing.DOWN);
+		}
+		if (RedstoneFlux.TESLA_ENERGY_STORAGE!=null) {
+			capabilityRegistry.registerProviderForAllSides(RedstoneFlux.TESLA_ENERGY_STORAGE, energy::getTeslaHolderWrapper);
+		}
+		if (RedstoneFlux.TESLA_ENERGY_CONSUMER!=null) {
+			capabilityRegistry.registerProviderForSides(RedstoneFlux.TESLA_ENERGY_CONSUMER, energy::getTeslaConsumerWrapper, EnumFacing.UP);
+		}
 	}
 	
 	@Override
@@ -79,47 +91,6 @@ public class TileEntityBattery extends TileEntityMachineBase implements cofh.api
 		//doubles might even be overkill for this.
 		return (float)( (double)energy.getEnergy() / (double)energy.getCapacity() );
 	}
-	
-	@Override
-	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-		if (capability==null) return false;
-		
-		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ||
-			capability == RedstoneFlux.CAPABILITY_CORE_ENERGY) return true;
-		
-		if (capability == RedstoneFlux.TESLA_ENERGY_PRODUCER) {
-			return facing==EnumFacing.DOWN;
-		}
-		
-		if (capability == RedstoneFlux.TESLA_ENERGY_CONSUMER ||
-			capability == RedstoneFlux.TESLA_ENERGY_STORAGE) {
-			return facing==EnumFacing.UP;
-		}
-		
-		return super.hasCapability(capability, facing);
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-		if (capability==null) return null;
-		
-
-		if (capability == RedstoneFlux.CAPABILITY_CORE_ENERGY) {
-			return (T) energy.getCapabilityCoreWrapper();
-		}
-		
-		if (capability == RedstoneFlux.TESLA_ENERGY_PRODUCER && facing==EnumFacing.DOWN) {
-			return (T) energy.getTeslaWrapper();
-		}
-		
-		if (capability == RedstoneFlux.TESLA_ENERGY_CONSUMER ||
-			capability == RedstoneFlux.TESLA_ENERGY_STORAGE) {
-			if (facing==EnumFacing.UP) return (T) energy.getTeslaWrapper();
-		}
-		
-		return super.getCapability(capability, facing);
-	}
 
 	@Override
 	public void update() {
@@ -150,8 +121,6 @@ public class TileEntityBattery extends TileEntityMachineBase implements cofh.api
 		long actualEnergyRemoved = downAccess.insertEnergy(pulledFromReserves, false);
 		
 		this.markDirty();
-		//IBlockState curState = worldObj.getBlockState(pos);
-		//worldObj.notifyBlockUpdate(pos, curState, curState, 3);
 		
 		if (actualEnergyRemoved!=pulledFromReserves) {
 			//TODO: Ideally, mark this tile visually as malfunctioning via IBlockState.

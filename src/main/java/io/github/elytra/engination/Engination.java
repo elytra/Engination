@@ -35,12 +35,10 @@ import io.github.elytra.engination.block.BlockGenerator;
 import io.github.elytra.engination.block.BlockGravityField;
 import io.github.elytra.engination.block.BlockLandingPad;
 import io.github.elytra.engination.block.BlockLauncher;
-import io.github.elytra.engination.block.BlockMachineBase;
 import io.github.elytra.engination.block.EnginationBlocks;
 import io.github.elytra.engination.block.te.TileEntityBattery;
 import io.github.elytra.engination.block.te.TileEntityGenerator;
 import io.github.elytra.engination.block.te.TileEntityMachineBase;
-import io.github.elytra.engination.client.gui.EnergyWailaDataProvider;
 import io.github.elytra.engination.client.gui.EnginationGuiHandler;
 import io.github.elytra.engination.entity.EntityTomato;
 import io.github.elytra.engination.item.ItemTomato;
@@ -54,18 +52,15 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
 
 @Mod(modid=Engination.MODID, name="Engination", version="@VERSION@")
 public class Engination {
@@ -146,38 +141,6 @@ public class Engination {
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new EnginationGuiHandler());
 		
 	}
-	
-	@EventHandler
-	public void onPostInit(FMLPostInitializationEvent e) {
-		
-	}
-	
-	/* this code has served its purpose.
-	@EventHandler
-	public void onBlockRemap(FMLMissingMappingsEvent e) {
-		for(MissingMapping mapping : e.getAll()) {
-			String modid = mapping.resourceLocation.getResourceDomain();
-			String name = mapping.resourceLocation.getResourcePath();
-			
-			if (modid.equals("dendrology")) {
-				
-				if (mapping.type==GameRegistry.Type.BLOCK) {
-					Block remapTo = Block.getBlockFromName(Engination.MODID+":"+name);
-					if (remapTo==null) {
-					} else {
-						mapping.remap(remapTo);
-					}
-				} else {
-					Item remapTo = Item.getByNameOrId(Engination.MODID+":"+name);
-					if (remapTo==null) {
-					} else {
-						mapping.remap(remapTo);
-					}
-				}
-			}
-			
-		}
-	}*/
 	
 	public void registerBlock(Block block) {
 		ItemBlock item = new ItemBlock(block);

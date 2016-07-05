@@ -40,10 +40,6 @@ public class EnergyStorage {
 	private long outPerTick = 30;
 	private long inPerTick = 30;
 	
-	private CapabilityCoreWrapper capabilityCoreProxy = null;
-	private RedstoneFluxWrapper redstoneFluxProxy = null;
-	private TeslaWrapper teslaProxy = null;
-	
 	private List<Listener<EnergyStorage>> listeners = Lists.newArrayList();
 	
 	public EnergyStorage(int limit) {
@@ -75,20 +71,41 @@ public class EnergyStorage {
 	
 	@Optional.Method(modid = "CapabilityCore")
 	public gigaherz.capabilities.api.energy.IEnergyHandler getCapabilityCoreWrapper() {
-		if (capabilityCoreProxy==null) capabilityCoreProxy = new CapabilityCoreWrapper(this);
-		return capabilityCoreProxy;
+		return new CapabilityCoreWrapper(this);
+	}
+	
+	@Optional.Method(modid = "CapabilityCore")
+	public gigaherz.capabilities.api.energy.IEnergyHandler getCapabilityCoreProviderWrapper() {
+		return new CapabilityCoreProviderWrapper(this);
+	}
+	
+	@Optional.Method(modid = "CapabilityCore")
+	public gigaherz.capabilities.api.energy.IEnergyHandler getCapabilityCoreConsumerWrapper() {
+		return new CapabilityCoreConsumerWrapper(this);
 	}
 	
 	public cofh.api.energy.IEnergyHandler getRedstoneFluxWrapper() {
-		if (redstoneFluxProxy==null) redstoneFluxProxy = new RedstoneFluxWrapper(this);
-		return redstoneFluxProxy;
+		return new RedstoneFluxWrapper(this);
 	}
-	
 	
 	@Optional.Method(modid = "Tesla")
 	public net.darkhax.tesla.api.ITeslaHolder getTeslaWrapper() {
-		if (teslaProxy==null) teslaProxy = new TeslaWrapper(this);
-		return teslaProxy;
+		return new TeslaWrapper(this);
+	}
+	
+	@Optional.Method(modid = "Tesla")
+	public net.darkhax.tesla.api.ITeslaProducer getTeslaProducerWrapper() {
+		return new TeslaProducerWrapper(this);
+	}
+	
+	@Optional.Method(modid = "Tesla")
+	public net.darkhax.tesla.api.ITeslaConsumer getTeslaConsumerWrapper() {
+		return new TeslaConsumerWrapper(this);
+	}
+	
+	@Optional.Method(modid = "Tesla")
+	public net.darkhax.tesla.api.ITeslaHolder getTeslaHolderWrapper() {
+		return new TeslaHolderWrapper(this);
 	}
 	
 	/*
@@ -197,6 +214,54 @@ public class EnergyStorage {
 		
 	}
 	
+	@Optional.Interface(iface = "net.darkhax.tesla.api.ITeslaProducer", modid = "Tesla")
+	private static class TeslaProducerWrapper implements net.darkhax.tesla.api.ITeslaProducer {
+		private final EnergyStorage delegate;
+		
+		public TeslaProducerWrapper(EnergyStorage delegate) {
+			this.delegate = delegate;
+		}
+	
+		@Override
+		public long takePower(long power, boolean simulated) {
+			return delegate.extractEnergy(power, simulated);	
+		}
+	}
+	
+	@Optional.Interface(iface = "net.darkhax.tesla.api.ITeslaHolder", modid = "Tesla")
+	private static class TeslaHolderWrapper implements net.darkhax.tesla.api.ITeslaHolder {
+		private final EnergyStorage delegate;
+		
+		public TeslaHolderWrapper(EnergyStorage delegate) {
+			this.delegate = delegate;
+		}
+		
+		@Override
+		public long getStoredPower() {
+			return delegate.getEnergy();
+		}
+
+		@Override
+		public long getCapacity() {
+			return delegate.getCapacity();
+		}
+	}
+	
+
+	@Optional.Interface(iface = "net.darkhax.tesla.api.ITeslaConsumer", modid = "Tesla")
+	private static class TeslaConsumerWrapper implements net.darkhax.tesla.api.ITeslaConsumer {
+		private final EnergyStorage delegate;
+		
+		public TeslaConsumerWrapper(EnergyStorage delegate) {
+			this.delegate = delegate;
+		}
+	
+		@Override
+		public long givePower(long power, boolean simulated) {
+			return delegate.insertEnergy(power, simulated);
+		}
+	}
+	
 	//@Optional.Interface(iface = "cofh.api.energy.IEnergyHandler", modid = "CoFHAPI")
 	//^ This probably won't work
 	private static class RedstoneFluxWrapper implements cofh.api.energy.IEnergyHandler {
@@ -233,7 +298,7 @@ public class EnergyStorage {
 		
 	}
 	
-	//@Optional.Interface(iface = "gigaherz.capabilities.api.energy.IEnergyHandler", modid = "CapabilityCore")
+	@Optional.Interface(iface = "gigaherz.capabilities.api.energy.IEnergyHandler", modid = "CapabilityCore")
 	//TODO: This mod would be fairly friendly to link against more weakly, if I linked against it via gradle instead.
 	private static class CapabilityCoreWrapper implements gigaherz.capabilities.api.energy.IEnergyHandler {
 		private final EnergyStorage delegate;
@@ -262,5 +327,63 @@ public class EnergyStorage {
 			return Ints.saturatedCast(delegate.insertEnergy(maxReceive, simulate));
 		}
 		
+	}
+	
+	@Optional.Interface(iface = "gigaherz.capabilities.api.energy.IEnergyHandler", modid = "CapabilityCore")
+	private static class CapabilityCoreProviderWrapper implements gigaherz.capabilities.api.energy.IEnergyHandler {
+		private final EnergyStorage delegate;
+		
+		public CapabilityCoreProviderWrapper(EnergyStorage delegate) {
+			this.delegate = delegate;
+		}
+		
+		@Override
+		public int getCapacity() {
+			return Ints.saturatedCast(delegate.getCapacity());
+		}
+
+		@Override
+		public int getEnergy() {
+			return Ints.saturatedCast(delegate.getEnergy());
+		}
+
+		@Override
+		public int extractEnergy(int maxExtract, boolean simulate) {
+			return Ints.saturatedCast(delegate.extractEnergy(maxExtract, simulate));
+		}
+
+		@Override
+		public int insertEnergy(int maxReceive, boolean simulate) {
+			return 0;
+		}
+	}
+	
+	@Optional.Interface(iface = "gigaherz.capabilities.api.energy.IEnergyHandler", modid = "CapabilityCore")
+	private static class CapabilityCoreConsumerWrapper implements gigaherz.capabilities.api.energy.IEnergyHandler {
+		private final EnergyStorage delegate;
+		
+		public CapabilityCoreConsumerWrapper(EnergyStorage delegate) {
+			this.delegate = delegate;
+		}
+		
+		@Override
+		public int getCapacity() {
+			return Ints.saturatedCast(delegate.getCapacity());
+		}
+
+		@Override
+		public int getEnergy() {
+			return Ints.saturatedCast(delegate.getEnergy());
+		}
+
+		@Override
+		public int extractEnergy(int maxExtract, boolean simulate) {
+			return 0;
+		}
+
+		@Override
+		public int insertEnergy(int maxReceive, boolean simulate) {
+			return Ints.saturatedCast(delegate.insertEnergy(maxReceive, simulate));
+		}
 	}
 }

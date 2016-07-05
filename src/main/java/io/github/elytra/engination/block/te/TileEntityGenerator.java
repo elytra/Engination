@@ -41,7 +41,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 
 public class TileEntityGenerator extends TileEntityMachineBase implements ITickable {
@@ -51,15 +50,25 @@ public class TileEntityGenerator extends TileEntityMachineBase implements ITicka
 			.listen((it)->this.markDirty())
 			.setStackValidator(0, TileEntityFurnace::isItemFuel);
 	
-	//private final EnergyStorage energy = new EnergyStorage(50000, 30, 30)
-	//		.listen((it)->this.markDirty());
-	
 	private int fuelTicks = 0;
 	
 	private HashMap<EnumFacing, TileEntity> verification = new HashMap<>();
 	private HashMap<EnumFacing, RedstoneFluxAccess> localAccess = new HashMap<>();
 	
-	public TileEntityGenerator() {}
+	public TileEntityGenerator() {
+		this.capabilityRegistry.registerProviderForAllSides(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, ()->inventory);
+		
+		//energy Capabilities
+		if (RedstoneFlux.CAPABILITY_CORE_ENERGY!=null) {
+			capabilityRegistry.registerProviderForAllSides(RedstoneFlux.CAPABILITY_CORE_ENERGY, energy::getCapabilityCoreProviderWrapper);
+		}
+		if (RedstoneFlux.TESLA_ENERGY_PRODUCER!=null) {
+			capabilityRegistry.registerProviderForAllSides(RedstoneFlux.TESLA_ENERGY_PRODUCER, energy::getTeslaProducerWrapper);
+		}
+		if (RedstoneFlux.TESLA_ENERGY_STORAGE!=null) {
+			capabilityRegistry.registerProviderForAllSides(RedstoneFlux.TESLA_ENERGY_STORAGE, energy::getTeslaHolderWrapper);
+		}
+	}
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
@@ -84,22 +93,23 @@ public class TileEntityGenerator extends TileEntityMachineBase implements ITicka
 	
 	
 	
-	@Override
-	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-		if (capability==null) return false;
+	//@Override
+	//public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+		/*if (capability==null) return false;
 		
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ||
 			capability == RedstoneFlux.CAPABILITY_CORE_ENERGY ||
 			capability == RedstoneFlux.TESLA_ENERGY_PRODUCER) {
 			return true;
-		}
+		}*/
 		
-		return super.hasCapability(capability, facing);
-	}
+		//return super.hasCapability(capability, facing);
+	//}
 	
-	@SuppressWarnings("unchecked")
-	@Override
-	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+	//@SuppressWarnings("unchecked")
+	//@Override
+	//public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+		/*
 		if (capability==null) return null;
 		
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
@@ -112,9 +122,9 @@ public class TileEntityGenerator extends TileEntityMachineBase implements ITicka
 		if (capability == RedstoneFlux.TESLA_ENERGY_PRODUCER) {
 			return (T) energy.getTeslaWrapper();
 		}
-		
-		return super.getCapability(capability, facing);
-	}
+		*/
+		//return super.getCapability(capability, facing);
+	//}
 	
 	
 	public boolean isFuel(ItemStack stack) {

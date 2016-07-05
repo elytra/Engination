@@ -36,7 +36,7 @@ public class EnergyWailaDataProvider implements IWailaDataProvider {
 		
 		TileEntity te = data.getTileEntity();
 		if (te instanceof TileEntityMachineBase) {
-			String danks = "Danks: "+((TileEntityMachineBase)te).getEnergyForWaila()+" / "+((TileEntityMachineBase)te).getEnergyCapacityForWaila();
+			String danks = "Danks: "+((TileEntityMachineBase)te).getEnergyInternal()+" / "+((TileEntityMachineBase)te).getEnergyCapacityInternal();
 			body.add(danks);
 		}
 		
