@@ -38,7 +38,6 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityFlowerPot;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -105,6 +104,7 @@ public class BlockBattery extends BlockMachineBase implements ITileEntityProvide
 		
 		TileEntity te = world.getTileEntity(pos);
 		if (te!=null && te instanceof TileEntityBattery) {
+			@SuppressWarnings("deprecation")
 			long capacity = ((TileEntityBattery) te).getEnergyCapacityInternal();
 			
 			NBTTagCompound tag = result.getTagCompound();
