@@ -44,7 +44,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 
 public class TileEntityGenerator extends TileEntityMachineBase implements ITickable {
-	public static final int CONVERSION_TICKS_TO_RF = 30; //1,600 ticks of coal -> 48,000 RF == 30 RF/t
+	//public static final int CONVERSION_TICKS_TO_RF = 30; //1,600 ticks of coal -> 48,000 RF == 30 RF/t
+	public static final int CONVERSION_TICKS_TO_RF = 1000; //For testing
 	
 	private final InventorySimple inventory = new InventorySimple(1, "tile.machine.generator.name")
 			.listen((it)->this.markDirty())
