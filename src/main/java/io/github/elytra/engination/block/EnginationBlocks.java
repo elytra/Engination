@@ -25,6 +25,7 @@
 package io.github.elytra.engination.block;
 
 import io.github.elytra.engination.Engination;
+import net.minecraft.block.Block;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 
 @ObjectHolder(Engination.MODID)
@@ -47,4 +48,6 @@ public class EnginationBlocks {
 	public static final BlockGenerator GENERATOR = null;
 	@ObjectHolder("machine.battery")
 	public static final BlockBattery BATTERY = null;
+	@ObjectHolder("cosmetic.tourian")
+	public static final BlockCosmetic COSMETIC_TOURIAN = null;
 }

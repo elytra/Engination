@@ -1,0 +1,34 @@
+{
+	"forge_marker":1,
+	
+	"defaults":{
+		"model":"minecraft:cube_all",
+		"transform":"forge:default-block",
+		"x":0,
+		"y":0,
+		"uvlock":true,
+		"textures":{
+			"all":"engination:blocks/cosmetic/wood.crate"
+		}
+	},
+	"variants":{
+		"variant":{
+			 0:{ "textures":{ "all":"engination:blocks/cosmetic/wood.crate"      } },
+			 1:{ "textures":{ "all":"engination:blocks/cosmetic/wood.paper"      } },
+			 2:{ "textures":{ "all":"engination:blocks/cosmetic/wood.paper.horizontal"} },
+			 3:{ "textures":{ "all":"engination:blocks/cosmetic/wood.paper.small"} },
+			 4:{ "textures":{ "all":"engination:blocks/cosmetic/wood.paper.brace"} },
+			 5:{ "textures":{ "all":"engination:blocks/cosmetic/wood.paper.eave" } },
+			 6:{ "textures":{ "all":"engination:blocks/cosmetic/wood.paper.port" } },
+			 7:{ "textures":{ "all":"engination:blocks/cosmetic/wood.paper.star" } },
+			 8:{ "textures":{ "all":"engination:blocks/cosmetic/wood.window"     } },
+			 9:{ "textures":{ "all":"engination:blocks/cosmetic/wood.laminated"  } },
+			10:{ "textures":{ "all":"engination:blocks/cosmetic/wood.relief.ghostly"    } },
+			11:{ "textures":{ "all":"engination:blocks/cosmetic/wood.relief.dark"       } },
+			12:{ "textures":{ "all":"engination:blocks/cosmetic/wood.relief"     } },
+			13:{ "textures":{ "all":"engination:blocks/cosmetic/wood.relief.underground"} },
+			14:{ "textures":{ "all":"engination:blocks/cosmetic/wood.lofi"       } },
+			15:{ "textures":{ "all":"engination:blocks/cosmetic/wood.lofi.block" } }
+		}
+	}
+}

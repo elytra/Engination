@@ -61,13 +61,13 @@ public class RenderEnergyStorage extends TileEntitySpecialRenderer<TileEntityBat
 		float barRight = 0.5f + (voxel*2); //0.65f;
 		float barTop = te.getStoragePercent();
 		float texWidth = icon.getMaxU()-icon.getMinU();
-		float texHeight = icon.getMaxV()-icon.getMinV();
+		//float texHeight = icon.getMaxV()-icon.getMinV();
 		float texel = texWidth/16;
 		float texelMid = icon.getMinU() + (texWidth/2);
 		
 		float texLeft  = texelMid - (texel*2);
 		float texRight = texelMid + (texel*2);
-		float texTop   = icon.getMaxV() - (texel * te.getStoragePercent());
+		//float texTop   = icon.getMaxV() - (texel * te.getStoragePercent());
 		
 		buf.pos( barLeft,  0.0,    voxel*0.8).tex(texLeft,  icon.getMaxV()).endVertex();
 		buf.pos( barRight, 0.0,    voxel*0.8).tex(texRight, icon.getMaxV()).endVertex();

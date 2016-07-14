@@ -1,0 +1,8 @@
+{
+    "parent": "minecraft:block/cube_column",
+    "textures": {
+        "side": "engination:blocks/cosmetic/sanic.wing.wires",
+        "particle": "engination:blocks/cosmetic/sanic.wing.wires",
+        "end": "engination:blocks/cosmetic/sanic.wing.end"
+    }
+}

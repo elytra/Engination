@@ -1,0 +1,34 @@
+{
+	"forge_marker":1,
+	
+	"defaults":{
+		"model":"minecraft:cube_all",
+		"transform":"forge:default-block",
+		"x":0,
+		"y":0,
+		"uvlock":true,
+		"textures":{
+			"all":"engination:blocks/cosmetic/1up.block.cyan"
+		}
+	},
+	"variants":{
+		"variant":{
+			 0:{ "textures":{ "all":"engination:blocks/cosmetic/1up.block.cyan"    } },
+			 1:{ "textures":{ "all":"engination:blocks/cosmetic/1up.block.orange"  } },
+			 2:{ "textures":{ "all":"engination:blocks/cosmetic/1up.brick.cyan"    } },
+			 3:{ "textures":{ "all":"engination:blocks/cosmetic/1up.brick.orange"  } },
+			 4:{ "textures":{ "all":"engination:blocks/cosmetic/1up.dented.gray"   } },
+			 5:{ "textures":{ "all":"engination:blocks/cosmetic/1up.dented.orange" } },
+			 6:{ "textures":{ "all":"engination:blocks/cosmetic/1up.ghostBrick"    } },
+			 7:{ "textures":{ "all":"engination:blocks/cosmetic/1up.ghostWood"     } },
+			 8:{ "textures":{ "all":"engination:blocks/cosmetic/1up.reinforced"    } },
+			 9:{ "textures":{ "all":"engination:blocks/cosmetic/1up.rivets.mint"   } },
+			10:{ "textures":{ "all":"engination:blocks/cosmetic/1up.seastone"      } },
+			11:{ "textures":{ "all":"engination:blocks/cosmetic/1up.seastone.lime" } },
+			12:{ "textures":{ "all":"engination:blocks/cosmetic/1up.stonebrick"    } },
+			13:{ "textures":{ "all":"engination:blocks/cosmetic/1up.three"         } },
+			14:{ "textures":{ "all":"engination:blocks/cosmetic/1up.uneven.gray"   } },
+			15:{ "textures":{ "all":"engination:blocks/cosmetic/1up.uneven.orange" } }
+		}
+	}
+}

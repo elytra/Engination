@@ -1,0 +1,8 @@
+{
+    "parent": "minecraft:block/cube_column",
+    "textures": {
+        "side": "engination:blocks/cosmetic/sanic.egg.ports",
+        "particle": "engination:blocks/cosmetic/sanic.egg.ports",
+        "end": "engination:blocks/cosmetic/sanic.egg.roughMetal"
+    }
+}

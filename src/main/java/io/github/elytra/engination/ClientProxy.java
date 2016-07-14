@@ -24,16 +24,20 @@
 
 package io.github.elytra.engination;
 
+import java.util.ArrayList;
+
 import io.github.elytra.engination.block.te.TileEntityBattery;
 import io.github.elytra.engination.client.gui.EnergyWailaDataProvider;
 import io.github.elytra.engination.client.render.RenderEnergyStorage;
 import io.github.elytra.engination.entity.EntityTomato;
 import io.github.elytra.engination.item.EnginationItems;
+import io.github.elytra.engination.item.ItemBlockCosmeticPillar;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -42,10 +46,26 @@ import net.minecraftforge.fml.common.event.FMLInterModComms;
 
 public class ClientProxy extends Proxy {
 	@Override
-	public void registerItemModel(Item item, int variants) {
+	public void registerItemModel(Item item) {
 		ResourceLocation loc = Item.REGISTRY.getNameForObject(item);
-		ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(loc, "inventory"));
+		ArrayList<ItemStack> variantList = new ArrayList<>();
+		item.getSubItems(item, Engination.TAB_ENGINATION, variantList);
+		if (variantList.size()==1) {
+			ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(loc, "inventory"));
+		} else {
+			if (item instanceof ItemBlockCosmeticPillar) {
+				for(ItemStack subItem : variantList) {
+					ModelLoader.setCustomModelResourceLocation(item, subItem.getItemDamage(), new ModelResourceLocation(loc, "axis=y,variant="+subItem.getItemDamage()));
+				}
+			} else {
+				for(ItemStack subItem : variantList) {
+					ModelLoader.setCustomModelResourceLocation(item, subItem.getItemDamage(), new ModelResourceLocation(loc, "variant="+subItem.getItemDamage()));
+				}
+			}
+		}
 	}
+	
+	
 	
 	@Override
 	public void init() {

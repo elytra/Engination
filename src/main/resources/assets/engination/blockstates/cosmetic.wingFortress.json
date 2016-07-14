@@ -1,0 +1,36 @@
+{
+	"defaults":{
+		"model":"minecraft:cube_all",
+		"transform":"forge:default-block",
+		"x":0,
+		"y":0,
+		"uvlock":true,
+		"textures":{
+			"all":"engination:blocks/cosmetic/sanic.wing.widget"
+		}
+	},
+	"variants":{
+		"variant=0":{ "model":"engination:cosmetic/wingFortress/0" },
+		"variant=1":{ "model":"engination:cosmetic/wingFortress/1" },
+		"variant=2":{ "model":"engination:cosmetic/wingFortress/2" },
+		"variant=3":[ { "model":"engination:cosmetic/wingFortress/3a" },
+		              { "model":"engination:cosmetic/wingFortress/3b" },
+		              { "model":"engination:cosmetic/wingFortress/3c" },
+		              { "model":"engination:cosmetic/wingFortress/3d" } ],
+		"variant=4":{ "model":"engination:cosmetic/wingFortress/4" },
+		"variant=5":{ "model":"engination:cosmetic/wingFortress/5" },
+		"variant=6":{ "model":"engination:cosmetic/wingFortress/6" },
+		"variant=7":{ "model":"engination:cosmetic/wingFortress/7" },
+		"variant=8":{ "model":"engination:cosmetic/wingFortress/8" },
+		"variant=9":[ { "model":"engination:cosmetic/wingFortress/9a", "weight":20 },
+		              { "model":"engination:cosmetic/wingFortress/9b", "weight":100 },
+		              { "model":"engination:cosmetic/wingFortress/9c", "weight":100 },
+		              { "model":"engination:cosmetic/wingFortress/9d", "weight":40 } ],
+		"variant=10":{ "model":"engination:cosmetic/wingFortress/a" },
+		"variant=11":{ "model":"engination:cosmetic/wingFortress/b" },
+		"variant=12":{ "model":"engination:cosmetic/wingFortress/c" },
+		"variant=13":{ "model":"engination:cosmetic/wingFortress/d" },
+		"variant=14":{ "model":"engination:cosmetic/wingFortress/e" },
+		"variant=15":{ "model":"engination:cosmetic/wingFortress/f" }
+	}
+}

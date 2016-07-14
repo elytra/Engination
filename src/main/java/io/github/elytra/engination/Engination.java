@@ -30,6 +30,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import io.github.elytra.engination.block.BlockConveyor;
+import io.github.elytra.engination.block.BlockCosmetic;
+import io.github.elytra.engination.block.BlockCosmeticPillar;
 import io.github.elytra.engination.block.BlockBattery;
 import io.github.elytra.engination.block.BlockGenerator;
 import io.github.elytra.engination.block.BlockGravityField;
@@ -41,10 +43,14 @@ import io.github.elytra.engination.block.te.TileEntityGenerator;
 import io.github.elytra.engination.block.te.TileEntityMachineBase;
 import io.github.elytra.engination.client.gui.EnginationGuiHandler;
 import io.github.elytra.engination.entity.EntityTomato;
+import io.github.elytra.engination.item.ItemBlockCosmetic;
+import io.github.elytra.engination.item.ItemBlockCosmeticPillar;
 import io.github.elytra.engination.item.ItemTomato;
 import io.github.elytra.engination.item.ItemWandRelight;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDispenser;
+import net.minecraft.block.material.MapColor;
+import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -72,6 +78,12 @@ public class Engination {
 		@Override
 		public Item getTabIconItem() {
 			return ItemBlock.getItemFromBlock(EnginationBlocks.CONVEYOR);
+		}
+	};
+	public static CreativeTabs TAB_COSMETIC = new CreativeTabs("engination.cosmetic") {
+		@Override
+		public Item getTabIconItem() {
+			return ItemBlock.getItemFromBlock(EnginationBlocks.COSMETIC_TOURIAN);
 		}
 	};
 	
@@ -119,6 +131,22 @@ public class Engination {
 		registerBlock(new BlockBattery());
 		GameRegistry.registerTileEntity(TileEntityBattery.class, "machine.battery");
 		
+		registerCosmeticBlock(new BlockCosmetic("scrapMetal", Material.IRON, MapColor.BROWN)
+				.setTip("Cold comfort for remorseful emperors"));
+		registerCosmeticBlock(new BlockCosmetic("oneUp", Material.IRON, MapColor.IRON)
+				.setTip("Colorful blocks that just make you want to jump around"));
+		registerCosmeticBlock(new BlockCosmetic("looseStone", Material.ROCK, MapColor.GRAY)
+				.setTip("Finally fantastic rocks"));
+		registerCosmeticBlock(new BlockCosmeticPillar("scrapMetal.column", Material.IRON, MapColor.BROWN)
+				.setTip("Props up powerful despots!"));
+		registerCosmeticBlock(new BlockCosmetic("wood", Material.WOOD, MapColor.WOOD)
+				.setTip("Pieces of broken houses shipped straight from Figaro"));
+		registerCosmeticBlock(new BlockCosmetic("sanic", Material.ROCK, MapColor.LIGHT_BLUE)
+				.setTip("Fast track to fashion"));
+		registerCosmeticBlock(new BlockCosmetic("wingFortress", Material.IRON, MapColor.GRAY)
+				.setTip("Tech that's light on its feet"));
+		registerCosmeticBlock(new BlockCosmetic("tourian", Material.IRON, MapColor.GRAY)
+				.setTip("Brainy tech for discerning space pirates"));
 		
 		registerBlock(new BlockGravityField());
 		
@@ -147,12 +175,23 @@ public class Engination {
 		item.setRegistryName(block.getRegistryName());
 		GameRegistry.register(item);
 		GameRegistry.register(block);
-		proxy.registerItemModel(item,0);
+		proxy.registerItemModel(item);
 	}
+	
+	public void registerCosmeticBlock(Block block) {
+		ItemBlock item = null;
+		if (block instanceof BlockCosmeticPillar) item = new ItemBlockCosmeticPillar(block);
+		else item = new ItemBlockCosmetic(block);
+		item.setRegistryName(block.getRegistryName());
+		GameRegistry.register(item);
+		GameRegistry.register(block);
+		proxy.registerItemModel(item);
+	}
+
 	
 	public void registerItem(Item item) {
 		GameRegistry.register(item);
-		proxy.registerItemModel(item, 0);
+		proxy.registerItemModel(item);
 	}
 	
 	public void registerFood(String name, int amount, float saturation, boolean forWolves) {

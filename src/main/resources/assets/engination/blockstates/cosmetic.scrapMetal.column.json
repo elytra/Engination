@@ -1,0 +1,31 @@
+{
+	"forge_marker":1,
+	
+	"defaults":{
+		"model":"minecraft:cube_column",
+		"transform":"forge:default-block",
+		"x":0,
+		"y":0,
+		"uvlock":false,
+		"textures":{
+			"side":"engination:blocks/cosmetic/gestahl.scaffold",
+			"end":"engination:blocks/cosmetic/gestahl.columnEnd",
+			"particle":"engination:blocks/cosmetic/gestahl.scaffold"
+		}
+	},
+	"variants":{
+		"variant":{
+			0:{ "textures":{ "side":"engination:blocks/cosmetic/gestahl.scaffold" } },
+			1:{ "textures":{ "side":"engination:blocks/cosmetic/gestahl.girder"   } },
+			2:{ "textures":{ "side":"engination:blocks/cosmetic/gestahl.zozoGirder" } },
+			3:{ "textures":{ "side":"engination:blocks/cosmetic/tourian.pillar",
+			                 "end" :"engination:blocks/cosmetic/tourian.pillar.end" } }
+		},
+		"axis":{
+			"x":{ "x":90,"y":90 },
+			"y":{ "x":0, "y":0 },
+			"z":{ "x":90,"y":0 },
+			"none":{}
+		}
+	}
+}

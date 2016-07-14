@@ -1,0 +1,8 @@
+{
+    "parent": "minecraft:block/cube_column",
+    "textures": {
+        "side": "engination:blocks/cosmetic/gestahl.pipes.3",
+        "end" : "engination:blocks/cosmetic/gestahl.pipes.end",
+        "particle": "engination:blocks/cosmetic/gestahl.pipes"
+    }
+}

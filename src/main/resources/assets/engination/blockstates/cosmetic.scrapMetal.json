@@ -1,0 +1,35 @@
+{
+	"defaults":{
+		"model":"minecraft:cube_all",
+		"transform":"forge:default-block",
+		"x":0,
+		"y":0,
+		"uvlock":true,
+		"textures":{
+			"all":"engination:blocks/cosmetic/gestahl.tread"
+		}
+	},
+	"variants":{
+		"variant=0":{ "model":"engination:cosmetic/gestahl/0" },
+		"variant=1":{ "model":"engination:cosmetic/gestahl/1" },
+		"variant=2":{ "model":"engination:cosmetic/gestahl/2" },
+		"variant=3":{ "model":"engination:cosmetic/gestahl/3" },
+		"variant=4":{ "model":"engination:cosmetic/gestahl/4" },
+		"variant=5":[ { "model":"engination:cosmetic/gestahl/5a" },
+		              { "model":"engination:cosmetic/gestahl/5b" },
+		              { "model":"engination:cosmetic/gestahl/5c" },
+		              { "model":"engination:cosmetic/gestahl/5d" } ],
+		"variant=6":{ "model":"engination:cosmetic/gestahl/6" },
+		"variant=7":{ "model":"engination:cosmetic/gestahl/7" },
+		"variant=8":{ "model":"engination:cosmetic/gestahl/8" },
+		"variant=9":{ "model":"engination:cosmetic/gestahl/9" },
+		"variant=10":{ "model":"engination:cosmetic/gestahl/a" },
+		"variant=11":{ "model":"engination:cosmetic/gestahl/b" },
+		"variant=12":{ "model":"engination:cosmetic/gestahl/c" },
+		"variant=13":{ "model":"engination:cosmetic/gestahl/d" },
+		"variant=14":{ "model":"engination:cosmetic/gestahl/e" },
+		"variant=15":[ { "model":"engination:cosmetic/gestahl/fa" },
+		               { "model":"engination:cosmetic/gestahl/fb" },
+		               { "model":"engination:cosmetic/gestahl/fc" } ]
+	}
+}

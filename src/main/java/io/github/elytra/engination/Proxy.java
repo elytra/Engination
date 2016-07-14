@@ -27,7 +27,7 @@ package io.github.elytra.engination;
 import net.minecraft.item.Item;
 
 public class Proxy {
-	public void registerItemModel(Item item, int variants) {}
+	public void registerItemModel(Item item) {}
 	
 	public void init() {}
 }

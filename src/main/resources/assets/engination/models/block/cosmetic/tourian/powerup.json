@@ -1,0 +1,12 @@
+{
+    "parent": "minecraft:block/cube",
+    "textures": {
+        "particle": "engination:blocks/cosmetic/tourian.powerup",
+        "north": "engination:blocks/cosmetic/tourian.powerup",
+        "south": "engination:blocks/cosmetic/tourian.powerup",
+        "east": "engination:blocks/cosmetic/tourian.powerup",
+        "west": "engination:blocks/cosmetic/tourian.powerup",
+        "up": "engination:blocks/cosmetic/tourian.powerup.top",
+        "down": "engination:blocks/cosmetic/tourian.block.ruined"
+    }
+}
