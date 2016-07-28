@@ -1,0 +1,34 @@
+{
+	"forge_marker":1,
+	
+	"defaults":{
+		"model":"minecraft:cube_all",
+		"transform":"forge:default-block",
+		"x":0,
+		"y":0,
+		"uvlock":true,
+		"textures":{
+			"all":"engination:blocks/cosmetic/test/stone.plain"
+		}
+	},
+	"variants":{
+		"variant":{
+			 0:{ "textures":{ "all":"engination:blocks/cosmetic/dolomite/stonebrick" } },
+			 1:{ "textures":{ "all":"engination:blocks/cosmetic/dolomite/smooth"     } },
+			 2:{ "textures":{ "all":"engination:blocks/cosmetic/dolomite/tiles"     } },
+			 3:{ "textures":{ "all":"engination:blocks/cosmetic/dolomite/smalltiles"      } },
+			 4:{ "textures":{ "all":"engination:blocks/cosmetic/dolomite/tile" } },
+			 5:{ "textures":{ "all":"engination:blocks/cosmetic/dolomite/dark.stonebrick"      } },
+			 6:{ "textures":{ "all":"engination:blocks/cosmetic/dolomite/dark.smooth"       } },
+			 7:{ "textures":{ "all":"engination:blocks/cosmetic/dolomite/dark.tiles"   } },
+			 8:{ "textures":{ "all":"engination:blocks/cosmetic/dolomite/dark.smalltiles"   } },
+			 9:{ "textures":{ "all":"engination:blocks/cosmetic/dolomite/dark.tile"   } },
+			10:{ "textures":{ "all":"engination:blocks/cosmetic/dolomite/checker"   } },
+			11:{ "textures":{ "all":"engination:blocks/cosmetic/dolomite/checker.smalltiles"   } },
+			12:{ "textures":{ "all":"engination:blocks/cosmetic/dolomite/hex"   } },
+			13:{ "textures":{ "all":"engination:blocks/cosmetic/dolomite/dark.hex"   } },
+			14:{ "textures":{ "all":"engination:blocks/cosmetic/dolomite/prismarine"   } },
+			15:{ "textures":{ "all":"engination:blocks/cosmetic/dolomite/dark.prismarine"   } }
+		}
+	}
+}

@@ -147,6 +147,16 @@ public class Engination {
 				.setTip("Tech that's light on its feet"));
 		registerCosmeticBlock(new BlockCosmetic("tourian", Material.IRON, MapColor.GRAY)
 				.setTip("Brainy tech for discerning space pirates"));
+		registerCosmeticBlock(new BlockCosmetic("dolomite", Material.ROCK, MapColor.STONE)
+				.setTip("New evidence suggests that this rock is really boring!"));
+		registerCosmeticBlock(new BlockCosmetic("celestite", Material.ROCK, MapColor.CYAN)
+				.setTip("Too heavy for the Aether, so it fell down here."));
+		
+		BlockCosmetic lamps = new BlockCosmetic("lamp", Material.ROCK, MapColor.ICE);
+		lamps.setLightLevel(1.0f); //15 light level == 1.0f ... why? MOJANG LOVES CONSISTENCY :(
+		lamps.setTip("All lighting in Minecraft is guaranteed lag in a box!");
+		
+		registerCosmeticBlock(lamps);
 		
 		registerBlock(new BlockGravityField());
 		

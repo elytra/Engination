@@ -1,0 +1,34 @@
+{
+	"forge_marker":1,
+	
+	"defaults":{
+		"model":"minecraft:cube_all",
+		"transform":"forge:default-block",
+		"x":0,
+		"y":0,
+		"uvlock":true,
+		"textures":{
+			"all":"engination:blocks/cosmetic/test/stone.plain"
+		}
+	},
+	"variants":{
+		"variant":{
+			 0:{ "textures":{ "all":"engination:blocks/cosmetic/celestite/stonebrick" } },
+			 1:{ "textures":{ "all":"engination:blocks/cosmetic/celestite/smooth"     } },
+			 2:{ "textures":{ "all":"engination:blocks/cosmetic/celestite/tiles"     } },
+			 3:{ "textures":{ "all":"engination:blocks/cosmetic/celestite/smalltiles"      } },
+			 4:{ "textures":{ "all":"engination:blocks/cosmetic/celestite/tile" } },
+			 5:{ "textures":{ "all":"engination:blocks/cosmetic/celestite/dark.stonebrick"      } },
+			 6:{ "textures":{ "all":"engination:blocks/cosmetic/celestite/dark.smooth"       } },
+			 7:{ "textures":{ "all":"engination:blocks/cosmetic/celestite/dark.tiles"   } },
+			 8:{ "textures":{ "all":"engination:blocks/cosmetic/celestite/dark.smalltiles"   } },
+			 9:{ "textures":{ "all":"engination:blocks/cosmetic/celestite/dark.tile"   } },
+			10:{ "textures":{ "all":"engination:blocks/cosmetic/celestite/checker"   } },
+			11:{ "textures":{ "all":"engination:blocks/cosmetic/celestite/checker.smalltiles"   } },
+			12:{ "textures":{ "all":"engination:blocks/cosmetic/celestite/hex"   } },
+			13:{ "textures":{ "all":"engination:blocks/cosmetic/celestite/dark.hex"   } },
+			14:{ "textures":{ "all":"engination:blocks/cosmetic/celestite/prismarine"   } },
+			15:{ "textures":{ "all":"engination:blocks/cosmetic/celestite/dark.prismarine"   } }
+		}
+	}
+}

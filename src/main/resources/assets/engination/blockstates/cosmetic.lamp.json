@@ -1,0 +1,34 @@
+{
+	"forge_marker":1,
+	
+	"defaults":{
+		"model":"minecraft:cube_all",
+		"transform":"forge:default-block",
+		"x":0,
+		"y":0,
+		"uvlock":true,
+		"textures":{
+			"all":"engination:blocks/cosmetic/lamp/black"
+		}
+	},
+	"variants":{
+		"variant":{
+			 0:{ "textures":{ "all":"engination:blocks/cosmetic/lamp/black"   } },
+			 1:{ "textures":{ "all":"engination:blocks/cosmetic/lamp/glowing.black" } },
+			 2:{ "textures":{ "all":"engination:blocks/cosmetic/lamp/fullblack"} },
+			 3:{ "textures":{ "all":"engination:blocks/cosmetic/lamp/gadget" } },
+			 4:{ "textures":{ "all":"engination:blocks/cosmetic/lamp/fullblack"   } },
+			 5:{ "textures":{ "all":"engination:blocks/cosmetic/lamp/fullblack" } },
+			 6:{ "textures":{ "all":"engination:blocks/cosmetic/lamp/magenta" } },
+			 7:{ "textures":{ "all":"engination:blocks/cosmetic/lamp/pink"   } },
+			 8:{ "textures":{ "all":"engination:blocks/cosmetic/lamp/orange"  } },
+			 9:{ "textures":{ "all":"engination:blocks/cosmetic/lamp/gold"  } },
+			10:{ "textures":{ "all":"engination:blocks/cosmetic/lamp/yellow"     } },
+			11:{ "textures":{ "all":"engination:blocks/cosmetic/lamp/lightgreen"  } },
+			12:{ "textures":{ "all":"engination:blocks/cosmetic/lamp/green" } },
+			13:{ "textures":{ "all":"engination:blocks/cosmetic/lamp/aqua"   } },
+			14:{ "textures":{ "all":"engination:blocks/cosmetic/lamp/skyblue"  } },
+			15:{ "textures":{ "all":"engination:blocks/cosmetic/lamp/purple"     } }
+		}
+	}
+}

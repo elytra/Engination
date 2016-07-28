@@ -25,7 +25,6 @@
 package io.github.elytra.engination.block;
 
 import io.github.elytra.engination.Engination;
-import net.minecraft.block.Block;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 
 @ObjectHolder(Engination.MODID)
