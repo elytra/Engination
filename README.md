@@ -1,5 +1,5 @@
 # Engination Enginogrammetry
-Industrialism and Automation for Lazor Enthusiasts
+Industrialism and Automation for Laser Enthusiasts
 
 #License: MIT
 See LICENSE for details. Go ahead and add this mod to your modpack!
