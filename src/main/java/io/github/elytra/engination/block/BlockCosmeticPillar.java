@@ -18,16 +18,18 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 
 public class BlockCosmeticPillar extends Block {
 	public static PropertyInteger VARIATION = PropertyInteger.create("variant", 0, 3);
 	public static PropertyEnum<BlockLog.EnumAxis> AXIS = PropertyEnum.create("axis", BlockLog.EnumAxis.class);
 	private String tip = null;
+	private boolean showTip = false;
 	
 	public BlockCosmeticPillar(String blockName, Material material, MapColor color) {
 		super(material, color);
-		this.setUnlocalizedName(blockName);
+		this.setUnlocalizedName("engination."+blockName);
 		this.setRegistryName("cosmetic."+blockName);
 		
 		this.blockHardness = 1.0f;
@@ -78,10 +80,10 @@ public class BlockCosmeticPillar extends Block {
 		return this.getStateFromMeta(meta).withProperty(AXIS, BlockLog.EnumAxis.fromFacingAxis(facing.getAxis()));
 	}
 	
-	public BlockCosmeticPillar setTip(String tip) { this.tip=tip; return this; }
+	public BlockCosmeticPillar setTip() { this.showTip=true; return this; }
 	
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-		if (tip!=null) tooltip.add(tip);
+		if (showTip) tooltip.add(I18n.translateToLocal(this.getUnlocalizedName()+".tip"));
 	}
 }

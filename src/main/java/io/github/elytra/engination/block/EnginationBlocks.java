@@ -49,4 +49,8 @@ public class EnginationBlocks {
 	public static final BlockBattery BATTERY = null;
 	@ObjectHolder("cosmetic.tourian")
 	public static final BlockCosmetic COSMETIC_TOURIAN = null;
+	@ObjectHolder("cosmetic.dolomite")
+	public static final BlockCosmetic COSMETIC_DOLOMITE = null;
+	@ObjectHolder("cosmetic.celestite")
+	public static final BlockCosmetic COSMETIC_CELESTITE = null;
 }

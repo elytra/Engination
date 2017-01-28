@@ -1,0 +1,34 @@
+{
+	"forge_marker":1,
+	
+	"defaults":{
+		"model":"minecraft:cube_all",
+		"transform":"forge:default-block",
+		"x":0,
+		"y":0,
+		"uvlock":true,
+		"textures":{
+			"all":"engination:blocks/cosmetic/baroque/stonebrick"
+		}
+	},
+	"variants":{
+		"variant":{
+			 0:{ "textures":{ "all":"engination:blocks/cosmetic/baroque/stonebrick"    } },
+			 1:{ "textures":{ "all":"engination:blocks/cosmetic/baroque/smooth"        } },
+			 2:{ "textures":{ "all":"engination:blocks/cosmetic/baroque/tiles"         } },
+			 3:{ "textures":{ "all":"engination:blocks/cosmetic/baroque/smalltiles"    } },
+			 4:{ "textures":{ "all":"engination:blocks/cosmetic/baroque/tile"          } },
+			 5:{ "textures":{ "all":"engination:blocks/cosmetic/baroque/red.stonebrick"} },
+			 6:{ "textures":{ "all":"engination:blocks/cosmetic/baroque/red.smooth"    } },
+			 7:{ "textures":{ "all":"engination:blocks/cosmetic/baroque/red.tiles"     } },
+			 8:{ "textures":{ "all":"engination:blocks/cosmetic/baroque/red.smalltiles"} },
+			 9:{ "textures":{ "all":"engination:blocks/cosmetic/baroque/red.tile"      } },
+			10:{ "textures":{ "all":"engination:blocks/cosmetic/baroque/copper.smooth" } },
+			11:{ "textures":{ "all":"engination:blocks/cosmetic/baroque/copper.grate"  } },
+			12:{ "textures":{ "all":"engination:blocks/cosmetic/baroque/copper.spout"  } },
+			13:{ "textures":{ "all":"engination:blocks/cosmetic/baroque/copper.yoku"   } },
+			14:{ "textures":{ "all":"engination:blocks/cosmetic/baroque/copper.tiles"  } },
+			15:{ "textures":{ "all":"engination:blocks/cosmetic/baroque/copper.triangles"} }
+		}
+	}
+}

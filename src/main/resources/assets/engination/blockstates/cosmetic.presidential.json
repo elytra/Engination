@@ -1,0 +1,34 @@
+{
+	"forge_marker":1,
+	
+	"defaults":{
+		"model":"minecraft:cube_all",
+		"transform":"forge:default-block",
+		"x":0,
+		"y":0,
+		"uvlock":true,
+		"textures":{
+			"all":"engination:blocks/cosmetic/presidential/tile"
+		}
+	},
+	"variants":{
+		"variant":{
+			 0:{ "textures":{ "all":"engination:blocks/cosmetic/presidential/tile"      } },
+			 1:{ "textures":{ "all":"engination:blocks/cosmetic/presidential/dots"      } },
+			 2:{ "textures":{ "all":"engination:blocks/cosmetic/presidential/grate"     } },
+			 3:{ "textures":{ "all":"engination:blocks/cosmetic/presidential/embossed"  } },
+			 4:{ "textures":{ "all":"engination:blocks/cosmetic/presidential/stonebrick"} },
+			 5:{ "textures":{ "all":"engination:blocks/cosmetic/presidential/panel"     } },
+			 6:{ "textures":{ "all":"engination:blocks/cosmetic/presidential/tile" } },
+			 7:{ "textures":{ "all":"engination:blocks/cosmetic/presidential/tile" } },
+			 8:{ "textures":{ "all":"engination:blocks/cosmetic/presidential/tile"} },
+			 9:{ "textures":{ "all":"engination:blocks/cosmetic/presidential/tile" } },
+			10:{ "textures":{ "all":"engination:blocks/cosmetic/presidential/tile"} },
+			11:{ "textures":{ "all":"engination:blocks/cosmetic/presidential/tile"     } },
+			12:{ "textures":{ "all":"engination:blocks/cosmetic/presidential/tile"     } },
+			13:{ "textures":{ "all":"engination:blocks/cosmetic/presidential/tile"     } },
+			14:{ "textures":{ "all":"engination:blocks/cosmetic/presidential/tile"     } },
+			15:{ "textures":{ "all":"engination:blocks/cosmetic/presidential/tile"     } }
+		}
+	}
+}

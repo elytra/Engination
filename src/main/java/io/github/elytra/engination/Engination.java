@@ -131,31 +131,24 @@ public class Engination {
 		registerBlock(new BlockBattery());
 		GameRegistry.registerTileEntity(TileEntityBattery.class, "machine.battery");
 		
-		registerCosmeticBlock(new BlockCosmetic("scrapMetal", Material.IRON, MapColor.BROWN)
-				.setTip("Cold comfort for remorseful emperors"));
-		registerCosmeticBlock(new BlockCosmetic("oneUp", Material.IRON, MapColor.IRON)
-				.setTip("Colorful blocks that just make you want to jump around"));
-		registerCosmeticBlock(new BlockCosmetic("looseStone", Material.ROCK, MapColor.GRAY)
-				.setTip("Finally fantastic rocks"));
-		registerCosmeticBlock(new BlockCosmeticPillar("scrapMetal.column", Material.IRON, MapColor.BROWN)
-				.setTip("Props up powerful despots!"));
-		registerCosmeticBlock(new BlockCosmetic("wood", Material.WOOD, MapColor.WOOD)
-				.setTip("Pieces of broken houses shipped straight from Figaro"));
-		registerCosmeticBlock(new BlockCosmetic("sanic", Material.ROCK, MapColor.LIGHT_BLUE)
-				.setTip("Fast track to fashion"));
-		registerCosmeticBlock(new BlockCosmetic("wingFortress", Material.IRON, MapColor.GRAY)
-				.setTip("Tech that's light on its feet"));
-		registerCosmeticBlock(new BlockCosmetic("tourian", Material.IRON, MapColor.GRAY)
-				.setTip("Brainy tech for discerning space pirates"));
-		registerCosmeticBlock(new BlockCosmetic("dolomite", Material.ROCK, MapColor.STONE)
-				.setTip("New evidence suggests that this rock is really boring!"));
-		registerCosmeticBlock(new BlockCosmetic("celestite", Material.ROCK, MapColor.CYAN)
-				.setTip("Too heavy for the Aether, so it fell down here."));
+		registerCosmeticBlock(new BlockCosmetic("scrapMetal",  Material.IRON, MapColor.BROWN     ).setTip());
+		registerCosmeticBlock(new BlockCosmetic("oneUp",       Material.IRON, MapColor.IRON      ).setTip());
+		registerCosmeticBlock(new BlockCosmetic("looseStone",  Material.ROCK, MapColor.GRAY      ).setTip());
+		registerCosmeticBlock(new BlockCosmetic("wood",        Material.WOOD, MapColor.WOOD      ).setTip());
+		registerCosmeticBlock(new BlockCosmetic("sanic",       Material.ROCK, MapColor.LIGHT_BLUE).setTip());
+		registerCosmeticBlock(new BlockCosmetic("wingFortress",Material.IRON, MapColor.GRAY      ).setTip());
+		registerCosmeticBlock(new BlockCosmetic("tourian",     Material.IRON, MapColor.GRAY      ).setTip());
+		registerCosmeticBlock(new BlockCosmetic("dolomite",    Material.ROCK, MapColor.STONE     ).setTip());
+		registerCosmeticBlock(new BlockCosmetic("celestite",   Material.ROCK, MapColor.CYAN      ).setTip());
+		registerCosmeticBlock(new BlockCosmetic("baroque",     Material.ROCK, MapColor.QUARTZ    ).setTip()); //This is a joke. Please don't try to explain history to me.
+		registerCosmeticBlock(new BlockCosmetic("presidential",Material.ROCK, MapColor.QUARTZ    ).setTip()); //#NotMyPresident #DealWithIt
 		
-		BlockCosmetic lamps = new BlockCosmetic("lamp", Material.ROCK, MapColor.ICE);
+		
+		registerCosmeticBlock(new BlockCosmeticPillar("scrapMetal.column", Material.IRON, MapColor.BROWN).setTip());
+		registerCosmeticBlock(new BlockCosmeticPillar("baroque.column", Material.IRON, MapColor.GREEN).setTip());
+		
+		BlockCosmetic lamps = new BlockCosmetic("lamp", Material.ROCK, MapColor.ICE).setTip();
 		lamps.setLightLevel(1.0f); //15 light level == 1.0f ... why? MOJANG LOVES CONSISTENCY :(
-		lamps.setTip("All lighting in Minecraft is guaranteed lag in a box!");
-		
 		registerCosmeticBlock(lamps);
 		
 		registerBlock(new BlockGravityField());

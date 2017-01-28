@@ -16,15 +16,17 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 
 public class BlockCosmetic extends Block {
 	public static PropertyInteger VARIATION = PropertyInteger.create("variant", 0, 15);
 	private String tip = null;
+	private boolean showTip = false;
 	
 	public BlockCosmetic(String blockName, Material material, MapColor color) {
 		super(material, color);
-		this.setUnlocalizedName(blockName);
+		this.setUnlocalizedName("engination."+blockName);
 		this.setRegistryName("cosmetic."+blockName);
 		
 		this.blockHardness = 1.0f;
@@ -67,11 +69,13 @@ public class BlockCosmetic extends Block {
 		return this.getStateFromMeta(meta);
 	}
 	
-	public BlockCosmetic setTip(String tip) { this.tip=tip; return this; }
+	public BlockCosmetic setTip(String tip) { this.tip=tip; this.showTip=true; return this; }
+	
+	public BlockCosmetic setTip() { this.showTip = true; return this; }
 	
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-		if (tip!=null) tooltip.add(tip);
+		if (showTip) tooltip.add(I18n.translateToLocal(this.getUnlocalizedName()+".tip"));
 	}
 	
 }

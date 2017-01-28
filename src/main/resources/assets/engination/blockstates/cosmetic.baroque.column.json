@@ -1,0 +1,31 @@
+{
+	"forge_marker":1,
+	
+	"defaults":{
+		"model":"minecraft:cube_column",
+		"transform":"forge:default-block",
+		"x":0,
+		"y":0,
+		"uvlock":false,
+		"textures":{
+			"side":"engination:blocks/cosmetic/baroque/copper.border",
+			"end":"engination:blocks/cosmetic/baroque/copper.end",
+			"particle":"engination:blocks/cosmetic/baroque/copper.smooth"
+		}
+	},
+	"variants":{
+		"variant":{
+			0:{ "textures":{ "side":"engination:blocks/cosmetic/baroque/copper.pipes",
+			                 "end" :"engination:blocks/cosmetic/baroque/copper.pipeend" } },
+			1:{ "textures":{ "side":"engination:blocks/cosmetic/baroque/copper.border"   } },
+			2:{ "textures":{ "side":"engination:blocks/cosmetic/baroque/copper.girder" } },
+			3:{ "textures":{ "side":"engination:blocks/cosmetic/baroque/copper.girder" } }
+		},
+		"axis":{
+			"x":{ "x":90,"y":90 },
+			"y":{ "x":0, "y":0 },
+			"z":{ "x":90,"y":0 },
+			"none":{}
+		}
+	}
+}
