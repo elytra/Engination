@@ -63,7 +63,7 @@ public class ItemTomato extends Item {
         if (!world.isRemote) {
             EntityTomato tomato = new EntityTomato(world, player);
             tomato.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
-            world.spawnEntityInWorld(tomato);
+            world.spawnEntity(tomato);
         }
 
         player.addStat(StatList.getObjectUseStats(this));

@@ -113,13 +113,13 @@ public class TileEntityMachineBase extends TileEntity implements IEnergyConnecti
 
 	@Override
 	public void update() {
-		if (worldObj.isRemote) return;
+		if (world.isRemote) return;
 		
 		if (isNetworkDirty) {
 			ticksUntilNetworkUpdate--;
 			if (ticksUntilNetworkUpdate<=0) {
-				IBlockState curState = worldObj.getBlockState(pos);
-				worldObj.notifyBlockUpdate(pos, curState, curState, 3);
+				IBlockState curState = world.getBlockState(pos);
+				world.notifyBlockUpdate(pos, curState, curState, 3);
 				isNetworkDirty = false;
 				ticksUntilNetworkUpdate = TICKS_BETWEEN_NETWORK_UPDATES;
 			}

@@ -137,15 +137,15 @@ public class TileEntityGenerator extends TileEntityMachineBase implements ITicka
 	}
 
 	private void sendUpdatePacket() {
-		IBlockState curState = worldObj.getBlockState(pos);
-		worldObj.notifyBlockUpdate(pos, curState, curState, 6);
+		IBlockState curState = world.getBlockState(pos);
+		world.notifyBlockUpdate(pos, curState, curState, 6);
 	}
 	
 	@Override
 	public void update() {
 		super.update();
 		
-		if (this.worldObj==null || this.worldObj.isRemote) return;
+		if (this.world==null || this.world.isRemote) return;
 		
 		long startEnergy = energy.getEnergy();
 		for(EnumFacing side : EnumFacing.values()) {
@@ -194,11 +194,11 @@ public class TileEntityGenerator extends TileEntityMachineBase implements ITicka
 	
 	public void pushEnergy(EnumFacing side) {
 		BlockPos neighbor = pos.offset(side);
-		TileEntity te = worldObj.getTileEntity(neighbor);
+		TileEntity te = world.getTileEntity(neighbor);
 		if (te==null) return;
 		if (te!=verification.get(side)) {
 			verification.put(side, te);
-			localAccess.put(side, RedstoneFlux.getAccess(worldObj, neighbor, side.getOpposite()));
+			localAccess.put(side, RedstoneFlux.getAccess(world, neighbor, side.getOpposite()));
 		}
 		
 		RedstoneFluxAccess access = localAccess.get(side);
@@ -216,11 +216,11 @@ public class TileEntityGenerator extends TileEntityMachineBase implements ITicka
 	}
 	
 	public void setOn(boolean on) {
-		EnginationBlocks.GENERATOR.setOn(worldObj, pos, on);
+		EnginationBlocks.GENERATOR.setOn(world, pos, on);
 	}
 	
 	public boolean isOn() {
-		return worldObj.getBlockState(pos).getValue(BlockGenerator.PROPERTY_ON);
+		return world.getBlockState(pos).getValue(BlockGenerator.PROPERTY_ON);
 	}
 	
 	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {

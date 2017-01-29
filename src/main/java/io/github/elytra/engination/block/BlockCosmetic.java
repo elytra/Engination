@@ -65,8 +65,8 @@ public class BlockCosmetic extends Block {
     }
 	
 	@Override
-	public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase playerIn) {
-		return this.getStateFromMeta(meta);
+	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+		world.setBlockState(pos, this.getStateFromMeta(stack.getMetadata()));
 	}
 	
 	public BlockCosmetic setTip(String tip) { this.tip=tip; this.showTip=true; return this; }

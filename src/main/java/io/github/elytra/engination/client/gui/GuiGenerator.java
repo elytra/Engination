@@ -39,7 +39,7 @@ public class GuiGenerator extends GuiContainer {
 	private InventorySimple generatorInventory;
 	
 	public GuiGenerator(InventoryPlayer playerInv, InventorySimple blockInv) {
-		super(new ContainerHopper(playerInv, blockInv, Minecraft.getMinecraft().thePlayer));
+		super(new ContainerHopper(playerInv, blockInv, Minecraft.getMinecraft().player));
         this.playerInventory = playerInv;
         this.generatorInventory = blockInv;
         this.allowUserInput = false;

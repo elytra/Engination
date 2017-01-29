@@ -55,12 +55,12 @@ public class EntityTomato extends EntityThrowable {
         }
 
         for (int i = 0; i < 128; ++i) {
-            this.worldObj.spawnParticle(EnumParticleTypes.BLOCK_DUST, this.posX, this.posY, this.posZ, this.rand.nextGaussian()*0.3 + (this.motionX/2), this.rand.nextDouble()*0.3 + (this.motionY/2), this.rand.nextGaussian()*0.3 + (this.motionZ/2), new int[] { Block.getIdFromBlock(Blocks.REDSTONE_BLOCK) });
+            this.world.spawnParticle(EnumParticleTypes.BLOCK_DUST, this.posX, this.posY, this.posZ, this.rand.nextGaussian()*0.3 + (this.motionX/2), this.rand.nextDouble()*0.3 + (this.motionY/2), this.rand.nextGaussian()*0.3 + (this.motionZ/2), new int[] { Block.getIdFromBlock(Blocks.REDSTONE_BLOCK) });
         }
         
-        this.worldObj.playSound(null, this.posX, this.posY, this.posZ, Engination.SOUND_TOMATO, SoundCategory.PLAYERS, 0.4f, 0.9f + rand.nextFloat()*0.2f);
+        this.world.playSound(null, this.posX, this.posY, this.posZ, Engination.SOUND_TOMATO, SoundCategory.PLAYERS, 0.4f, 0.9f + rand.nextFloat()*0.2f);
         
-        if (!this.worldObj.isRemote) {
+        if (!this.world.isRemote) {
             this.setDead();
         }
     }

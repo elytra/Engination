@@ -30,7 +30,6 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -45,11 +44,6 @@ public class BlockGenerator extends BlockMachineBase implements ITileEntityProvi
 		super("generator");
 		
 		this.guiId = EnginationGuiHandler.ID_GENERATOR;
-	}
-	
-	@Override
-	public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-		return this.blockState.getBaseState().withProperty(PROPERTY_FACING, placer.getAdjustedHorizontalFacing().getOpposite());
 	}
 
 	@Override

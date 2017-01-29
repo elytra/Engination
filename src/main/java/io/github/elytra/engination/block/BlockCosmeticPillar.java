@@ -76,8 +76,11 @@ public class BlockCosmeticPillar extends Block {
     }
 	
 	@Override
-	public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase playerIn) {
-		return this.getStateFromMeta(meta).withProperty(AXIS, BlockLog.EnumAxis.fromFacingAxis(facing.getAxis()));
+	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+		EnumFacing facing = placer.getHorizontalFacing();
+		world.setBlockState(pos,
+				this.getStateFromMeta(stack.getMetadata())
+				    .withProperty(AXIS, BlockLog.EnumAxis.fromFacingAxis(facing.getAxis())));
 	}
 	
 	public BlockCosmeticPillar setTip() { this.showTip=true; return this; }

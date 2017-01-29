@@ -95,7 +95,7 @@ public class TileEntityBattery extends TileEntityMachineBase implements cofh.api
 	@Override
 	public void update() {
 		super.update();
-		if (worldObj.isRemote) return;
+		if (world.isRemote) return;
 		if (this.pos.getY()==0) return; //Don't push down!
 		
 		pushEnergyDown();
@@ -103,11 +103,11 @@ public class TileEntityBattery extends TileEntityMachineBase implements cofh.api
 	
 	public void pushEnergyDown() {
 		BlockPos neighbor = pos.down();
-		TileEntity te = worldObj.getTileEntity(neighbor);
+		TileEntity te = world.getTileEntity(neighbor);
 		if (te==null) return;
 		if (te!=downTile) {
 			downTile = te;
-			downAccess = RedstoneFlux.getAccess(worldObj, neighbor, EnumFacing.UP);
+			downAccess = RedstoneFlux.getAccess(world, neighbor, EnumFacing.UP);
 		}
 		
 		if (downAccess==RedstoneFlux.NULL_ACCESS) {

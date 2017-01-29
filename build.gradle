@@ -50,8 +50,10 @@ retrolambda {
 }
 
 minecraft {
-  version = "1.9.4-12.17.0.1965"
-  mappings = "snapshot_20160522"
+  //version = "1.9.4-12.17.0.1965";
+  //mappings = "snapshot_20160522";
+  version = "1.10.2-12.18.3.2221";
+  mappings = "snapshot_20161117";
 
   runDir = "minecraft"
 
