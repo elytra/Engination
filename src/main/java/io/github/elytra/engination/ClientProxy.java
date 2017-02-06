@@ -26,9 +26,6 @@ package io.github.elytra.engination;
 
 import java.util.ArrayList;
 
-import io.github.elytra.engination.block.te.TileEntityBattery;
-import io.github.elytra.engination.client.gui.EnergyWailaDataProvider;
-import io.github.elytra.engination.client.render.RenderEnergyStorage;
 import io.github.elytra.engination.entity.EntityTomato;
 import io.github.elytra.engination.item.EnginationItems;
 import io.github.elytra.engination.item.ItemBlockCosmeticPillar;
@@ -40,9 +37,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.fml.common.event.FMLInterModComms;
 
 public class ClientProxy extends Proxy {
 	@Override
@@ -71,9 +66,8 @@ public class ClientProxy extends Proxy {
 	public void init() {
 		RenderingRegistry.registerEntityRenderingHandler(EntityTomato.class,
 				(RenderManager m) -> new RenderSnowball<EntityTomato>(m, EnginationItems.TOMATO, Minecraft.getMinecraft().getRenderItem()));
-		FMLInterModComms.sendMessage( "Waila", "register", EnergyWailaDataProvider.class.getCanonicalName() + ".callbackRegister" );
 		
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBattery.class, new RenderEnergyStorage());
-		
+		//ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBattery.class, new RenderEnergyStorage());
+		//ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCable.class, new RenderCable());
 	}
 }

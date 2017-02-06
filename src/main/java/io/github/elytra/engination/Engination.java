@@ -32,16 +32,10 @@ import org.apache.logging.log4j.Logger;
 import io.github.elytra.engination.block.BlockConveyor;
 import io.github.elytra.engination.block.BlockCosmetic;
 import io.github.elytra.engination.block.BlockCosmeticPillar;
-import io.github.elytra.engination.block.BlockBattery;
-import io.github.elytra.engination.block.BlockGenerator;
 import io.github.elytra.engination.block.BlockGravityField;
 import io.github.elytra.engination.block.BlockLandingPad;
 import io.github.elytra.engination.block.BlockLauncher;
 import io.github.elytra.engination.block.EnginationBlocks;
-import io.github.elytra.engination.block.te.TileEntityBattery;
-import io.github.elytra.engination.block.te.TileEntityGenerator;
-import io.github.elytra.engination.block.te.TileEntityMachineBase;
-import io.github.elytra.engination.client.gui.EnginationGuiHandler;
 import io.github.elytra.engination.entity.EntityTomato;
 import io.github.elytra.engination.item.ItemBlockCosmetic;
 import io.github.elytra.engination.item.ItemBlockCosmeticPillar;
@@ -105,10 +99,7 @@ public class Engination {
 		LOG = LogManager.getLogger(Engination.MODID);
 		File config = e.getSuggestedConfigurationFile();
 		CONFIG = new Configuration(config);
-		int updateFrequency = CONFIG.getInt("energyUpdateFrequency", "network", 10, 4, 100, "Affects how frequently energy storage updates are sent to the client.", "config.key.energyUpdateFrequency");
-		TileEntityMachineBase.TICKS_BETWEEN_NETWORK_UPDATES = updateFrequency;
-		
-		CONFIG.save();
+		//CONFIG.save();
 		//LOG.info("");
 		
 		SOUND_TOMATO = createSound("tomato");
@@ -125,11 +116,11 @@ public class Engination {
 		
 		registerBlock(new BlockLandingPad());
 		
-		registerBlock(new BlockGenerator());
-		GameRegistry.registerTileEntity(TileEntityGenerator.class, "machine.generator");
+		//registerBlock(new BlockGenerator());
+		//GameRegistry.registerTileEntity(TileEntityGenerator.class, "machine.generator");
 		
-		registerBlock(new BlockBattery());
-		GameRegistry.registerTileEntity(TileEntityBattery.class, "machine.battery");
+		//registerBlock(new BlockBattery());
+		//GameRegistry.registerTileEntity(TileEntityBattery.class, "machine.battery");
 		
 		registerCosmeticBlock(new BlockCosmetic("scrapMetal",  Material.IRON, MapColor.BROWN     ).setTip());
 		registerCosmeticBlock(new BlockCosmetic("oneUp",       Material.IRON, MapColor.IRON      ).setTip());
@@ -165,12 +156,6 @@ public class Engination {
 		EntityRegistry.registerModEntity(EntityTomato.class, "tomato", 0, this, 80, 3, true);
 		
 		proxy.init();
-	}
-	
-	@EventHandler
-	public void onInit(FMLInitializationEvent e) {
-		NetworkRegistry.INSTANCE.registerGuiHandler(this, new EnginationGuiHandler());
-		
 	}
 	
 	public void registerBlock(Block block) {

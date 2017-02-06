@@ -24,19 +24,6 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'me.tatarka.retrolambda'
 
 
-repositories {
-  mavenCentral();
-  jcenter();
-  maven {
-    url = "http://maven.epoxide.xyz"
-  }
-}
-dependencies {
-  compile "net.darkhax.tesla:Tesla:1.9.4-1.1.0.24"
-}
-
-
-
 group = "io.github.elytra"
 archivesBaseName = "Engination"
 version = "1.06"
@@ -50,8 +37,6 @@ retrolambda {
 }
 
 minecraft {
-  //version = "1.9.4-12.17.0.1965";
-  //mappings = "snapshot_20160522";
   version = "1.10.2-12.18.3.2221";
   mappings = "snapshot_20161117";
 
@@ -77,6 +62,6 @@ processResources {
   // copy everything else, thats not the mcmod.info
   from(sourceSets.main.resources.srcDirs) {
     exclude 'mcmod.info'
-    exclude '*.xcf'
+    exclude '*.xcf' //Always exclude GIMP source files
   }
 }

@@ -13,8 +13,17 @@
 		}
 	},
 	"variants":{
-		"normal": {
-			"x": 0, "y": 0
+		"facing": {
+			"north":{ "x":0, "y":  0 },
+			"east": { "x":0, "y": 90 },
+			"south":{ "x":0, "y":180 },
+			"west": { "x":0, "y":270 },
+			"up":{},
+			"down":{}
+		},
+		"on":{
+			true:{},
+			false:{}
 		},
 		"inventory": {
 			"transform": "forge:default-block"

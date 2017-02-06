@@ -43,10 +43,6 @@ public class EnginationBlocks {
 	public static final BlockLauncher LAUNCHER_ULTRAFORCEFUL = null;
 	@ObjectHolder("machine.landingpad")
 	public static final BlockLandingPad LANDINGPAD = null;
-	@ObjectHolder("machine.generator")
-	public static final BlockGenerator GENERATOR = null;
-	@ObjectHolder("machine.battery")
-	public static final BlockBattery BATTERY = null;
 	@ObjectHolder("cosmetic.tourian")
 	public static final BlockCosmetic COSMETIC_TOURIAN = null;
 	@ObjectHolder("cosmetic.dolomite")
