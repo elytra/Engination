@@ -30,7 +30,6 @@ import java.util.Random;
 
 import io.github.elytra.engination.Engination;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockLog;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
@@ -75,14 +74,6 @@ public class BlockGravityField extends Block {
 		
 	}
 	
-	//@Override
-	//public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-	//	
-	//	EnumFacing dir = BlockPistonBase.getFacingFromEntity(pos, placer).getOpposite();
-	//	
-	//	return this.blockState.getBaseState().withProperty(PROPERTY_FACING, dir);
-	//}
-	
 	@Override
 	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
 		EnumFacing facing = BlockPistonBase.getFacingFromEntity(pos, placer).getOpposite();
@@ -107,10 +98,6 @@ public class BlockGravityField extends Block {
 		
 		EnumFacing facing = state.getValue(PROPERTY_FACING);
 		adjustMotion(entity, facing);
-		
-		//entity.motionX += facing.getFrontOffsetX();
-		//entity.motionY += facing.getFrontOffsetY();
-		//entity.motionZ += facing.getFrontOffsetZ();
 	}
 	
 	private boolean adjustMotion(Entity entity, EnumFacing vector) {

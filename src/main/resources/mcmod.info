@@ -1,7 +1,7 @@
 [{
   "modid": "engination",
   "name": "Engination",
-  "description": "Industrialism and Automation for the Discerning Lazor Enthusiast",
+  "description": "FANCY creative blocks for the Discerning Lazor Enthusiast",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "https://github.com/elytra/Engination",

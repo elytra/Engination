@@ -14,14 +14,12 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 
 public class BlockCosmetic extends Block {
 	public static PropertyInteger VARIATION = PropertyInteger.create("variant", 0, 15);
-	private String tip = null;
 	private boolean showTip = false;
 	
 	public BlockCosmetic(String blockName, Material material, MapColor color) {
@@ -68,8 +66,6 @@ public class BlockCosmetic extends Block {
 	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
 		world.setBlockState(pos, this.getStateFromMeta(stack.getMetadata()));
 	}
-	
-	public BlockCosmetic setTip(String tip) { this.tip=tip; this.showTip=true; return this; }
 	
 	public BlockCosmetic setTip() { this.showTip = true; return this; }
 	

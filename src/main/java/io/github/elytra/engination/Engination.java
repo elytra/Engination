@@ -56,9 +56,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -115,12 +113,6 @@ public class Engination {
 		registerBlock(new BlockLauncher(5));
 		
 		registerBlock(new BlockLandingPad());
-		
-		//registerBlock(new BlockGenerator());
-		//GameRegistry.registerTileEntity(TileEntityGenerator.class, "machine.generator");
-		
-		//registerBlock(new BlockBattery());
-		//GameRegistry.registerTileEntity(TileEntityBattery.class, "machine.battery");
 		
 		registerCosmeticBlock(new BlockCosmetic("scrapMetal",  Material.IRON, MapColor.BROWN     ).setTip());
 		registerCosmeticBlock(new BlockCosmetic("oneUp",       Material.IRON, MapColor.IRON      ).setTip());
