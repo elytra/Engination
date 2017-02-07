@@ -49,6 +49,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.config.Configuration;
@@ -68,14 +69,14 @@ public class Engination {
 	
 	public static CreativeTabs TAB_ENGINATION = new CreativeTabs("engination") {
 		@Override
-		public Item getTabIconItem() {
-			return ItemBlock.getItemFromBlock(EnginationBlocks.CONVEYOR);
+		public ItemStack getTabIconItem() {
+			return new ItemStack(EnginationBlocks.CONVEYOR);
 		}
 	};
 	public static CreativeTabs TAB_COSMETIC = new CreativeTabs("engination.cosmetic") {
 		@Override
-		public Item getTabIconItem() {
-			return ItemBlock.getItemFromBlock(EnginationBlocks.COSMETIC_TOURIAN);
+		public ItemStack getTabIconItem() {
+			return new ItemStack(EnginationBlocks.COSMETIC_TOURIAN);
 		}
 	};
 	
@@ -114,12 +115,12 @@ public class Engination {
 		
 		registerBlock(new BlockLandingPad());
 		
-		registerCosmeticBlock(new BlockCosmetic("scrapMetal",  Material.IRON, MapColor.BROWN     ).setTip());
-		registerCosmeticBlock(new BlockCosmetic("oneUp",       Material.IRON, MapColor.IRON      ).setTip());
-		registerCosmeticBlock(new BlockCosmetic("looseStone",  Material.ROCK, MapColor.GRAY      ).setTip());
+		registerCosmeticBlock(new BlockCosmetic("scrapmetal",  Material.IRON, MapColor.BROWN     ).setTip());
+		registerCosmeticBlock(new BlockCosmetic("oneup",       Material.IRON, MapColor.IRON      ).setTip());
+		registerCosmeticBlock(new BlockCosmetic("loosestone",  Material.ROCK, MapColor.GRAY      ).setTip());
 		registerCosmeticBlock(new BlockCosmetic("wood",        Material.WOOD, MapColor.WOOD      ).setTip());
 		registerCosmeticBlock(new BlockCosmetic("sanic",       Material.ROCK, MapColor.LIGHT_BLUE).setTip());
-		registerCosmeticBlock(new BlockCosmetic("wingFortress",Material.IRON, MapColor.GRAY      ).setTip());
+		registerCosmeticBlock(new BlockCosmetic("wingfortress",Material.IRON, MapColor.GRAY      ).setTip());
 		registerCosmeticBlock(new BlockCosmetic("tourian",     Material.IRON, MapColor.GRAY      ).setTip());
 		registerCosmeticBlock(new BlockCosmetic("dolomite",    Material.ROCK, MapColor.STONE     ).setTip());
 		registerCosmeticBlock(new BlockCosmetic("celestite",   Material.ROCK, MapColor.CYAN      ).setTip());
@@ -127,7 +128,7 @@ public class Engination {
 		registerCosmeticBlock(new BlockCosmetic("presidential",Material.ROCK, MapColor.QUARTZ    ).setTip()); //#NotMyPresident #DealWithIt
 		
 		
-		registerCosmeticBlock(new BlockCosmeticPillar("scrapMetal.column", Material.IRON, MapColor.BROWN).setTip());
+		registerCosmeticBlock(new BlockCosmeticPillar("scrapmetal.column", Material.IRON, MapColor.BROWN).setTip());
 		registerCosmeticBlock(new BlockCosmeticPillar("baroque.column", Material.IRON, MapColor.GREEN).setTip());
 		
 		BlockCosmetic lamps = new BlockCosmetic("lamp", Material.ROCK, MapColor.ICE).setTip();
@@ -145,7 +146,7 @@ public class Engination {
 		registerFood("food.celery", 0, 0, false);
 		
 		
-		EntityRegistry.registerModEntity(EntityTomato.class, "tomato", 0, this, 80, 3, true);
+		EntityRegistry.registerModEntity(new ResourceLocation("engination", "tomato"), EntityTomato.class, "tomato", 0, this, 80, 3, true);
 		
 		proxy.init();
 	}

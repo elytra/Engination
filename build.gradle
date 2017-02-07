@@ -1,6 +1,5 @@
 buildscript {
 
-
   repositories {
     mavenCentral()
     jcenter()
@@ -26,7 +25,7 @@ apply plugin: 'me.tatarka.retrolambda'
 
 group = "io.github.elytra"
 archivesBaseName = "Engination"
-version = "MC1.10.2_ver1.07"
+version = "MC1.11.2_ver1.07"
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -37,13 +36,17 @@ retrolambda {
 }
 
 minecraft {
-  version = "1.10.2-12.18.3.2221";
-  mappings = "snapshot_20161117";
+  version = "1.11.2-13.20.0.2226";
+  mappings = "snapshot_20170205";
 
   runDir = "minecraft"
 
   replaceIn 'src/main/java/io/github/elytra/engination/Engination.java'
   replace '@VERSION@', project.version
+}
+
+dependencies {
+	testCompile "junit:junit:4.12";
 }
 
 processResources {

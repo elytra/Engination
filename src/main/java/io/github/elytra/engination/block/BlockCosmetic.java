@@ -14,6 +14,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
@@ -36,7 +37,7 @@ public class BlockCosmetic extends Block {
 	}
 
 	@Override
-	public void getSubBlocks(Item itemBlock, CreativeTabs tab, List<ItemStack> list) {
+	public void getSubBlocks(Item itemBlock, CreativeTabs tab, NonNullList<ItemStack> list) {
 		for(int i=0; i<16; i++) {
 			list.add(new ItemStack(itemBlock, 1, i));
 		}

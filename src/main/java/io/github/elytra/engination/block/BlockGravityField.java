@@ -30,9 +30,8 @@ import java.util.Random;
 
 import io.github.elytra.engination.Engination;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockPistonBase;
+import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -44,14 +43,15 @@ import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec2f;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockGravityField extends Block {
-	public static PropertyDirection PROPERTY_FACING = PropertyDirection.create("facing");
+public class BlockGravityField extends BlockDirectional {
+	//public static PropertyDirection PROPERTY_FACING = PropertyDirection.create("facing");
 	
 	public static AxisAlignedBB SELECTION_BOX = new AxisAlignedBB(0,0,0,0,0,0);
 	
@@ -74,12 +74,22 @@ public class BlockGravityField extends Block {
 		
 	}
 	
+	
 	@Override
 	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-		EnumFacing facing = BlockPistonBase.getFacingFromEntity(pos, placer).getOpposite();
+		EnumFacing facing = EnumFacing.UP;
+		Vec2f rot = placer.getPitchYaw();
+		//System.out.println("Placer x: "+rot.x+" y:"+rot.y+" yaw:"+placer.getRotationYawHead());
+		
+		if (rot.x > 45) {
+			facing = EnumFacing.DOWN;
+		} else if (rot.x > -45) {
+			facing = placer.getAdjustedHorizontalFacing();
+		}
+		
 		world.setBlockState(pos,
 				this.getStateFromMeta(stack.getMetadata())
-				    .withProperty(PROPERTY_FACING, facing));
+					.withProperty(FACING, facing));
 	}
 	
 	
@@ -96,7 +106,7 @@ public class BlockGravityField extends Block {
 			if (((EntityPlayer)entity).capabilities.isFlying) return;
 		}
 		
-		EnumFacing facing = state.getValue(PROPERTY_FACING);
+		EnumFacing facing = state.getValue(FACING);
 		adjustMotion(entity, facing);
 	}
 	
@@ -133,32 +143,32 @@ public class BlockGravityField extends Block {
 	
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, PROPERTY_FACING);
+		return new BlockStateContainer(this, FACING);
 	}
 	
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
 		switch(meta) {
 		case 0:
-			return this.blockState.getBaseState().withProperty(PROPERTY_FACING, EnumFacing.NORTH);
+			return this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH);
 		case 1:
-			return this.blockState.getBaseState().withProperty(PROPERTY_FACING, EnumFacing.EAST);
+			return this.blockState.getBaseState().withProperty(FACING, EnumFacing.EAST);
 		case 2:
-			return this.blockState.getBaseState().withProperty(PROPERTY_FACING, EnumFacing.SOUTH);
+			return this.blockState.getBaseState().withProperty(FACING, EnumFacing.SOUTH);
 		case 3:
-			return this.blockState.getBaseState().withProperty(PROPERTY_FACING, EnumFacing.WEST);
+			return this.blockState.getBaseState().withProperty(FACING, EnumFacing.WEST);
 		case 4:
-			return this.blockState.getBaseState().withProperty(PROPERTY_FACING, EnumFacing.UP);
+			return this.blockState.getBaseState().withProperty(FACING, EnumFacing.UP);
 		case 5:
-			return this.blockState.getBaseState().withProperty(PROPERTY_FACING, EnumFacing.DOWN);
+			return this.blockState.getBaseState().withProperty(FACING, EnumFacing.DOWN);
 		default:
-			return this.blockState.getBaseState().withProperty(PROPERTY_FACING, EnumFacing.NORTH);
+			return this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH);
 		}
 	}
 	
 	@Override
 	public int getMetaFromState(IBlockState state) {
-		switch(state.getValue(PROPERTY_FACING)) {
+		switch(state.getValue(FACING)) {
 		case NORTH:
 			return 0;
 		case EAST:
@@ -205,9 +215,9 @@ public class BlockGravityField extends Block {
 	@Override
 	public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune) {}
 	@Override
-	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, Entity entityIn) {}
+	public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB aabb, List<AxisAlignedBB> list, Entity collider, boolean something) {}
 	@Override
-	public AxisAlignedBB getCollisionBoundingBox(IBlockState state, World world, BlockPos pos) { return Block.NULL_AABB; }
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) { return Block.NULL_AABB; }
 	@Override
 	public Item getItemDropped(IBlockState state, Random random, int fortuneLevel) { return null; }
 	@Override

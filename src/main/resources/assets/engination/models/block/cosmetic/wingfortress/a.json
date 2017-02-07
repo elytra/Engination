@@ -1,6 +1,6 @@
 {
     "parent": "minecraft:block/cube_all",
     "textures": {
-        "all": "engination:blocks/cosmetic/gestahl/panel"
+        "all": "engination:blocks/cosmetic/wingfortress/roughmetal"
     }
 }

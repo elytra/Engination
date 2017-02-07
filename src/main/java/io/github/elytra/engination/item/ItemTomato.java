@@ -53,21 +53,30 @@ public class ItemTomato extends Item {
 		tooltip.add("Throw me!");
 	}
 	
-	public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
+	@Override
+	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+		ItemStack item = player.getHeldItem(hand);
+		
         if (!player.capabilities.isCreativeMode) {
-            --stack.stackSize;
+        	item.shrink(1);
+        	player.setHeldItem(hand, item);
+            //--stack.stackSize;
         }
-
         world.playSound((EntityPlayer)null, player.posX, player.posY, player.posZ, Engination.SOUND_THROW, SoundCategory.PLAYERS, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
-
+        
         if (!world.isRemote) {
             EntityTomato tomato = new EntityTomato(world, player);
             tomato.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
+            //Adjustments are because newly-aggressive clientside collisions were causing premature tomato-face
+            tomato.posX += player.getLookVec().xCoord*2f;
+            tomato.posY += player.getLookVec().yCoord*1.5f;
+            tomato.posZ += player.getLookVec().zCoord*2f;
+            tomato.posY -= 0.2f; //Felt high as it was.
             world.spawnEntity(tomato);
         }
 
         player.addStat(StatList.getObjectUseStats(this));
-        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, item);
     }
 	
 	public static class BehaviorTomatoDispense extends BehaviorProjectileDispense {

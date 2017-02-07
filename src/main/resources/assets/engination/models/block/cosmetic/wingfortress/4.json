@@ -1,6 +1,6 @@
 {
     "parent": "minecraft:block/cube_all",
     "textures": {
-        "all": "engination:blocks/cosmetic/gestahl/catapult"
+        "all": "engination:blocks/cosmetic/wingfortress/panel"
     }
 }

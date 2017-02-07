@@ -1,8 +1,8 @@
 {
     "parent": "minecraft:block/cube_column",
     "textures": {
-        "side": "engination:blocks/cosmetic/gestahl.platform",
-        "end" : "engination:blocks/cosmetic/gestahl.panel.dark",
-        "particle": "engination:blocks/cosmetic/gestahl.platform"
+        "side": "engination:blocks/cosmetic/gestahl/platform",
+        "end" : "engination:blocks/cosmetic/gestahl/panel.dark",
+        "particle": "engination:blocks/cosmetic/gestahl/platform"
     }
 }

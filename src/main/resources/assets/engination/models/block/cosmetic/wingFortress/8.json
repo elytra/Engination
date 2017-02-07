@@ -1,8 +1,0 @@
-{
-    "parent": "minecraft:block/cube_column",
-    "textures": {
-        "side": "engination:blocks/cosmetic/sanic.egg.fluids",
-        "particle": "engination:blocks/cosmetic/sanic.egg.fluids",
-        "end": "engination:blocks/cosmetic/sanic.wing.end"
-    }
-}

@@ -1,8 +1,8 @@
 {
     "parent": "minecraft:block/cube_column",
     "textures": {
-        "side": "engination:blocks/cosmetic/gestahl.smooth",
-        "end" : "engination:blocks/cosmetic/gestahl.smooth.end",
-        "particle": "engination:blocks/cosmetic/gestahl.smooth"
+        "side": "engination:blocks/cosmetic/gestahl/smooth",
+        "end" : "engination:blocks/cosmetic/gestahl/smooth.end",
+        "particle": "engination:blocks/cosmetic/gestahl/smooth"
     }
 }

@@ -1,0 +1,46 @@
+{
+	"forge_marker":1,
+
+	"defaults":{
+		"model":"minecraft:cube_all",
+		"transform":"forge:default-block",
+		"x":0,
+		"y":0,
+		"uvlock":true,
+		"textures":{
+			"all":"engination:blocks/cosmetic/wingfortress/widget"
+		}
+	},
+	"variants":{
+		"variant=0": [ { "model": "engination:cosmetic/wingfortress/0" } ],
+		"variant=1": [ { "textures": { "all": "engination:blocks/cosmetic/wingfortress/orb"       } } ],
+		"variant=2": [ { "model": "engination:cosmetic/wingfortress/2" } ],
+		"variant=3": [ { "model": "engination:cosmetic/wingfortress/3a"},
+					   { "model": "engination:cosmetic/wingfortress/3b"},
+					   { "model": "engination:cosmetic/wingfortress/3c"},
+					   { "model": "engination:cosmetic/wingfortress/3d"}
+					 ],
+		"variant=4": [ { "textures": { "all": "engination:blocks/cosmetic/wingfortress/panel"     } } ],
+		"variant=5": [ { "model": "engination:cosmetic/wingfortress/5" } ],
+		"variant=6": [ { "model": "engination:cosmetic/wingfortress/6" } ],
+		"variant=7": [ { "textures": { "all": "engination:blocks/cosmetic/wingfortress/end"       } } ],
+		"variant=8": [ { "model": "minecraft:cube_column",
+						 "textures": {
+							"side": "engination:blocks/cosmetic/wingfortress/fluids",
+					        "particle": "engination:blocks/cosmetic/wingfortress/fluids",
+					        "end": "engination:blocks/cosmetic/wingfortress/end"
+						 }
+					   } ],
+		"variant=9": [ { "model": "engination:cosmetic/wingfortress/9a"},
+					   { "model": "engination:cosmetic/wingfortress/9b"},
+					   { "model": "engination:cosmetic/wingfortress/9c"},
+					   { "model": "engination:cosmetic/wingfortress/9d"}
+					 ],
+		"variant=10":[ { "textures": { "all": "engination:blocks/cosmetic/wingfortress/roughmetal"} } ],
+		"variant=11":[ { "model": "engination:cosmetic/wingfortress/b" } ],
+		"variant=12":[ { "model": "engination:cosmetic/wingfortress/c" } ],
+		"variant=13":[ { "model": "engination:cosmetic/wingfortress/d" } ],
+		"variant=14":[ { "textures": { "all": "engination:blocks/cosmetic/wingfortress/widget.top"} } ],
+		"variant=15":[ { "textures": { "all": "engination:blocks/cosmetic/wingfortress/panel.light"}} ]
+	}
+}

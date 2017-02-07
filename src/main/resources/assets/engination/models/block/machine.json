@@ -1,8 +1,0 @@
-{
-    "parent": "block/orientable",
-    "textures": {
-        "top": "blocks/machine.top",
-        "front": "blocks/machine.generator.front",
-        "side": "blocks/machine.side"
-    }
-}

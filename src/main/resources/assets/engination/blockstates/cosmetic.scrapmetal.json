@@ -1,0 +1,39 @@
+{
+	"forge_marker":1,
+
+	"defaults":{
+		"model":"minecraft:cube_all",
+		"transform":"forge:default-block",
+		"x":0,
+		"y":0,
+		"uvlock":true,
+		"textures":{
+			"all":"engination:blocks/cosmetic/gestahl/tread"
+		}
+	},
+	"variants":{
+		"variant=0": [ { "textures": { "all": "engination:blocks/cosmetic/gestahl/tread"       } } ],
+		"variant=1": [ { "textures": { "all": "engination:blocks/cosmetic/gestahl/domino"      } } ],
+		"variant=2": [ { "textures": { "all": "engination:blocks/cosmetic/gestahl/panel"       } } ],
+		"variant=3": [ { "textures": { "all": "engination:blocks/cosmetic/gestahl/panel.medium"} } ],
+		"variant=4": [ { "textures": { "all": "engination:blocks/cosmetic/gestahl/panel.dark"  } } ],
+		"variant=5": [ { "model":"engination:cosmetic/gestahl/5a" },
+					   { "model":"engination:cosmetic/gestahl/5b" },
+					   { "model":"engination:cosmetic/gestahl/5c" },
+					   { "model":"engination:cosmetic/gestahl/5d" }
+					 ],
+		"variant=6": [ { "textures": { "all":"engination:blocks/cosmetic/gestahl/grate"        } } ],
+		"variant=7": [ { "model": "engination:cosmetic/gestahl/7" } ],
+		"variant=8": [ { "textures": { "all":"engination:blocks/cosmetic/gestahl/platform.dark"} } ],
+		"variant=9": [ { "model": "engination:cosmetic/gestahl/9" } ],
+		"variant=10":[ { "model": "engination:cosmetic/gestahl/a" } ],
+		"variant=11":[ { "model": "engination:cosmetic/gestahl/b" } ],
+		"variant=12":[ { "textures": { "all":"engination:blocks/cosmetic/gestahl/steps.end"    } } ],
+		"variant=13":[ { "textures": { "all":"engination:blocks/cosmetic/gestahl/smooth.end"   } } ],
+		"variant=14":[ { "textures": { "all":"engination:blocks/cosmetic/gestahl/tread.blue"   } } ],
+		"variant=15":[ { "textures": { "all": "engination:blocks/cosmetic/gestahl/catapult"    } },
+					   { "textures": { "all": "engination:blocks/cosmetic/gestahl/catapult.1"  } },
+					   { "textures": { "all": "engination:blocks/cosmetic/gestahl/catapult.2"  } }
+					 ]
+	}
+}

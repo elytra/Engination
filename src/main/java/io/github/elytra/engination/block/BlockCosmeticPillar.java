@@ -3,12 +3,9 @@ package io.github.elytra.engination.block;
 import java.util.List;
 
 import io.github.elytra.engination.Engination;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockLog;
 import net.minecraft.block.BlockRotatedPillar;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -18,13 +15,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 
 public class BlockCosmeticPillar extends BlockRotatedPillar {
 	public static PropertyInteger VARIATION = PropertyInteger.create("variant", 0, 3);
-	//public static PropertyEnum<BlockLog.EnumAxis> AXIS = PropertyEnum.create("axis", BlockLog.EnumAxis.class);
 	private boolean showTip = false;
 	
 	public BlockCosmeticPillar(String blockName, Material material, MapColor color) {
@@ -40,7 +38,7 @@ public class BlockCosmeticPillar extends BlockRotatedPillar {
 	}
 
 	@Override
-	public void getSubBlocks(Item itemBlock, CreativeTabs tab, List<ItemStack> list) {
+	public void getSubBlocks(Item itemBlock, CreativeTabs tab, NonNullList<ItemStack> list) {
 		for(int i=0; i<4; i++) {
 			list.add(new ItemStack(itemBlock, 1, i));
 		}
@@ -55,25 +53,13 @@ public class BlockCosmeticPillar extends BlockRotatedPillar {
 	public IBlockState getStateFromMeta(int meta) {
 		int variation = meta & 0x3;
 		
-		return super.getStateFromMeta(meta >> 2)
+		return super.getStateFromMeta(meta)
 				.withProperty(VARIATION, variation);
-		
-		
-		//state = state.withProperty(VARIATION, variation);
-		
-		//int axis = meta >> 2;
-		//if (axis>BlockLog.EnumAxis.values().length) axis = 0;
-		
-		//return this.blockState.getBaseState()
-		//		.withProperty(VARIATION, variation)
-		//		.withProperty(AXIS, EnumFacing.Axis.values()[axis]);
-		
-		
 	}
 	
 	@Override
 	public int getMetaFromState(IBlockState state) {
-		return super.getMetaFromState(state) | (state.getValue(VARIATION) << 2);
+		return super.getMetaFromState(state) | (state.getValue(VARIATION) & 0x3);
 	}
 	
 	@Override
@@ -82,9 +68,9 @@ public class BlockCosmeticPillar extends BlockRotatedPillar {
     }
 	
 	@Override
-	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float x, float y, float z, int something, EntityLivingBase placer, ItemStack item) {
-		return super.getStateForPlacement(world, pos, facing, x, y, z, something, placer, item)
-				.withProperty(VARIATION, item.getItemDamage());
+	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float x, float y, float z, int something, EntityLivingBase placer, EnumHand hand) {
+		return super.getStateForPlacement(world, pos, facing, x, y, z, something, placer, hand)
+				.withProperty(VARIATION, placer.getHeldItem(hand).getItemDamage());
 	}
 	
 	public BlockCosmeticPillar setTip() { this.showTip=true; return this; }

@@ -1,0 +1,34 @@
+{
+	"forge_marker":1,
+	
+	"defaults":{
+		"model":"minecraft:cube_all",
+		"transform":"forge:default-block",
+		"x":0,
+		"y":0,
+		"uvlock":true,
+		"textures":{
+			"all":"engination:blocks/cosmetic/dingy.cobble"
+		}
+	},
+	"variants":{
+		"variant":{
+			 "0":{ "textures":{ "all":"engination:blocks/cosmetic/loosestone/zozo"   } },
+			 "1":{ "textures":{ "all":"engination:blocks/cosmetic/loosestone/vector" } },
+			 "2":{ "textures":{ "all":"engination:blocks/cosmetic/loosestone/thamasa"} },
+			 "3":{ "textures":{ "all":"engination:blocks/cosmetic/loosestone/figaro" } },
+			 "4":{ "textures":{ "all":"engination:blocks/cosmetic/loosestone/figaro.path"   } },
+			 "5":{ "textures":{ "all":"engination:blocks/cosmetic/loosestone/figaro.bright" } },
+			 "6":{ "textures":{ "all":"engination:blocks/cosmetic/loosestone/figaro.normal" } },
+			 "7":{ "textures":{ "all":"engination:blocks/cosmetic/loosestone/figaro.dark"   } },
+			 "8":{ "textures":{ "all":"engination:blocks/cosmetic/loosestone/figaro.black"  } },
+			 "9":{ "textures":{ "all":"engination:blocks/cosmetic/loosestone/figaro.canal"  } },
+			"10":{ "textures":{ "all":"engination:blocks/cosmetic/loosestone/zozo.roof"     } },
+			"11":{ "textures":{ "all":"engination:blocks/cosmetic/loosestone/gold.uneven"  } },
+			"12":{ "textures":{ "all":"engination:blocks/cosmetic/loosestone/thamasa.brick" } },
+			"13":{ "textures":{ "all":"engination:blocks/cosmetic/loosestone/tan.edging"   } },
+			"14":{ "textures":{ "all":"engination:blocks/cosmetic/loosestone/tan.shingle"  } },
+			"15":{ "textures":{ "all":"engination:blocks/cosmetic/loosestone/zozo.dirt"     } }
+		}
+	}
+}

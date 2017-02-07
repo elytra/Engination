@@ -1,0 +1,8 @@
+{
+    "parent": "minecraft:block/cube_column",
+    "textures": {
+        "side": "engination:blocks/cosmetic/wingfortress/fluids",
+        "particle": "engination:blocks/cosmetic/wingfortress/fluids",
+        "end": "engination:blocks/cosmetic/wingfortress/end"
+    }
+}
