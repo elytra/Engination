@@ -1,7 +1,7 @@
 /**
- * MIT License
+ * The MIT License (MIT)
  *
- * Copyright (c) 2016 Isaac Ellingson (Falkreon)
+ * Copyright (c) 2016-2017 Isaac Ellingson (Falkreon)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,11 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
 package io.github.elytra.engination.block;
 
-import net.minecraft.block.material.MapColor;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
@@ -39,8 +36,8 @@ import net.minecraft.world.World;
 public class BlockFallThrough extends BlockDisappearing {
 	public static final ChainReactionType CHAINTYPE_FALLTHROUGH = new ChainReactionType();
 	
-	public BlockFallThrough(String blockName, Material material, MapColor color) {
-		super(blockName, material, color);
+	public BlockFallThrough(String blockName) {
+		super(blockName);
 	}
 
 	@Override

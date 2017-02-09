@@ -1,7 +1,7 @@
 /**
- * MIT License
+ * The MIT License (MIT)
  *
- * Copyright (c) 2016 Isaac Ellingson (Falkreon)
+ * Copyright (c) 2016-2017 Isaac Ellingson (Falkreon)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
 package io.github.elytra.engination.block;
 
 import java.util.HashSet;
@@ -59,8 +58,8 @@ public class BlockDisappearing extends BlockCosmetic {
 	public static final int DISAPPEAR_CHAIN_MAX = 16;
 	public static final ChainReactionType CHAINTYPE_NONE = new ChainReactionType();
 	
-	public BlockDisappearing(String blockName, Material material, MapColor color) {
-		super(material, color);
+	public BlockDisappearing(String blockName) {
+		super(Material.CIRCUITS, Material.ROCK.getMaterialMapColor());
 		this.setUnlocalizedName("engination.disappearing."+blockName);
 		this.setRegistryName("disappearing."+blockName);
 		this.setCreativeTab(Engination.TAB_ENGINATION);

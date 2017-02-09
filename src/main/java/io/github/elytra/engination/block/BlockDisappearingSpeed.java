@@ -23,30 +23,52 @@
  */
 package io.github.elytra.engination.block;
 
+import java.util.List;
+
+import com.google.common.primitives.Doubles;
+
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockDisappearingMelee extends BlockDisappearing {
-	public static final ChainReactionType CHAINTYPE_PUNCH = new ChainReactionType();
-	
-	public BlockDisappearingMelee(String blockName) {
-		super("melee");
+public class BlockDisappearingSpeed extends BlockDisappearing {
+
+	public BlockDisappearingSpeed(String blockName) {
+		super(blockName);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
-	public void onBlockClicked(World world, BlockPos pos, EntityPlayer player) {
-		if (world.isRemote) return;
-		ItemStack heldItem = player.getHeldItemMainhand();
-		if (heldItem.isEmpty()) {
-			this.disappearChainReaction(world, pos);
+	public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB bounds, List<AxisAlignedBB> list, Entity entity, boolean something) {
+		if (state.getValue(DISAPPEARED)) {
+			//Don't collide with it if disappear'd!
+		} else {
+			if (entity instanceof EntityPlayer) {
+				double speed = entitySpeed(entity);
+				System.out.println("SPEED: "+speed);
+				switch(state.getValue(BlockDisappearing.VARIANT)) {
+				case 0:
+				case 1:
+				case 2:
+				case 3:
+				case 4:
+				case 5:
+				case 6:
+				case 7:
+				default:
+					super.addCollisionBoxToList(state, world, pos, bounds, list, entity, something);
+					break;
+				}
+			} else {
+				super.addCollisionBoxToList(state, world, pos, bounds, list, entity, something);
+			}
 		}
 	}
 	
-	@Override
-	public ChainReactionType getChainReactionType() {
-		return CHAINTYPE_PUNCH;
+	private static double entitySpeed(Entity entity) {
+		return Doubles.max(Math.abs(entity.motionX), Math.abs(entity.motionY), Math.abs(entity.motionZ));
 	}
-	
 }

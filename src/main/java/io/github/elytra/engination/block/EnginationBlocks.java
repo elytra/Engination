@@ -1,7 +1,7 @@
 /**
- * MIT License
+ * The MIT License (MIT)
  *
- * Copyright (c) 2016 Isaac Ellingson (Falkreon)
+ * Copyright (c) 2016-2017 Isaac Ellingson (Falkreon)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
 package io.github.elytra.engination.block;
 
 import io.github.elytra.engination.Engination;
@@ -29,24 +28,34 @@ import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 
 @ObjectHolder(Engination.MODID)
 public class EnginationBlocks {
+	@Deprecated
 	@ObjectHolder("machine.conveyor.2")
 	public static final BlockConveyor CONVEYOR = null;
+	@Deprecated
 	@ObjectHolder("machine.conveyor.4")
 	public static final BlockConveyor CONVEYOR_FAST = null;
+	@Deprecated
 	@ObjectHolder("machine.conveyor.8")
 	public static final BlockConveyor CONVEYOR_ULTRAFAST = null;
+	@Deprecated
 	@ObjectHolder("machine.launcher.2")
 	public static final BlockLauncher LAUNCHER = null;
+	@Deprecated
 	@ObjectHolder("machine.launcher.3")
 	public static final BlockLauncher LAUNCHER_FORCEFUL = null;
+	@Deprecated
 	@ObjectHolder("machine.launcher.5")
 	public static final BlockLauncher LAUNCHER_ULTRAFORCEFUL = null;
+	@Deprecated
 	@ObjectHolder("machine.landingpad")
 	public static final BlockLandingPad LANDINGPAD = null;
+	@Deprecated
 	@ObjectHolder("cosmetic.tourian")
 	public static final BlockCosmetic COSMETIC_TOURIAN = null;
+	@Deprecated
 	@ObjectHolder("cosmetic.dolomite")
 	public static final BlockCosmetic COSMETIC_DOLOMITE = null;
+	@Deprecated
 	@ObjectHolder("cosmetic.celestite")
 	public static final BlockCosmetic COSMETIC_CELESTITE = null;
 }

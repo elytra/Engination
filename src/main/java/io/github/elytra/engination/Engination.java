@@ -1,7 +1,7 @@
 /**
- * MIT License
+ * The MIT License (MIT)
  *
- * Copyright (c) 2016 Isaac Ellingson (Falkreon)
+ * Copyright (c) 2016-2017 Isaac Ellingson (Falkreon)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
 package io.github.elytra.engination;
 
 import java.io.File;
@@ -140,7 +139,7 @@ public class Engination {
 		registerCosmeticBlock(lamps);
 		
 		registerBlock(new BlockGravityField());
-		registerCosmeticBlock(new BlockFallThrough("fallthrough", Material.CIRCUITS, MapColor.GRAY));
+		registerCosmeticBlock(new BlockFallThrough("fallthrough"));
 		registerCosmeticBlock(new BlockDisappearingMelee("melee"));
 		registerCosmeticBlock(new BlockDisappearingSword("sword"));
 		
