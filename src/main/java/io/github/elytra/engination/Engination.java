@@ -1,4 +1,4 @@
-/*
+/**
  * MIT License
  *
  * Copyright (c) 2016 Isaac Ellingson (Falkreon)
@@ -32,6 +32,9 @@ import org.apache.logging.log4j.Logger;
 import io.github.elytra.engination.block.BlockConveyor;
 import io.github.elytra.engination.block.BlockCosmetic;
 import io.github.elytra.engination.block.BlockCosmeticPillar;
+import io.github.elytra.engination.block.BlockDisappearingMelee;
+import io.github.elytra.engination.block.BlockDisappearingSword;
+import io.github.elytra.engination.block.BlockFallThrough;
 import io.github.elytra.engination.block.BlockGravityField;
 import io.github.elytra.engination.block.BlockLandingPad;
 import io.github.elytra.engination.block.BlockLauncher;
@@ -98,6 +101,7 @@ public class Engination {
 		LOG = LogManager.getLogger(Engination.MODID);
 		File config = e.getSuggestedConfigurationFile();
 		CONFIG = new Configuration(config);
+		//TODO: Grab values for fallthrough block delay and max disappearing block chain
 		//CONFIG.save();
 		//LOG.info("");
 		
@@ -126,7 +130,7 @@ public class Engination {
 		registerCosmeticBlock(new BlockCosmetic("celestite",   Material.ROCK, MapColor.CYAN      ).setTip());
 		registerCosmeticBlock(new BlockCosmetic("baroque",     Material.ROCK, MapColor.QUARTZ    ).setTip()); //This is a joke. Please don't try to explain history to me.
 		registerCosmeticBlock(new BlockCosmetic("presidential",Material.ROCK, MapColor.QUARTZ    ).setTip()); //#NotMyPresident #DealWithIt
-		
+		registerCosmeticBlock(new BlockCosmetic("peridot",     Material.GLASS,MapColor.GREEN     ).setTip());
 		
 		registerCosmeticBlock(new BlockCosmeticPillar("scrapmetal.column", Material.IRON, MapColor.BROWN).setTip());
 		registerCosmeticBlock(new BlockCosmeticPillar("baroque.column", Material.IRON, MapColor.GREEN).setTip());
@@ -136,6 +140,9 @@ public class Engination {
 		registerCosmeticBlock(lamps);
 		
 		registerBlock(new BlockGravityField());
+		registerCosmeticBlock(new BlockFallThrough("fallthrough", Material.CIRCUITS, MapColor.GRAY));
+		registerCosmeticBlock(new BlockDisappearingMelee("melee"));
+		registerCosmeticBlock(new BlockDisappearingSword("sword"));
 		
 		ItemTomato tomato = new ItemTomato();
 		registerItem(tomato);

@@ -14,7 +14,7 @@
 	"variants":{
 		"variant":{
 			 0:{ "textures":{ "all":"engination:blocks/cosmetic/tourian.spawner"    } },
-			 1:{ "textures":{ "all":"engination:blocks/cosmetic/tourian.smallBlocks"  } },
+			 1:{ "textures":{ "all":"engination:blocks/cosmetic/tourian.smallblocks"  } },
 			 2:{ "textures":{ "all":"engination:blocks/cosmetic/tourian.pointed"    } },
 			 3:{ "textures":{ "all":"engination:blocks/cosmetic/tourian.pointed.dented"  } },
 			 4:{ "textures":{ "all":"engination:blocks/cosmetic/tourian.block.cracked"   } },
@@ -26,7 +26,7 @@
 			10:{ "textures":{ "all":"engination:blocks/cosmetic/tourian.stone.dark" } },
 			11:{ "textures":{ "all":"engination:blocks/cosmetic/tourian.stone.meteoric" } },
 			12:{ "textures":{ "all":"engination:blocks/cosmetic/tourian.breakable"} },
-			13:{ "textures":{ "all":"engination:blocks/cosmetic/tourian.block.fallThrough"} },
+			13:{ "textures":{ "all":"engination:blocks/cosmetic/tourian.block.fallthrough"} },
 			14:{ "model": "engination:cosmetic/tourian/powerup" },
 			15:{ "textures":{ "all":"engination:blocks/cosmetic/tourian.ui" } }
 		}

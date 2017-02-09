@@ -1,0 +1,30 @@
+{
+	"forge_marker":1,
+	
+	"defaults":{
+		"model":"minecraft:cube_all",
+		"transform":"forge:default-block",
+		"x":0,
+		"y":0,
+		"uvlock":true,
+		"textures":{
+			"cross":"engination:blocks/cosmetic/tourian/disappear"
+		}
+	},
+	"variants":{
+		"disappeared":{
+			"true":  { "model":"minecraft:cross" },
+			"false": { "model":"minecraft:cube_all" }
+		},
+		"variant":{
+			 "0":{ "textures":{ "all":"engination:blocks/cosmetic/tourian.breakable"        } },
+			 "1":{ "textures":{ "all":"engination:blocks/cosmetic/tourian.stone.meteoric"   } },
+			 "2":{ "textures":{ "all":"engination:blocks/cosmetic/tourian.vent"             } },
+			 "3":{ "textures":{ "all":"engination:blocks/cosmetic/tourian.block.cracked"    } },
+			 "4":{ "textures":{ "all":"minecraft:blocks/stone"                              } },
+			 "5":{ "textures":{ "all":"engination:blocks/cosmetic/tourian.breakable"        } },
+			 "6":{ "textures":{ "all":"engination:blocks/cosmetic/tourian.breakable"        } },
+			 "7":{ "textures":{ "all":"engination:blocks/cosmetic/tourian.breakable"        } }
+		}
+	}
+}

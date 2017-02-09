@@ -1,3 +1,27 @@
+/**
+ * MIT License
+ *
+ * Copyright (c) 2016 Isaac Ellingson (Falkreon)
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package io.github.elytra.engination.block;
 
 import java.util.List;
@@ -20,7 +44,7 @@ import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 
 public class BlockCosmetic extends Block {
-	public static PropertyInteger VARIATION = PropertyInteger.create("variant", 0, 15);
+	public static PropertyInteger VARIANT = PropertyInteger.create("variant", 0, 15);
 	private boolean showTip = false;
 	
 	public BlockCosmetic(String blockName, Material material, MapColor color) {
@@ -33,7 +57,14 @@ public class BlockCosmetic extends Block {
 		this.setHarvestLevel("pickaxe", 1);
 		
 		this.setCreativeTab(Engination.TAB_COSMETIC);
-		
+	}
+	
+	/** USE AT OWN RISK: Does not set unlocalizedName or registryName! */
+	protected BlockCosmetic(Material material, MapColor color) {
+		super(material, color);
+		this.blockHardness = 1.0f;
+		this.blockResistance = 15.0f;
+		this.setHarvestLevel("pickaxe", 1);
 	}
 
 	@Override
@@ -45,22 +76,22 @@ public class BlockCosmetic extends Block {
 	
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, VARIATION);
+		return new BlockStateContainer(this, VARIANT);
 	}
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return this.blockState.getBaseState().withProperty(VARIATION, meta);
+		return this.blockState.getBaseState().withProperty(VARIANT, meta);
 	}
 	
 	@Override
 	public int getMetaFromState(IBlockState state) {
-		return state.getValue(VARIATION);
+		return state.getValue(VARIANT);
 	}
 	
 	@Override
 	public int damageDropped(IBlockState state) {
-        return state.getValue(VARIATION);
+        return state.getValue(VARIANT);
     }
 	
 	@Override

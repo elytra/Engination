@@ -24,8 +24,10 @@
 
 package io.github.elytra.engination;
 
+import io.github.elytra.engination.block.BlockDisappearing;
 import io.github.elytra.engination.entity.EntityTomato;
 import io.github.elytra.engination.item.EnginationItems;
+import io.github.elytra.engination.item.ItemBlockCosmetic;
 import io.github.elytra.engination.item.ItemBlockCosmeticPillar;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -52,8 +54,14 @@ public class ClientProxy extends Proxy {
 					ModelLoader.setCustomModelResourceLocation(item, subItem.getItemDamage(), new ModelResourceLocation(loc, "axis=y,variant="+subItem.getItemDamage()));
 				}
 			} else {
-				for(ItemStack subItem : variantList) {
-					ModelLoader.setCustomModelResourceLocation(item, subItem.getItemDamage(), new ModelResourceLocation(loc, "variant="+subItem.getItemDamage()));
+				if ((item instanceof ItemBlockCosmetic) && (((ItemBlockCosmetic)item).getBlock() instanceof BlockDisappearing)) {
+					for(ItemStack subItem : variantList) {
+						ModelLoader.setCustomModelResourceLocation(item, subItem.getItemDamage(), new ModelResourceLocation(loc, "disappeared=false,variant="+subItem.getItemDamage()));
+					}
+				} else {
+					for(ItemStack subItem : variantList) {
+						ModelLoader.setCustomModelResourceLocation(item, subItem.getItemDamage(), new ModelResourceLocation(loc, "variant="+subItem.getItemDamage()));
+					}
 				}
 			}
 		}

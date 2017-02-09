@@ -1,0 +1,34 @@
+{
+	"forge_marker":1,
+	
+	"defaults":{
+		"model":"minecraft:cube_all",
+		"transform":"forge:default-block",
+		"x":0,
+		"y":0,
+		"uvlock":true,
+		"textures":{
+			"all":"engination:blocks/cosmetic/peridot/rocks"
+		}
+	},
+	"variants":{
+		"variant":{
+			 0:{ "textures":{ "all":"engination:blocks/cosmetic/peridot/stonebrick" } },
+			 1:{ "textures":{ "all":"engination:blocks/cosmetic/peridot/rocks"     } },
+			 2:{ "textures":{ "all":"engination:blocks/cosmetic/peridot/tiles"     } },
+			 3:{ "textures":{ "all":"engination:blocks/cosmetic/peridot/smalltiles"      } },
+			 4:{ "textures":{ "all":"engination:blocks/cosmetic/peridot/tile" } },
+			 5:{ "textures":{ "all":"engination:blocks/cosmetic/peridot/dark.stonebrick"      } },
+			 6:{ "textures":{ "all":"engination:blocks/cosmetic/peridot/dark.rocks"       } },
+			 7:{ "textures":{ "all":"engination:blocks/cosmetic/peridot/dark.tiles"   } },
+			 8:{ "textures":{ "all":"engination:blocks/cosmetic/peridot/dark.smalltiles"   } },
+			 9:{ "textures":{ "all":"engination:blocks/cosmetic/peridot/dark.tile"   } },
+			10:{ "textures":{ "all":"engination:blocks/cosmetic/peridot/checker"   } },
+			11:{ "textures":{ "all":"engination:blocks/cosmetic/peridot/checker.smalltiles"   } },
+			12:{ "textures":{ "all":"engination:blocks/cosmetic/peridot/hex"   } },
+			13:{ "textures":{ "all":"engination:blocks/cosmetic/peridot/dark.hex"   } },
+			14:{ "textures":{ "all":"engination:blocks/cosmetic/peridot/prism"   } },
+			15:{ "textures":{ "all":"engination:blocks/cosmetic/peridot/dark.prism"   } }
+		}
+	}
+}

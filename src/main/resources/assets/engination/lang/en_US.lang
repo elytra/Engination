@@ -1,7 +1,13 @@
+#CreativeTabs
+itemGroup.engination=Engination
+itemGroup.engination.cosmetic=Engination Cosmetic Blocks
+
+#Items
 item.tomato.name=Tomato
 item.food.celery.name=Celery
 item.wand.relight.name=Chunk Relight Wand
 
+#Momentum Devices
 tile.machine.conveyor.2.name=Conveyor
 tile.machine.conveyor.4.name=Fast Conveyor
 tile.machine.conveyor.8.name=Super-Fast Conveyor
@@ -11,6 +17,44 @@ tile.machine.launcher.5.name=Ultra-Forceful Launcher
 tile.machine.landingpad.name=Landing Pad
 tile.field.gravity.name=Gravity Field
 
+#Disappearing
+tile.engination.disappearing.fallthrough.tip=Automated defenestration blocks
+tile.engination.disappearing.fallthrough.0.name=FallThrough - Plain
+tile.engination.disappearing.fallthrough.1.name=FallThrough - Meteoric Rock
+tile.engination.disappearing.fallthrough.2.name=FallThrough - Vent
+tile.engination.disappearing.fallthrough.3.name=FallThrough - Cracked
+tile.engination.disappearing.fallthrough.4.name=FallThrough - Stone
+tile.engination.disappearing.fallthrough.5.name=FallThrough - ???
+tile.engination.disappearing.fallthrough.6.name=FallThrough - ???
+tile.engination.disappearing.fallthrough.7.name=FallThrough - ???
+
+tile.engination.disappearing.fallthrough.0.name.kappa=Tourian - Fall-Through
+tile.engination.disappearing.fallthrough.1.name.kappa=Tourian - Meteoric Rock
+tile.engination.disappearing.fallthrough.2.name.kappa=Tourian - Vent
+tile.engination.disappearing.fallthrough.3.name.kappa=Tourian - Cracked
+tile.engination.disappearing.fallthrough.4.name.kappa=Stone
+
+tile.engination.disappearing.melee.tip=Sounds hollow, but really has lots of character
+tile.engination.disappearing.melee.0.name=Punchable - Breakable
+tile.engination.disappearing.melee.1.name=Punchable - Meteoric Rock
+tile.engination.disappearing.melee.2.name=Punchable - Vent
+tile.engination.disappearing.melee.3.name=Punchable - Cracked
+tile.engination.disappearing.melee.4.name=Punchable - Stone
+tile.engination.disappearing.melee.5.name=Punchable - ???
+tile.engination.disappearing.melee.6.name=Punchable - ???
+tile.engination.disappearing.melee.7.name=Punchable - ???
+
+tile.engination.disappearing.sword.tip=Blocks with very particular phobias
+tile.engination.disappearing.sword.0.name=Swordable - Wooden Sword
+tile.engination.disappearing.sword.1.name=Swordable - Stone Sword
+tile.engination.disappearing.sword.2.name=Swordable - Iron Sword
+tile.engination.disappearing.sword.3.name=Swordable - Gold Sword
+tile.engination.disappearing.sword.4.name=Swordable - Diamond Sword
+tile.engination.disappearing.sword.5.name=Swordable (reserved for mod integration)
+tile.engination.disappearing.sword.6.name=Swordable (reserved for mod integration)
+tile.engination.disappearing.sword.7.name=Swordable (reserved for mod integration)
+
+#Cosmetic
 tile.engination.scrapmetal.tip=Cold comfort for remorseful emperors
 tile.engination.scrapmetal.0.name=Gestahl - Treads
 tile.engination.scrapmetal.1.name=Gestahl - Domino
@@ -179,6 +223,24 @@ tile.engination.celestite.13.name=Celestite - Dark Hexagons
 tile.engination.celestite.14.name=Celestite - Prism
 tile.engination.celestite.15.name=Celestite - Dark Prism
 
+tile.engination.peridot.tip=Birthstone of most Leos, but hard to brag about. This is a problem for Leos.
+tile.engination.peridot.0.name=Peridot - Brick
+tile.engination.peridot.1.name=Peridot - Gemrock
+tile.engination.peridot.2.name=Peridot - Tiles
+tile.engination.peridot.3.name=Peridot - Small Tiles
+tile.engination.peridot.4.name=Peridot - Large Tile
+tile.engination.peridot.5.name=Peridot - Dark Brick
+tile.engination.peridot.6.name=Peridot - Dark Gemrock
+tile.engination.peridot.7.name=Peridot - Dark Tiles
+tile.engination.peridot.8.name=Peridot - Dark Small Tiles
+tile.engination.peridot.9.name=Peridot - Dark Large Tile
+tile.engination.peridot.10.name=Peridot - Checkers
+tile.engination.peridot.11.name=Peridot - Small Checkers
+tile.engination.peridot.12.name=Peridot - ???
+tile.engination.peridot.13.name=Peridot - ???
+tile.engination.peridot.14.name=Peridot - Prism
+tile.engination.peridot.15.name=Peridot - Dark Prism
+
 tile.engination.lamp.tip=All lighting in Minecraft is guaranteed lag in a box!
 tile.engination.lamp.0.name=Crystal Lamp - Golbez
 tile.engination.lamp.1.name=Crystal Lamp - Pulsing
@@ -239,9 +301,7 @@ tile.engination.presidential.13.name=Presidential - Do Not Use
 tile.engination.presidential.14.name=Presidential - Do Not Use
 tile.engination.presidential.15.name=Presidential - Do Not Use
 
-itemGroup.engination=Engination
-itemGroup.engination.cosmetic=Engination Cosmetic Blocks
-
+#Sound subtitles
 subtitles.engination.tomato.throw=Tomato flies
 subtitles.engination.tomato.squish=Tomato squishes
 subtitles.engination.machine.launcher=Launcher launches
