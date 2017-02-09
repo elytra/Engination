@@ -19,7 +19,7 @@
 			 3:{ "textures":{ "all":"engination:blocks/cosmetic/presidential/embossed"  } },
 			 4:{ "textures":{ "all":"engination:blocks/cosmetic/presidential/stonebrick"} },
 			 5:{ "textures":{ "all":"engination:blocks/cosmetic/presidential/panel"     } },
-			 6:{ "textures":{ "all":"engination:blocks/cosmetic/presidential/tile" } },
+			 6:{ "textures":{ "all":"engination:blocks/cosmetic/presidential/t"         } },
 			 7:{ "textures":{ "all":"engination:blocks/cosmetic/presidential/tile" } },
 			 8:{ "textures":{ "all":"engination:blocks/cosmetic/presidential/tile"} },
 			 9:{ "textures":{ "all":"engination:blocks/cosmetic/presidential/tile" } },

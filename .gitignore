@@ -6,6 +6,7 @@
 /.settings/
 /*.launch
 /libs/
+/libs-disabled/
 /minecraft/
 /src/main/java/cofh/
 /src/main/java/gigaherz/
