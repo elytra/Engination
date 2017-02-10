@@ -32,35 +32,29 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockDisappearingSpeed extends BlockDisappearing {
-
+	public static ChainReactionType CHAINTYPE_SPEED = new ChainReactionType();
+	
 	public BlockDisappearingSpeed(String blockName) {
 		super(blockName);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB bounds, List<AxisAlignedBB> list, Entity entity, boolean something) {
+		if (!world.isRemote) return; //Sadly, the really important behavior here is clientside
 		if (state.getValue(DISAPPEARED)) {
 			//Don't collide with it if disappear'd!
 		} else {
+			
 			if (entity instanceof EntityPlayer) {
 				double speed = entitySpeed(entity);
-				System.out.println("SPEED: "+speed);
-				switch(state.getValue(BlockDisappearing.VARIANT)) {
-				case 0:
-				case 1:
-				case 2:
-				case 3:
-				case 4:
-				case 5:
-				case 6:
-				case 7:
-				default:
+				if (speed<getSpeedThreshold(state)) {
 					super.addCollisionBoxToList(state, world, pos, bounds, list, entity, something);
-					break;
+				} else {
+					//Move aside, let the man go through. Let the man go through.
 				}
 			} else {
 				super.addCollisionBoxToList(state, world, pos, bounds, list, entity, something);
@@ -68,7 +62,58 @@ public class BlockDisappearingSpeed extends BlockDisappearing {
 		}
 	}
 	
+	@Override
+	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
+		//if (!world.isRemote) return; //If we skip serverside collision breaks, the "restore" action never triggers.
+		
+		if (entity instanceof EntityPlayer) {
+			if (!state.getValue(DISAPPEARED)) {
+				this.disappearChainReaction(world, new BlockPos(pos));
+			}
+		}
+	}
+	
+	@Override
+	public void onFallenUpon(World world, BlockPos pos, Entity entity, float maybeFallDistance) {
+		if (!world.isRemote) return;
+		if (meetsThreshold(entity, world.getBlockState(pos))) considerBreaking(world, pos, entity);
+	}
+	
+	@Override
+	public void onEntityWalk(World world, BlockPos pos, Entity entity) {
+		if (!world.isRemote) return;
+		if (meetsThreshold(entity, world.getBlockState(pos))) considerBreaking(world, pos, entity);
+	}
+	
+	@Override
+	public boolean isPassable(IBlockAccess world, BlockPos pos) {
+		return true;
+	}
+	
+	public void considerBreaking(World world, BlockPos pos, Entity entity) {
+		if (entity instanceof EntityPlayer) {
+			if (!world.getBlockState(pos).getValue(DISAPPEARED)) {
+				this.disappearChainReaction(world, new BlockPos(pos));
+			}
+		}
+	}
+	
+	public boolean meetsThreshold(Entity entity, IBlockState state) {
+		if (!(entity instanceof EntityPlayer)) return false;
+		return entitySpeed(entity) >= getSpeedThreshold(state);
+	}
+	
+	private static float getSpeedThreshold(IBlockState state) {
+		return 0.23f + (0.1f * state.getValue(BlockDisappearing.VARIANT));
+	}
+	
 	private static double entitySpeed(Entity entity) {
-		return Doubles.max(Math.abs(entity.motionX), Math.abs(entity.motionY), Math.abs(entity.motionZ));
+		//Used to check Y, but then you could easily *fall* through blocks, and that's just not good.
+		return Doubles.max(Math.abs(entity.motionX), Math.abs(entity.motionZ));
+	}
+	
+	@Override
+	public ChainReactionType getChainReactionType() {
+		return CHAINTYPE_SPEED;
 	}
 }

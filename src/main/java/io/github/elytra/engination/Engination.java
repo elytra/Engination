@@ -32,6 +32,7 @@ import io.github.elytra.engination.block.BlockConveyor;
 import io.github.elytra.engination.block.BlockCosmetic;
 import io.github.elytra.engination.block.BlockCosmeticPillar;
 import io.github.elytra.engination.block.BlockDisappearingMelee;
+import io.github.elytra.engination.block.BlockDisappearingSpeed;
 import io.github.elytra.engination.block.BlockDisappearingSword;
 import io.github.elytra.engination.block.BlockFallThrough;
 import io.github.elytra.engination.block.BlockGravityField;
@@ -142,6 +143,7 @@ public class Engination {
 		registerCosmeticBlock(new BlockFallThrough("fallthrough"));
 		registerCosmeticBlock(new BlockDisappearingMelee("melee"));
 		registerCosmeticBlock(new BlockDisappearingSword("sword"));
+		registerCosmeticBlock(new BlockDisappearingSpeed("speed"));
 		
 		ItemTomato tomato = new ItemTomato();
 		registerItem(tomato);

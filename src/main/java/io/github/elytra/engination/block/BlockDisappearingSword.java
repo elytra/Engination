@@ -46,7 +46,6 @@ public class BlockDisappearingSword extends BlockDisappearing {
 		
 		switch(variation) {
 		case 0:
-			System.out.println(heldItem.getItem().getRegistryName());
 			if (heldItem.getItem().equals(Items.WOODEN_SWORD)) {
 				this.disappearChainReaction(world, pos);
 			}
