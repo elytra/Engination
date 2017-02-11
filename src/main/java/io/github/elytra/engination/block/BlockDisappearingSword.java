@@ -23,7 +23,6 @@
  */
 package io.github.elytra.engination.block;
 
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;

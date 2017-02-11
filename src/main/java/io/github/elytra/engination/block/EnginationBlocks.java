@@ -28,7 +28,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 
 @ObjectHolder(Engination.MODID)
 public class EnginationBlocks {
-	@Deprecated
 	@ObjectHolder("machine.conveyor.2")
 	public static final BlockConveyor CONVEYOR = null;
 	@Deprecated
@@ -49,7 +48,6 @@ public class EnginationBlocks {
 	@Deprecated
 	@ObjectHolder("machine.landingpad")
 	public static final BlockLandingPad LANDINGPAD = null;
-	@Deprecated
 	@ObjectHolder("cosmetic.tourian")
 	public static final BlockCosmetic COSMETIC_TOURIAN = null;
 	@Deprecated

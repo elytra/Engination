@@ -30,7 +30,6 @@ import java.util.Set;
 
 import io.github.elytra.engination.Engination;
 import net.minecraft.block.Block;
-import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyInteger;
@@ -54,8 +53,8 @@ public class BlockDisappearing extends BlockCosmetic {
 	public static PropertyBool DISAPPEARED = PropertyBool.create("disappeared");
 	public static PropertyInteger  VARIANT     = PropertyInteger.create("variant", 0, 7);
 	
-	public static final int DELAY_REAPPEAR = 20 * 5;
-	public static final int DISAPPEAR_CHAIN_MAX = 16;
+	public static int DELAY_REAPPEAR = 20 * 5;
+	public static int DISAPPEAR_CHAIN_MAX = 16;
 	public static final ChainReactionType CHAINTYPE_NONE = new ChainReactionType();
 	
 	public BlockDisappearing(String blockName) {

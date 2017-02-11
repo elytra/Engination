@@ -31,6 +31,7 @@ import org.apache.logging.log4j.Logger;
 import io.github.elytra.engination.block.BlockConveyor;
 import io.github.elytra.engination.block.BlockCosmetic;
 import io.github.elytra.engination.block.BlockCosmeticPillar;
+import io.github.elytra.engination.block.BlockDisappearing;
 import io.github.elytra.engination.block.BlockDisappearingMelee;
 import io.github.elytra.engination.block.BlockDisappearingSpeed;
 import io.github.elytra.engination.block.BlockDisappearingSword;
@@ -101,8 +102,10 @@ public class Engination {
 		LOG = LogManager.getLogger(Engination.MODID);
 		File config = e.getSuggestedConfigurationFile();
 		CONFIG = new Configuration(config);
+		CONFIG.get("block.disappearing", "delay-reappear", BlockDisappearing.DELAY_REAPPEAR);
+		CONFIG.get("block.disappearing", "chain-max",      BlockDisappearing.DISAPPEAR_CHAIN_MAX);
 		//TODO: Grab values for fallthrough block delay and max disappearing block chain
-		//CONFIG.save();
+		CONFIG.save();
 		//LOG.info("");
 		
 		SOUND_TOMATO = createSound("tomato");
