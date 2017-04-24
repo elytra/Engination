@@ -56,6 +56,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.config.Configuration;
@@ -280,7 +281,7 @@ public class Engination {
 			} else {
 				GameRegistry.addRecipe(new ShapedOreRecipe(
 						new ItemStack(EnginationBlocks.COSMETIC_PERIDOT, 16),
-						"GGG", "GlG", "GGG",
+						"SGS", "GlG", "SGS",
 						'G', "blockGlass",
 						'l', "dyeLime"
 						));
@@ -292,6 +293,22 @@ public class Engination {
 					'S', "stone",
 					'E', new ItemStack(Blocks.SOUL_SAND)
 					));
+			
+			
+			//Circular crafting for varieties
+			registerCraftingCircle(EnginationBlocks.COSMETIC_BAROQUE);
+			registerCraftingCircle(EnginationBlocks.COSMETIC_CELESTITE);
+			registerCraftingCircle(EnginationBlocks.COSMETIC_DOLOMITE);
+			registerCraftingCircle(EnginationBlocks.COSMETIC_LAMP);
+			registerCraftingCircle(EnginationBlocks.COSMETIC_LOOSESTONE);
+			registerCraftingCircle(EnginationBlocks.COSMETIC_ONEUP);
+			registerCraftingCircle(EnginationBlocks.COSMETIC_PERIDOT);
+			registerCraftingCircle(EnginationBlocks.COSMETIC_PRESIDENTIAL);
+			registerCraftingCircle(EnginationBlocks.COSMETIC_SANIC);
+			registerCraftingCircle(EnginationBlocks.COSMETIC_SCRAPMETAL);
+			registerCraftingCircle(EnginationBlocks.COSMETIC_TOURIAN);
+			registerCraftingCircle(EnginationBlocks.COSMETIC_WINGFORTRESS);
+			registerCraftingCircle(EnginationBlocks.COSMETIC_WOOD);
 		}
 	}
 	
@@ -332,6 +349,19 @@ public class Engination {
 		SoundEvent sound = new SoundEvent(rsrc);
 		GameRegistry.register(sound, rsrc);
 		return sound;
+	}
+	
+	public void registerCraftingCircle(BlockCosmetic block) {
+		NonNullList<ItemStack> list = NonNullList.create();
+		block.getVarieties(Item.getItemFromBlock(block), list);
+		if (list.size()<2) return;
+		ItemStack first = list.remove(0);
+		ItemStack previous = first;
+		for(ItemStack item : list) {
+			GameRegistry.addShapelessRecipe(item, previous);
+			previous = item;
+		}
+		GameRegistry.addShapelessRecipe(first, list.get(list.size()-1));
 	}
 	
 	public static Engination instance() {

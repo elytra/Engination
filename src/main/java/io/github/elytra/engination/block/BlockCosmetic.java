@@ -33,17 +33,15 @@ import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.translation.I18n;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SuppressWarnings("deprecation")
 public class BlockCosmetic extends Block {
 	public static PropertyInteger VARIANT = PropertyInteger.create("variant", 0, 15);
 	private boolean showTip = false;
@@ -71,6 +69,13 @@ public class BlockCosmetic extends Block {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item itemBlock, CreativeTabs tab, NonNullList<ItemStack> list) {
+		getVarieties(itemBlock, list);
+	}
+	
+	/**
+	 * Behaves like getSubBlocks, but is available on the server
+	 */
+	public void getVarieties(Item itemBlock, NonNullList<ItemStack> list) {
 		for(int i=0; i<16; i++) {
 			list.add(new ItemStack(itemBlock, 1, i));
 		}
