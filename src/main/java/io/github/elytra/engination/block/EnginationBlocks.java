@@ -30,30 +30,63 @@ import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 public class EnginationBlocks {
 	@ObjectHolder("machine.conveyor.2")
 	public static final BlockConveyor CONVEYOR = null;
-	@Deprecated
+	
 	@ObjectHolder("machine.conveyor.4")
 	public static final BlockConveyor CONVEYOR_FAST = null;
-	@Deprecated
+	
 	@ObjectHolder("machine.conveyor.8")
 	public static final BlockConveyor CONVEYOR_ULTRAFAST = null;
-	@Deprecated
+	
 	@ObjectHolder("machine.launcher.2")
 	public static final BlockLauncher LAUNCHER = null;
-	@Deprecated
+	
 	@ObjectHolder("machine.launcher.3")
 	public static final BlockLauncher LAUNCHER_FORCEFUL = null;
-	@Deprecated
+	
 	@ObjectHolder("machine.launcher.5")
 	public static final BlockLauncher LAUNCHER_ULTRAFORCEFUL = null;
-	@Deprecated
+	
 	@ObjectHolder("machine.landingpad")
 	public static final BlockLandingPad LANDINGPAD = null;
-	@ObjectHolder("cosmetic.tourian")
-	public static final BlockCosmetic COSMETIC_TOURIAN = null;
-	@Deprecated
-	@ObjectHolder("cosmetic.dolomite")
-	public static final BlockCosmetic COSMETIC_DOLOMITE = null;
-	@Deprecated
-	@ObjectHolder("cosmetic.celestite")
+	
+	
+	
+	@ObjectHolder("cosmetic.baroque")
+	public static final BlockCosmetic COSMETIC_BAROQUE = null;
+	
+	@ObjectHolder("cosmetic.celestite")//
 	public static final BlockCosmetic COSMETIC_CELESTITE = null;
+	
+	@ObjectHolder("cosmetic.dolomite")//
+	public static final BlockCosmetic COSMETIC_DOLOMITE = null;
+	
+	@ObjectHolder("cosmetic.lamp")//
+	public static final BlockCosmetic COSMETIC_LAMP = null;
+	
+	@ObjectHolder("cosmetic.loosestone")//
+	public static final BlockCosmetic COSMETIC_LOOSESTONE = null;
+	
+	@ObjectHolder("cosmetic.oneup")//
+	public static final BlockCosmetic COSMETIC_ONEUP = null;
+	
+	@ObjectHolder("cosmetic.peridot")//
+	public static final BlockCosmetic COSMETIC_PERIDOT = null;
+	
+	@ObjectHolder("cosmetic.presidential")//
+	public static final BlockCosmetic COSMETIC_PRESIDENTIAL = null;
+	
+	@ObjectHolder("cosmetic.sanic")//
+	public static final BlockCosmetic COSMETIC_SANIC = null;
+	
+	@ObjectHolder("cosmetic.scrapmetal")//
+	public static final BlockCosmetic COSMETIC_SCRAPMETAL = null;
+	
+	@ObjectHolder("cosmetic.tourian")//
+	public static final BlockCosmetic COSMETIC_TOURIAN = null;
+	
+	@ObjectHolder("cosmetic.wingfortress")//
+	public static final BlockCosmetic COSMETIC_WINGFORTRESS = null;
+	
+	@ObjectHolder("cosmetic.wood")//
+	public static final BlockCosmetic COSMETIC_WOOD = null;
 }

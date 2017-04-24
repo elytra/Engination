@@ -41,6 +41,8 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockCosmetic extends Block {
 	public static PropertyInteger VARIANT = PropertyInteger.create("variant", 0, 15);
@@ -67,6 +69,7 @@ public class BlockCosmetic extends Block {
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item itemBlock, CreativeTabs tab, NonNullList<ItemStack> list) {
 		for(int i=0; i<16; i++) {
 			list.add(new ItemStack(itemBlock, 1, i));
@@ -92,11 +95,6 @@ public class BlockCosmetic extends Block {
 	public int damageDropped(IBlockState state) {
         return state.getValue(VARIANT);
     }
-	
-	@Override
-	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-		world.setBlockState(pos, this.getStateFromMeta(stack.getMetadata()));
-	}
 	
 	public BlockCosmetic setTip() { this.showTip = true; return this; }
 	

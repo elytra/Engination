@@ -50,6 +50,8 @@ import net.minecraft.block.BlockDispenser;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemFood;
@@ -61,9 +63,12 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 
 @Mod(modid=Engination.MODID, name="Engination", version="@VERSION@")
 public class Engination {
@@ -84,6 +89,8 @@ public class Engination {
 		}
 	};
 	
+	private static boolean ENABLE_RECIPES_COSMETIC = false;
+	
 	@Instance(MODID)
 	private static Engination instance;
 	
@@ -101,11 +108,20 @@ public class Engination {
 		LOG = LogManager.getLogger(Engination.MODID);
 		File config = e.getSuggestedConfigurationFile();
 		CONFIG = new Configuration(config);
-		CONFIG.get("block.disappearing", "delay-reappear", BlockDisappearing.DELAY_REAPPEAR);
-		CONFIG.get("block.disappearing", "chain-max",      BlockDisappearing.DISAPPEAR_CHAIN_MAX);
-		//TODO: Grab values for fallthrough block delay and max disappearing block chain
+		
+		BlockDisappearing.DELAY_REAPPEAR = CONFIG.getInt(
+				"delay-reappear", "block.disappearing",
+				BlockDisappearing.DELAY_REAPPEAR, 1, 900,
+				"The time it takes for a disappearing block to reappear");
+		
+		BlockDisappearing.DISAPPEAR_CHAIN_MAX = CONFIG.getInt(
+				"chain-max", "block.disappearing",
+				BlockDisappearing.DISAPPEAR_CHAIN_MAX, 1, 900,
+				"The maximum number of blocks that will disappear together in a group");
+		
+		ENABLE_RECIPES_COSMETIC = CONFIG.getBoolean("enable-cosmetic", "recipe", ENABLE_RECIPES_COSMETIC, "If enabled, this registers recipes for cosmetic blocks");
+		
 		CONFIG.save();
-		//LOG.info("");
 		
 		SOUND_TOMATO = createSound("tomato");
 		SOUND_THROW = createSound("tomato.throw");
@@ -159,6 +175,124 @@ public class Engination {
 		EntityRegistry.registerModEntity(new ResourceLocation("engination", "tomato"), EntityTomato.class, "tomato", 0, this, 80, 3, true);
 		
 		proxy.init();
+	}
+	
+	@EventHandler
+	public void onInit(FMLInitializationEvent e) {
+		if (ENABLE_RECIPES_COSMETIC) {
+			GameRegistry.addRecipe(new ShapedOreRecipe(
+					new ItemStack(EnginationBlocks.COSMETIC_SCRAPMETAL, 32),
+					"SiS", "i i", "SiS",
+					'S', "stone",
+					'i', "ingotIron"
+					));
+			
+			GameRegistry.addRecipe(new ShapedOreRecipe(
+					new ItemStack(EnginationBlocks.COSMETIC_SANIC, 32),
+					"SiS", "ili", "SiS",
+					'S', "stone",
+					'i', "ingotIron",
+					'l', "gemLapis"
+					));
+			
+			GameRegistry.addRecipe(new ShapedOreRecipe(
+					new ItemStack(EnginationBlocks.COSMETIC_WINGFORTRESS, 32),
+					"SiS", "iii", "SiS",
+					'S', "stone",
+					'i', "ingotIron"
+					));
+			
+			GameRegistry.addRecipe(new ShapedOreRecipe(
+					new ItemStack(EnginationBlocks.COSMETIC_TOURIAN, 32),
+					"SiS", "ici", "SiS",
+					'S', "stone",
+					'i', "ingotIron",
+					'c', new ItemStack(Items.COAL, 1, OreDictionary.WILDCARD_VALUE)
+					));
+			
+			//Unrealistically expensive to account for the fact that it's really quite big.
+			//And you know what they say, big block, ...
+			GameRegistry.addRecipe(new ShapedOreRecipe(
+					new ItemStack(EnginationBlocks.COSMETIC_PRESIDENTIAL, 1),
+					"GgG", "geg", "GgG",
+					'G', "blockGold",
+					'g', "ingotGold",
+					'e', "gemEmerald"
+					));
+			
+			GameRegistry.addRecipe(new ShapedOreRecipe(
+					new ItemStack(EnginationBlocks.COSMETIC_WOOD, 32),
+					"WWW", "WsW", "WWW",
+					'W', "plankWood",
+					's', "stickWood"
+					));
+			
+			GameRegistry.addRecipe(new ShapedOreRecipe(
+					new ItemStack(EnginationBlocks.COSMETIC_LOOSESTONE, 32),
+					"SCS", "C C", "SCS",
+					'S', "stone",
+					'C', "cobblestone"
+					));
+			
+			GameRegistry.addRecipe(new ShapedOreRecipe(
+					new ItemStack(EnginationBlocks.COSMETIC_LAMP, 1),
+					"SgS", "g g", "SgS",
+					'S', "stone",
+					'g', "dustGlowstone"
+					));
+			
+			GameRegistry.addRecipe(new ShapedOreRecipe(
+					new ItemStack(EnginationBlocks.COSMETIC_CELESTITE, 32),
+					"GcG", "c c", "GcG",
+					'G', "blockGlass",
+					'c', "dyeCyan"
+					));
+			
+			GameRegistry.addRecipe(new ShapedOreRecipe(
+					new ItemStack(EnginationBlocks.COSMETIC_DOLOMITE, 32),
+					"SDS", "DGD", "SDS",
+					'S', "stone",
+					'D', "stoneDiorite",
+					'G', "stoneGranite"
+					));
+			
+			//No listAllMushrooms entry exists :/
+			GameRegistry.addRecipe(new ShapedOreRecipe(
+					new ItemStack(EnginationBlocks.COSMETIC_ONEUP, 32),
+					"SSS", "SMS", "SSS",
+					'S', "stone",
+					'M', new ItemStack(Blocks.RED_MUSHROOM)
+					));
+			GameRegistry.addRecipe(new ShapedOreRecipe(
+					new ItemStack(EnginationBlocks.COSMETIC_ONEUP, 32),
+					"SSS", "SMS", "SSS",
+					'S', "stone",
+					'M', new ItemStack(Blocks.BROWN_MUSHROOM)
+					));
+			
+			if (OreDictionary.doesOreNameExist("gemPeridot")) {
+				GameRegistry.addRecipe(new ShapedOreRecipe(
+						new ItemStack(EnginationBlocks.COSMETIC_PERIDOT, 32),
+						"GGG", "GpG", "GGG",
+						'G', "blockGlass",
+						'p', "gemPeridot"
+						));
+			} else {
+				GameRegistry.addRecipe(new ShapedOreRecipe(
+						new ItemStack(EnginationBlocks.COSMETIC_PERIDOT, 16),
+						"GGG", "GlG", "GGG",
+						'G', "blockGlass",
+						'l', "dyeLime"
+						));
+			}
+			
+			GameRegistry.addRecipe(new ShapedOreRecipe(
+					new ItemStack(EnginationBlocks.COSMETIC_BAROQUE, 32),
+					"SSS", "SES", "SSS",
+					'S', "stone",
+					'E', new ItemStack(Blocks.SOUL_SAND)
+					));
+		}
 	}
 	
 	public void registerBlock(Block block) {
