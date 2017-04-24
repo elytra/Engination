@@ -53,13 +53,16 @@ public class ItemTomato extends Item {
 	}
 	
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
-		ItemStack item = player.getHeldItem(hand);
+	public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
+		ItemStack item = stack;
 		
         if (!player.capabilities.isCreativeMode) {
-        	item.shrink(1);
-        	player.setHeldItem(hand, item);
-            //--stack.stackSize;
+        	item.stackSize -= 1;
+        	if (item.stackSize<=0) {
+        		player.setHeldItem(hand, null);
+        	} else {
+        		player.setHeldItem(hand, item);
+        	}
         }
         world.playSound((EntityPlayer)null, player.posX, player.posY, player.posZ, Engination.SOUND_THROW, SoundCategory.PLAYERS, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
         

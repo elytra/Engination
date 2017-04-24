@@ -39,10 +39,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockCosmeticPillar extends BlockRotatedPillar {
 	public static PropertyInteger VARIATION = PropertyInteger.create("variant", 0, 3);
@@ -61,7 +62,12 @@ public class BlockCosmeticPillar extends BlockRotatedPillar {
 	}
 
 	@Override
-	public void getSubBlocks(Item itemBlock, CreativeTabs tab, NonNullList<ItemStack> list) {
+	@SideOnly(Side.CLIENT)
+	public void getSubBlocks(Item itemBlock, CreativeTabs tab, List<ItemStack> list) {
+		getVarieties(itemBlock, list);
+	}
+	
+	public void getVarieties(Item itemBlock, List<ItemStack> list) {
 		for(int i=0; i<4; i++) {
 			list.add(new ItemStack(itemBlock, 1, i));
 		}
@@ -91,9 +97,9 @@ public class BlockCosmeticPillar extends BlockRotatedPillar {
     }
 	
 	@Override
-	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float x, float y, float z, int something, EntityLivingBase placer, EnumHand hand) {
-		return super.getStateForPlacement(world, pos, facing, x, y, z, something, placer, hand)
-				.withProperty(VARIATION, placer.getHeldItem(hand).getItemDamage());
+	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float x, float y, float z, int meta, EntityLivingBase placer, ItemStack stack) {
+		return super.getStateForPlacement(world, pos, facing, x, y, z, meta, placer, stack)
+				.withProperty(VARIATION, stack.getItemDamage());
 	}
 	
 	public BlockCosmeticPillar setTip() { this.showTip=true; return this; }

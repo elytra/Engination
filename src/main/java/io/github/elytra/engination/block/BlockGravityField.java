@@ -214,9 +214,9 @@ public class BlockGravityField extends BlockDirectional {
 	@Override
 	public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune) {}
 	@Override
-	public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB aabb, List<AxisAlignedBB> list, Entity collider, boolean something) {}
+	public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB aabb, List<AxisAlignedBB> list, Entity collider) {}
 	@Override
-	public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) { return Block.NULL_AABB; }
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState state, World world, BlockPos pos) { return Block.NULL_AABB; }
 	@Override
 	public Item getItemDropped(IBlockState state, Random random, int fortuneLevel) { return null; }
 	@Override

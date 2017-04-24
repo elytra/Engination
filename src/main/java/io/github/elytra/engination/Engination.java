@@ -24,6 +24,7 @@
 package io.github.elytra.engination;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -56,7 +57,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.config.Configuration;
@@ -79,14 +79,14 @@ public class Engination {
 	
 	public static CreativeTabs TAB_ENGINATION = new CreativeTabs("engination") {
 		@Override
-		public ItemStack getTabIconItem() {
-			return new ItemStack(EnginationBlocks.CONVEYOR);
+		public Item getTabIconItem() {
+			return Item.getItemFromBlock(EnginationBlocks.CONVEYOR);
 		}
 	};
 	public static CreativeTabs TAB_COSMETIC = new CreativeTabs("engination.cosmetic") {
 		@Override
-		public ItemStack getTabIconItem() {
-			return new ItemStack(EnginationBlocks.COSMETIC_TOURIAN);
+		public Item getTabIconItem() {
+			return Item.getItemFromBlock(EnginationBlocks.COSMETIC_TOURIAN);
 		}
 	};
 	
@@ -173,7 +173,7 @@ public class Engination {
 		registerFood("food.celery", 0, 0, false);
 		
 		
-		EntityRegistry.registerModEntity(new ResourceLocation("engination", "tomato"), EntityTomato.class, "tomato", 0, this, 80, 3, true);
+		EntityRegistry.registerModEntity(EntityTomato.class, "tomato", 0, this, 80, 3, true);
 		
 		proxy.init();
 	}
@@ -352,7 +352,7 @@ public class Engination {
 	}
 	
 	public void registerCraftingCircle(BlockCosmetic block) {
-		NonNullList<ItemStack> list = NonNullList.create();
+		ArrayList<ItemStack> list = new ArrayList<>();
 		block.getVarieties(Item.getItemFromBlock(block), list);
 		if (list.size()<2) return;
 		ItemStack first = list.remove(0);

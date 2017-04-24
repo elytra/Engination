@@ -23,6 +23,8 @@
  */
 package io.github.elytra.engination;
 
+import java.util.ArrayList;
+
 import io.github.elytra.engination.block.BlockDisappearing;
 import io.github.elytra.engination.entity.EntityTomato;
 import io.github.elytra.engination.item.EnginationItems;
@@ -34,7 +36,6 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -43,7 +44,7 @@ public class ClientProxy extends Proxy {
 	@Override
 	public void registerItemModel(Item item) {
 		ResourceLocation loc = Item.REGISTRY.getNameForObject(item);
-		NonNullList<ItemStack> variantList = NonNullList.create();
+		ArrayList<ItemStack> variantList = new ArrayList<>();
 		item.getSubItems(item, Engination.TAB_ENGINATION, variantList);
 		if (variantList.size()==1) {
 			ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(loc, "inventory"));

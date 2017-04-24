@@ -39,7 +39,7 @@ public class BlockDisappearingMelee extends BlockDisappearing {
 	public void onBlockClicked(World world, BlockPos pos, EntityPlayer player) {
 		if (world.isRemote) return;
 		ItemStack heldItem = player.getHeldItemMainhand();
-		if (heldItem.isEmpty()) {
+		if (heldItem==null) {
 			this.disappearChainReaction(world, pos);
 		}
 	}

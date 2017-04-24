@@ -43,7 +43,7 @@ public class BlockDisappearingSpeed extends BlockDisappearing {
 	}
 
 	@Override
-	public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB bounds, List<AxisAlignedBB> list, Entity entity, boolean something) {
+	public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB bounds, List<AxisAlignedBB> list, Entity entity) {
 		if (!world.isRemote) return; //Sadly, the really important behavior here is clientside
 		if (state.getValue(DISAPPEARED)) {
 			//Don't collide with it if disappear'd!
@@ -52,12 +52,12 @@ public class BlockDisappearingSpeed extends BlockDisappearing {
 			if (entity instanceof EntityPlayer) {
 				double speed = entitySpeed(entity);
 				if (speed<getSpeedThreshold(state)) {
-					super.addCollisionBoxToList(state, world, pos, bounds, list, entity, something);
+					super.addCollisionBoxToList(state, world, pos, bounds, list, entity);
 				} else {
 					//Move aside, let the man go through. Let the man go through.
 				}
 			} else {
-				super.addCollisionBoxToList(state, world, pos, bounds, list, entity, something);
+				super.addCollisionBoxToList(state, world, pos, bounds, list, entity);
 			}
 		}
 	}

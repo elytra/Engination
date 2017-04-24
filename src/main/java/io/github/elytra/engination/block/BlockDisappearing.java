@@ -41,7 +41,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -68,7 +67,7 @@ public class BlockDisappearing extends BlockCosmetic {
 	}
 
 	@Override
-	public void getSubBlocks(Item itemBlock, CreativeTabs tab, NonNullList<ItemStack> list) {
+	public void getVarieties(Item itemBlock, List<ItemStack> list) {
 		for(int i=0; i<7; i++) {
 			list.add(new ItemStack(itemBlock, 1, i));
 		}
@@ -120,17 +119,17 @@ public class BlockDisappearing extends BlockCosmetic {
 	
 	@SuppressWarnings("deprecation")
 	@Override
-	public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB bounds, List<AxisAlignedBB> list, Entity entity, boolean something) {
+	public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB bounds, List<AxisAlignedBB> list, Entity entity) {
 		if (state.getValue(DISAPPEARED)) {
 			//Don't collide with it if disappear'd!
 		} else {
-			super.addCollisionBoxToList(state, world, pos, bounds, list, entity, something);
+			super.addCollisionBoxToList(state, world, pos, bounds, list, entity);
 		}
 	}
 	
 	@SuppressWarnings("deprecation")
 	@Override
-	public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState state, World world, BlockPos pos) {
 		if (state.getValue(DISAPPEARED)) {
 			return Block.NULL_AABB;
 		} else {
