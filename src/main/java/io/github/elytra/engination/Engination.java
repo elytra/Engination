@@ -191,6 +191,7 @@ public class Engination {
 				pendingItems.add(item);
 			} else if (b instanceof BlockCosmetic) {
 				ItemBlockCosmetic item = new ItemBlockCosmetic(b);
+				if (b==EnginationBlocks.COSMETIC_PRESIDENTIAL) item.setMaxStackSize(45); //Important special case
 				item.setRegistryName(b.getRegistryName());
 				r.register(item);
 				pendingItems.add(item);
