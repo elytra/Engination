@@ -23,16 +23,10 @@
  */
 package io.github.elytra.engination.item;
 
-import io.github.elytra.engination.Engination;
 import net.minecraft.item.ItemFood;
-import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 
-@ObjectHolder(Engination.MODID)
 public class EnginationItems {
-	@ObjectHolder("tomato")
-	public static final ItemTomato TOMATO = null;
-	@ObjectHolder("wand.relight")
-	public static final ItemWandRelight WAND_RELIGHT = null;
-	@ObjectHolder("food.celery")
-	public static final ItemFood CELERY = null;
+	public static ItemTomato TOMATO;
+	public static ItemWandRelight WAND_RELIGHT;
+	public static ItemFood CELERY;
 }

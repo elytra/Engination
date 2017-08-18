@@ -23,10 +23,14 @@
  */
 package io.github.elytra.engination;
 
-import net.minecraft.item.Item;
+import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class Proxy {
-	public void registerItemModel(Item item) {}
+	public void preInit() {}
 	
-	public void init() {}
+	@SubscribeEvent
+	public void onModelRegister(ModelRegistryEvent e) {
+		
+	}
 }

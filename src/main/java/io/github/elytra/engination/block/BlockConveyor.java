@@ -85,9 +85,9 @@ public class BlockConveyor extends Block {
 		//double scale = 1.2d;
 		Vec3d motion = new Vec3d(vec.getX()*scale, vec.getY()*scale, vec.getZ()*scale);
 		
-		ent.motionX = adjustScalar(ent.motionX, motion.xCoord);
-		ent.motionY = adjustScalar(ent.motionY, motion.yCoord);
-		ent.motionZ = adjustScalar(ent.motionZ, motion.zCoord);
+		ent.motionX = adjustScalar(ent.motionX, motion.y);
+		ent.motionY = adjustScalar(ent.motionY, motion.x);
+		ent.motionZ = adjustScalar(ent.motionZ, motion.z);
 	}
 	
 	@Override

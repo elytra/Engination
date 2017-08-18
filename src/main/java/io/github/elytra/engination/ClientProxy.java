@@ -36,15 +36,17 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ClientProxy extends Proxy {
-	@Override
-	public void registerItemModel(Item item) {
+	private void registerItemModel(Item item) {
 		ResourceLocation loc = Item.REGISTRY.getNameForObject(item);
 		NonNullList<ItemStack> variantList = NonNullList.create();
-		item.getSubItems(item, Engination.TAB_ENGINATION, variantList);
+		item.getSubItems(item.getCreativeTab(), variantList);
 		if (variantList.size()==1) {
 			ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(loc, "inventory"));
 		} else {
@@ -69,11 +71,18 @@ public class ClientProxy extends Proxy {
 	
 	
 	@Override
-	public void init() {
+	public void preInit() {
+		MinecraftForge.EVENT_BUS.register(this);
+		
 		RenderingRegistry.registerEntityRenderingHandler(EntityTomato.class,
 				(RenderManager m) -> new RenderSnowball<EntityTomato>(m, EnginationItems.TOMATO, Minecraft.getMinecraft().getRenderItem()));
-		
-		//ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBattery.class, new RenderEnergyStorage());
-		//ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCable.class, new RenderCable());
+	}
+	
+	@SubscribeEvent
+	@Override
+	public void onModelRegister(ModelRegistryEvent e) {
+		for(Item item : Engination.instance().pendingItems) {
+			registerItemModel(item);
+		}
 	}
 }

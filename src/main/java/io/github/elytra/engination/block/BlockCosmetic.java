@@ -32,19 +32,22 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.translation.I18n;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SuppressWarnings("deprecation")
 public class BlockCosmetic extends Block {
 	public static PropertyInteger VARIANT = PropertyInteger.create("variant", 0, 15);
-	private boolean showTip = false;
+	//private boolean showTip = false;
 	
 	public BlockCosmetic(String blockName, Material material, MapColor color) {
 		super(material, color);
@@ -67,9 +70,10 @@ public class BlockCosmetic extends Block {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(Item itemBlock, CreativeTabs tab, NonNullList<ItemStack> list) {
-		getVarieties(itemBlock, list);
+	public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list) {
+		if (this.getCreativeTabToDisplayOn().equals(tab)) {
+			getVarieties(ItemBlock.getItemFromBlock(this), list);
+		}
 	}
 	
 	/**
@@ -101,11 +105,12 @@ public class BlockCosmetic extends Block {
         return state.getValue(VARIANT);
     }
 	
-	public BlockCosmetic setTip() { this.showTip = true; return this; }
+	//public BlockCosmetic setTip() { this.showTip = true; return this; }
 	
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-		if (showTip) tooltip.add(I18n.translateToLocal(this.getUnlocalizedName()+".tip"));
+	public void addInformation(ItemStack stack, World playerWorld, List<String> tooltip, ITooltipFlag flags) {
+		//if (showTip)
+		tooltip.add(I18n.translateToLocal(this.getUnlocalizedName()+".tip"));
 	}
 	
 }

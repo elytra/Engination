@@ -27,9 +27,9 @@
 			10:{ "textures":{ "all":"engination:blocks/cosmetic/presidential/tile"} },
 			11:{ "textures":{ "all":"engination:blocks/cosmetic/presidential/tile"     } },
 			12:{ "textures":{ "all":"engination:blocks/cosmetic/presidential/tile"     } },
-			13:{ "textures":{ "all":"engination:blocks/cosmetic/test/dungeon_brick"     } },
-			14:{ "textures":{ "all":"engination:blocks/cosmetic/test/dungeon_grit"     } },
-			15:{ "textures":{ "all":"engination:blocks/cosmetic/test/dungeon_scale"     } }
+			13:{ "textures":{ "all":"engination:blocks/cosmetic/presidential/tile"     } },
+			14:{ "textures":{ "all":"engination:blocks/cosmetic/presidential/tile"     } },
+			15:{ "textures":{ "all":"engination:blocks/cosmetic/presidential/tile"     } }
 		}
 	}
 }

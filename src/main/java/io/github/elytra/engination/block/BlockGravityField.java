@@ -201,8 +201,8 @@ public class BlockGravityField extends BlockDirectional {
 	public boolean isOpaqueCube(IBlockState state) { return false; }
 	@Override
     public boolean isFullCube(IBlockState state) { return false; }
-	@Override
-	public boolean isBlockSolid(IBlockAccess world, BlockPos pos, EnumFacing side) { return false; }
+	//@Override
+	//public boolean isBlockSolid(IBlockAccess world, BlockPos pos, EnumFacing side) { return false; }
 	@Override
 	public boolean isAir(IBlockState state, IBlockAccess world, BlockPos pos) { return true; }
 	@Override

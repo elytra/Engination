@@ -67,9 +67,9 @@ public class ItemTomato extends Item {
             EntityTomato tomato = new EntityTomato(world, player);
             tomato.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
             //Adjustments are because newly-aggressive clientside collisions were causing premature tomato-face
-            tomato.posX += player.getLookVec().xCoord*2f;
-            tomato.posY += player.getLookVec().yCoord*1.5f;
-            tomato.posZ += player.getLookVec().zCoord*2f;
+            tomato.posX += player.getLookVec().x*2f;
+            tomato.posY += player.getLookVec().y*1.5f;
+            tomato.posZ += player.getLookVec().z*2f;
             tomato.posY -= 0.2f; //Felt high as it was.
             world.spawnEntity(tomato);
         }

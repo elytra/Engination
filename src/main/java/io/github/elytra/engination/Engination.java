@@ -24,6 +24,8 @@
 package io.github.elytra.engination;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -41,6 +43,7 @@ import io.github.elytra.engination.block.BlockLandingPad;
 import io.github.elytra.engination.block.BlockLauncher;
 import io.github.elytra.engination.block.EnginationBlocks;
 import io.github.elytra.engination.entity.EntityTomato;
+import io.github.elytra.engination.item.EnginationItems;
 import io.github.elytra.engination.item.ItemBlockCosmetic;
 import io.github.elytra.engination.item.ItemBlockCosmeticPillar;
 import io.github.elytra.engination.item.ItemTomato;
@@ -56,20 +59,27 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.registries.IForgeRegistry;
 
 @Mod(modid=Engination.MODID, name="Engination", version="@VERSION@")
 public class Engination {
@@ -103,6 +113,280 @@ public class Engination {
 	public static SoundEvent SOUND_THROW;
 	public static SoundEvent SOUND_LAUNCH;
 	
+	public List<Block> pendingBlocks = new ArrayList<>();
+	public List<Item> pendingItems = new ArrayList<>();
+	
+	@SubscribeEvent
+	public void onRegisterSounds(RegistryEvent.Register<SoundEvent> e) {
+		SOUND_TOMATO = createSound(e.getRegistry(), "tomato");
+		SOUND_THROW = createSound(e.getRegistry(), "tomato.throw");
+		SOUND_LAUNCH = createSound(e.getRegistry(), "machine.launcher");
+	}
+	
+	public SoundEvent createSound(IForgeRegistry<SoundEvent> registry, String loc) {
+		ResourceLocation rsrc = new ResourceLocation(Engination.MODID, loc);
+		SoundEvent sound = new SoundEvent(rsrc);
+		sound.setRegistryName(rsrc.getResourcePath());
+		registry.register(sound);
+		return sound;
+	}
+	
+	@SubscribeEvent
+	public void onRegisterBlocks(RegistryEvent.Register<Block> e) {
+		IForgeRegistry<Block> r = e.getRegistry();
+		
+		EnginationBlocks.CONVEYOR               = block(r, new BlockConveyor(2));
+		EnginationBlocks.CONVEYOR_FAST          = block(r, new BlockConveyor(4));
+		EnginationBlocks.CONVEYOR_ULTRAFAST     = block(r, new BlockConveyor(8));
+		
+		EnginationBlocks.LAUNCHER               = block(r, new BlockLauncher(2));
+		EnginationBlocks.LAUNCHER_FORCEFUL      = block(r, new BlockLauncher(3));
+		EnginationBlocks.LAUNCHER_ULTRAFORCEFUL = block(r, new BlockLauncher(5));
+		
+		EnginationBlocks.LANDINGPAD             = block(r, new BlockLandingPad());
+		
+		EnginationBlocks.COSMETIC_SCRAPMETAL    = block(r, new BlockCosmetic("scrapmetal",  Material.IRON, MapColor.BROWN     ));
+		EnginationBlocks.COSMETIC_ONEUP         = block(r, new BlockCosmetic("oneup",       Material.IRON, MapColor.IRON      ));
+		EnginationBlocks.COSMETIC_LOOSESTONE    = block(r, new BlockCosmetic("loosestone",  Material.ROCK, MapColor.GRAY      ));
+		EnginationBlocks.COSMETIC_WOOD          = block(r, new BlockCosmetic("wood",        Material.WOOD, MapColor.WOOD      ));
+		EnginationBlocks.COSMETIC_SANIC         = block(r, new BlockCosmetic("sanic",       Material.ROCK, MapColor.LIGHT_BLUE));
+		EnginationBlocks.COSMETIC_WINGFORTRESS  = block(r, new BlockCosmetic("wingfortress",Material.IRON, MapColor.GRAY      ));
+		EnginationBlocks.COSMETIC_TOURIAN       = block(r, new BlockCosmetic("tourian",     Material.IRON, MapColor.GRAY      ));
+		EnginationBlocks.COSMETIC_DOLOMITE      = block(r, new BlockCosmetic("dolomite",    Material.ROCK, MapColor.STONE     ));
+		EnginationBlocks.COSMETIC_CELESTITE     = block(r, new BlockCosmetic("celestite",   Material.ROCK, MapColor.CYAN      ));
+		EnginationBlocks.COSMETIC_BAROQUE       = block(r, new BlockCosmetic("baroque",     Material.ROCK, MapColor.QUARTZ    ));
+		EnginationBlocks.COSMETIC_PRESIDENTIAL  = block(r, new BlockCosmetic("presidential",Material.ROCK, MapColor.QUARTZ    )); //#NotMyPresident #DealWithIt
+		EnginationBlocks.COSMETIC_PERIDOT       = block(r, new BlockCosmetic("peridot",     Material.GLASS,MapColor.GREEN     )); //I love feedback - Thanks u/Barhandar! ^_^
+		
+		EnginationBlocks.COSMETIC_PILLAR_SCRAPMETAL = block(r, new BlockCosmeticPillar("scrapmetal.column", Material.IRON, MapColor.BROWN));
+		EnginationBlocks.COSMETIC_PILLAR_BAROQUE    = block(r, new BlockCosmeticPillar("baroque.column",    Material.IRON, MapColor.GREEN));
+		
+		EnginationBlocks.COSMETIC_LAMP = block(r, new BlockCosmetic("lamp", Material.ROCK, MapColor.ICE));
+		EnginationBlocks.COSMETIC_LAMP.setLightLevel(1.0f);
+		
+		EnginationBlocks.GRAVITY_FIELD          = block(r, new BlockGravityField());
+		
+		EnginationBlocks.DISAPPEARING_FALLTHROUGH = block(r, new BlockFallThrough("fallthrough"));
+		EnginationBlocks.DISAPPEARING_MELEE       = block(r, new BlockDisappearingMelee("melee"));
+		EnginationBlocks.DISAPPEARING_SWORD       = block(r, new BlockDisappearingSword("sword"));
+		EnginationBlocks.DISAPPEARING_SPEED       = block(r, new BlockDisappearingSpeed("speed"));
+	}
+	
+	public <T extends Block> T block(IForgeRegistry<Block> registry, T t) { //You forced my hand, Lex
+		registry.register(t);
+		pendingBlocks.add(t);
+		return t;
+	}
+	
+	@SubscribeEvent
+	public void onRegisterItems(RegistryEvent.Register<Item> e) {
+		IForgeRegistry<Item> r = e.getRegistry();
+		
+		//Create appropriate item variants of all the blocks we created earlier
+		for(Block b : pendingBlocks) {
+			if (b instanceof BlockCosmeticPillar) {
+				ItemBlockCosmeticPillar item = new ItemBlockCosmeticPillar(b);
+				item.setRegistryName(b.getRegistryName());
+				r.register(item);
+				pendingItems.add(item);
+			} else if (b instanceof BlockCosmetic) {
+				ItemBlockCosmetic item = new ItemBlockCosmetic(b);
+				item.setRegistryName(b.getRegistryName());
+				r.register(item);
+				pendingItems.add(item);
+			} else {
+				ItemBlock item = new ItemBlock(b);
+				item.setRegistryName(b.getRegistryName());
+				r.register(item);
+				pendingItems.add(item);
+			}
+		}
+		
+		EnginationItems.TOMATO       = item(r, new ItemTomato());
+		EnginationItems.WAND_RELIGHT = item(r, new ItemWandRelight());
+		EnginationItems.CELERY       = food(r, "food.celery", 0, 0, false);
+		
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(EnginationItems.TOMATO, new ItemTomato.BehaviorTomatoDispense());
+	}
+	
+	public <T extends Item> T item(IForgeRegistry<Item> registry, T t) {
+		registry.register(t);
+		pendingItems.add(t);
+		return t;
+	}
+	
+	public ItemFood food(IForgeRegistry<Item> registry, String name, int amount, float saturation, boolean forWolves) {
+		ItemFood food = new ItemFood(amount, saturation, forWolves);
+		food.setRegistryName(name);
+		food.setUnlocalizedName(name);
+		food.setCreativeTab(Engination.TAB_ENGINATION);
+		registry.register(food);
+		pendingItems.add(food);
+		
+		return food;
+	}
+	
+	@SubscribeEvent
+	public void onRegisterRecipes(RegistryEvent.Register<IRecipe> e) {
+		IForgeRegistry<IRecipe> r = e.getRegistry();
+		
+		if (ENABLE_RECIPES_COSMETIC) {
+			ResourceLocation groupCosmetic = new ResourceLocation("engination:cosmetic");
+			
+			shapedOreRecipe(r, groupCosmetic,
+			//r.register(new ShapedOreRecipe( groupCosmetic,
+					new ItemStack(EnginationBlocks.COSMETIC_SCRAPMETAL, 32),
+					"SiS", "i i", "SiS",
+					'S', "stone",
+					'i', "ingotIron"
+					);//.setRegistryName(EnginationBlocks.COSMETIC_SCRAPMETAL.getRegistryName()));
+			
+			shapedOreRecipe(r, groupCosmetic,
+			//r.register(new ShapedOreRecipe( groupCosmetic,
+					new ItemStack(EnginationBlocks.COSMETIC_SANIC, 32),
+					"SiS", "ili", "SiS",
+					'S', "stone",
+					'i', "ingotIron",
+					'l', "gemLapis"
+					);
+			
+			shapedOreRecipe(r, groupCosmetic,
+			//r.register(new ShapedOreRecipe( groupCosmetic,
+					new ItemStack(EnginationBlocks.COSMETIC_WINGFORTRESS, 32),
+					"SiS", "iii", "SiS",
+					'S', "stone",
+					'i', "ingotIron"
+					);
+			
+			shapedOreRecipe(r, groupCosmetic,
+			//r.register(new ShapedOreRecipe( groupCosmetic,
+					new ItemStack(EnginationBlocks.COSMETIC_TOURIAN, 32),
+					"SiS", "ici", "SiS",
+					'S', "stone",
+					'i', "ingotIron",
+					'c', new ItemStack(Items.COAL, 1, OreDictionary.WILDCARD_VALUE)
+					);
+			
+			//Unrealistically expensive to account for the fact that it's really quite big.
+			//And you know what they say, big block, ...
+			shapedOreRecipe(r, groupCosmetic,
+			//r.register(new ShapedOreRecipe( groupCosmetic,
+					new ItemStack(EnginationBlocks.COSMETIC_PRESIDENTIAL, 1),
+					"GgG", "geg", "GgG",
+					'G', "blockGold",
+					'g', "ingotGold",
+					'e', "gemEmerald"
+					);
+			
+			shapedOreRecipe(r, groupCosmetic,
+			//r.register(new ShapedOreRecipe( groupCosmetic,
+					new ItemStack(EnginationBlocks.COSMETIC_WOOD, 32),
+					"WWW", "WsW", "WWW",
+					'W', "plankWood",
+					's', "stickWood"
+					);
+			
+			shapedOreRecipe(r, groupCosmetic,
+			//r.register(new ShapedOreRecipe( groupCosmetic,
+					new ItemStack(EnginationBlocks.COSMETIC_LOOSESTONE, 32),
+					"SCS", "C C", "SCS",
+					'S', "stone",
+					'C', "cobblestone"
+					);
+			
+			shapedOreRecipe(r, groupCosmetic,
+			//r.register(new ShapedOreRecipe( groupCosmetic,
+					new ItemStack(EnginationBlocks.COSMETIC_LAMP, 1),
+					"SgS", "g g", "SgS",
+					'S', "stone",
+					'g', "dustGlowstone"
+					);
+			
+			shapedOreRecipe(r, groupCosmetic,
+			//r.register(new ShapedOreRecipe( groupCosmetic,
+					new ItemStack(EnginationBlocks.COSMETIC_CELESTITE, 32),
+					"GcG", "c c", "GcG",
+					'G', "blockGlass",
+					'c', "dyeCyan"
+					);
+			
+			shapedOreRecipe(r, groupCosmetic,
+			//r.register(new ShapedOreRecipe( groupCosmetic,
+					new ItemStack(EnginationBlocks.COSMETIC_DOLOMITE, 32),
+					"SDS", "DGD", "SDS",
+					'S', "stone",
+					'D', "stoneDiorite",
+					'G', "stoneGranite"
+					);
+			
+			//No listAllMushrooms entry exists :/
+			shapedOreRecipe(r, groupCosmetic,
+			//r.register(new ShapedOreRecipe( groupCosmetic,
+					new ItemStack(EnginationBlocks.COSMETIC_ONEUP, 32),
+					"SSS", "SMS", "SSS",
+					'S', "stone",
+					'M', new ItemStack(Blocks.RED_MUSHROOM)
+					);
+			
+			shapedOreRecipe(r, groupCosmetic,
+			//r.register(new ShapedOreRecipe( groupCosmetic,
+					new ItemStack(EnginationBlocks.COSMETIC_ONEUP, 32),
+					"SSS", "SMS", "SSS",
+					'S', "stone",
+					'M', new ItemStack(Blocks.BROWN_MUSHROOM)
+					);
+			
+			if (OreDictionary.doesOreNameExist("gemPeridot")) {
+				shapedOreRecipe(r, groupCosmetic,
+				//r.register(new ShapedOreRecipe( groupCosmetic,
+						new ItemStack(EnginationBlocks.COSMETIC_PERIDOT, 32),
+						"GGG", "GpG", "GGG",
+						'G', "blockGlass",
+						'p', "gemPeridot"
+						);
+			} else {
+				shapedOreRecipe(r, groupCosmetic,
+				//r.register(new ShapedOreRecipe( groupCosmetic,
+						new ItemStack(EnginationBlocks.COSMETIC_PERIDOT, 16),
+						"SGS", "GlG", "SGS",
+						'S', "sand",
+						'G', "blockGlass",
+						'l', "dyeLime"
+						);
+			}
+			
+			shapedOreRecipe(r, groupCosmetic,
+			//r.register(new ShapedOreRecipe( groupCosmetic,
+					new ItemStack(EnginationBlocks.COSMETIC_BAROQUE, 32),
+					"SSS", "SES", "SSS",
+					'S', "stone",
+					'E', new ItemStack(Blocks.SOUL_SAND)
+					);
+			
+			
+			//Circular crafting for varieties
+			registerCraftingCircle(r, EnginationBlocks.COSMETIC_BAROQUE);
+			registerCraftingCircle(r, EnginationBlocks.COSMETIC_CELESTITE);
+			registerCraftingCircle(r, EnginationBlocks.COSMETIC_DOLOMITE);
+			registerCraftingCircle(r, EnginationBlocks.COSMETIC_LAMP);
+			registerCraftingCircle(r, EnginationBlocks.COSMETIC_LOOSESTONE);
+			registerCraftingCircle(r, EnginationBlocks.COSMETIC_ONEUP);
+			registerCraftingCircle(r, EnginationBlocks.COSMETIC_PERIDOT);
+			registerCraftingCircle(r, EnginationBlocks.COSMETIC_PRESIDENTIAL);
+			registerCraftingCircle(r, EnginationBlocks.COSMETIC_SANIC);
+			registerCraftingCircle(r, EnginationBlocks.COSMETIC_SCRAPMETAL);
+			registerCraftingCircle(r, EnginationBlocks.COSMETIC_TOURIAN);
+			registerCraftingCircle(r, EnginationBlocks.COSMETIC_WINGFORTRESS);
+			registerCraftingCircle(r, EnginationBlocks.COSMETIC_WOOD);
+		}
+	}
+	
+	public ShapedOreRecipe shapedOreRecipe(IForgeRegistry<IRecipe> registry, ResourceLocation category, ItemStack out, Object... recipe) {
+		ShapedOreRecipe result = new ShapedOreRecipe(category, out, recipe);
+		result.setRegistryName(out.getItem().getRegistryName()+"_"+out.getItemDamage());
+		registry.register(result);
+		return result;
+	}
 	
 	@EventHandler
 	public void onPreInit(FMLPreInitializationEvent e) {
@@ -124,244 +408,28 @@ public class Engination {
 		
 		CONFIG.save();
 		
-		SOUND_TOMATO = createSound("tomato");
-		SOUND_THROW = createSound("tomato.throw");
-		SOUND_LAUNCH = createSound("machine.launcher");
-		
-		registerBlock(new BlockConveyor(2));
-		registerBlock(new BlockConveyor(4));
-		registerBlock(new BlockConveyor(8));
-		
-		registerBlock(new BlockLauncher(2));
-		registerBlock(new BlockLauncher(3));
-		registerBlock(new BlockLauncher(5));
-		
-		registerBlock(new BlockLandingPad());
-		
-		registerCosmeticBlock(new BlockCosmetic("scrapmetal",  Material.IRON, MapColor.BROWN     ).setTip());
-		registerCosmeticBlock(new BlockCosmetic("oneup",       Material.IRON, MapColor.IRON      ).setTip());
-		registerCosmeticBlock(new BlockCosmetic("loosestone",  Material.ROCK, MapColor.GRAY      ).setTip());
-		registerCosmeticBlock(new BlockCosmetic("wood",        Material.WOOD, MapColor.WOOD      ).setTip());
-		registerCosmeticBlock(new BlockCosmetic("sanic",       Material.ROCK, MapColor.LIGHT_BLUE).setTip());
-		registerCosmeticBlock(new BlockCosmetic("wingfortress",Material.IRON, MapColor.GRAY      ).setTip());
-		registerCosmeticBlock(new BlockCosmetic("tourian",     Material.IRON, MapColor.GRAY      ).setTip());
-		registerCosmeticBlock(new BlockCosmetic("dolomite",    Material.ROCK, MapColor.STONE     ).setTip());
-		registerCosmeticBlock(new BlockCosmetic("celestite",   Material.ROCK, MapColor.CYAN      ).setTip());
-		registerCosmeticBlock(new BlockCosmetic("baroque",     Material.ROCK, MapColor.QUARTZ    ).setTip()); //This is a joke. Please don't try to explain history to me.
-		registerCosmeticBlock(new BlockCosmetic("presidential",Material.ROCK, MapColor.QUARTZ    ).setTip()); //#NotMyPresident #DealWithIt
-		registerCosmeticBlock(new BlockCosmetic("peridot",     Material.GLASS,MapColor.GREEN     ).setTip());
-		
-		registerCosmeticBlock(new BlockCosmeticPillar("scrapmetal.column", Material.IRON, MapColor.BROWN).setTip());
-		registerCosmeticBlock(new BlockCosmeticPillar("baroque.column", Material.IRON, MapColor.GREEN).setTip());
-		
-		BlockCosmetic lamps = new BlockCosmetic("lamp", Material.ROCK, MapColor.ICE).setTip();
-		lamps.setLightLevel(1.0f); //15 light level == 1.0f ... why? MOJANG LOVES CONSISTENCY :(
-		registerCosmeticBlock(lamps);
-		
-		registerBlock(new BlockGravityField());
-		registerCosmeticBlock(new BlockFallThrough("fallthrough"));
-		registerCosmeticBlock(new BlockDisappearingMelee("melee"));
-		registerCosmeticBlock(new BlockDisappearingSword("sword"));
-		registerCosmeticBlock(new BlockDisappearingSpeed("speed"));
-		
-		ItemTomato tomato = new ItemTomato();
-		registerItem(tomato);
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(tomato, new ItemTomato.BehaviorTomatoDispense());
-		
-		registerItem(new ItemWandRelight());
-		
-		registerFood("food.celery", 0, 0, false);
-		
-		
 		EntityRegistry.registerModEntity(new ResourceLocation("engination", "tomato"), EntityTomato.class, "tomato", 0, this, 80, 3, true);
 		
-		proxy.init();
+		MinecraftForge.EVENT_BUS.register(this);
+		proxy.preInit();
 	}
 	
-	@EventHandler
-	public void onInit(FMLInitializationEvent e) {
-		if (ENABLE_RECIPES_COSMETIC) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(
-					new ItemStack(EnginationBlocks.COSMETIC_SCRAPMETAL, 32),
-					"SiS", "i i", "SiS",
-					'S', "stone",
-					'i', "ingotIron"
-					));
-			
-			GameRegistry.addRecipe(new ShapedOreRecipe(
-					new ItemStack(EnginationBlocks.COSMETIC_SANIC, 32),
-					"SiS", "ili", "SiS",
-					'S', "stone",
-					'i', "ingotIron",
-					'l', "gemLapis"
-					));
-			
-			GameRegistry.addRecipe(new ShapedOreRecipe(
-					new ItemStack(EnginationBlocks.COSMETIC_WINGFORTRESS, 32),
-					"SiS", "iii", "SiS",
-					'S', "stone",
-					'i', "ingotIron"
-					));
-			
-			GameRegistry.addRecipe(new ShapedOreRecipe(
-					new ItemStack(EnginationBlocks.COSMETIC_TOURIAN, 32),
-					"SiS", "ici", "SiS",
-					'S', "stone",
-					'i', "ingotIron",
-					'c', new ItemStack(Items.COAL, 1, OreDictionary.WILDCARD_VALUE)
-					));
-			
-			//Unrealistically expensive to account for the fact that it's really quite big.
-			//And you know what they say, big block, ...
-			GameRegistry.addRecipe(new ShapedOreRecipe(
-					new ItemStack(EnginationBlocks.COSMETIC_PRESIDENTIAL, 1),
-					"GgG", "geg", "GgG",
-					'G', "blockGold",
-					'g', "ingotGold",
-					'e', "gemEmerald"
-					));
-			
-			GameRegistry.addRecipe(new ShapedOreRecipe(
-					new ItemStack(EnginationBlocks.COSMETIC_WOOD, 32),
-					"WWW", "WsW", "WWW",
-					'W', "plankWood",
-					's', "stickWood"
-					));
-			
-			GameRegistry.addRecipe(new ShapedOreRecipe(
-					new ItemStack(EnginationBlocks.COSMETIC_LOOSESTONE, 32),
-					"SCS", "C C", "SCS",
-					'S', "stone",
-					'C', "cobblestone"
-					));
-			
-			GameRegistry.addRecipe(new ShapedOreRecipe(
-					new ItemStack(EnginationBlocks.COSMETIC_LAMP, 1),
-					"SgS", "g g", "SgS",
-					'S', "stone",
-					'g', "dustGlowstone"
-					));
-			
-			GameRegistry.addRecipe(new ShapedOreRecipe(
-					new ItemStack(EnginationBlocks.COSMETIC_CELESTITE, 32),
-					"GcG", "c c", "GcG",
-					'G', "blockGlass",
-					'c', "dyeCyan"
-					));
-			
-			GameRegistry.addRecipe(new ShapedOreRecipe(
-					new ItemStack(EnginationBlocks.COSMETIC_DOLOMITE, 32),
-					"SDS", "DGD", "SDS",
-					'S', "stone",
-					'D', "stoneDiorite",
-					'G', "stoneGranite"
-					));
-			
-			//No listAllMushrooms entry exists :/
-			GameRegistry.addRecipe(new ShapedOreRecipe(
-					new ItemStack(EnginationBlocks.COSMETIC_ONEUP, 32),
-					"SSS", "SMS", "SSS",
-					'S', "stone",
-					'M', new ItemStack(Blocks.RED_MUSHROOM)
-					));
-			GameRegistry.addRecipe(new ShapedOreRecipe(
-					new ItemStack(EnginationBlocks.COSMETIC_ONEUP, 32),
-					"SSS", "SMS", "SSS",
-					'S', "stone",
-					'M', new ItemStack(Blocks.BROWN_MUSHROOM)
-					));
-			
-			if (OreDictionary.doesOreNameExist("gemPeridot")) {
-				GameRegistry.addRecipe(new ShapedOreRecipe(
-						new ItemStack(EnginationBlocks.COSMETIC_PERIDOT, 32),
-						"GGG", "GpG", "GGG",
-						'G', "blockGlass",
-						'p', "gemPeridot"
-						));
-			} else {
-				GameRegistry.addRecipe(new ShapedOreRecipe(
-						new ItemStack(EnginationBlocks.COSMETIC_PERIDOT, 16),
-						"SGS", "GlG", "SGS",
-						'G', "blockGlass",
-						'l', "dyeLime"
-						));
-			}
-			
-			GameRegistry.addRecipe(new ShapedOreRecipe(
-					new ItemStack(EnginationBlocks.COSMETIC_BAROQUE, 32),
-					"SSS", "SES", "SSS",
-					'S', "stone",
-					'E', new ItemStack(Blocks.SOUL_SAND)
-					));
-			
-			
-			//Circular crafting for varieties
-			registerCraftingCircle(EnginationBlocks.COSMETIC_BAROQUE);
-			registerCraftingCircle(EnginationBlocks.COSMETIC_CELESTITE);
-			registerCraftingCircle(EnginationBlocks.COSMETIC_DOLOMITE);
-			registerCraftingCircle(EnginationBlocks.COSMETIC_LAMP);
-			registerCraftingCircle(EnginationBlocks.COSMETIC_LOOSESTONE);
-			registerCraftingCircle(EnginationBlocks.COSMETIC_ONEUP);
-			registerCraftingCircle(EnginationBlocks.COSMETIC_PERIDOT);
-			registerCraftingCircle(EnginationBlocks.COSMETIC_PRESIDENTIAL);
-			registerCraftingCircle(EnginationBlocks.COSMETIC_SANIC);
-			registerCraftingCircle(EnginationBlocks.COSMETIC_SCRAPMETAL);
-			registerCraftingCircle(EnginationBlocks.COSMETIC_TOURIAN);
-			registerCraftingCircle(EnginationBlocks.COSMETIC_WINGFORTRESS);
-			registerCraftingCircle(EnginationBlocks.COSMETIC_WOOD);
-		}
-	}
 	
-	public void registerBlock(Block block) {
-		ItemBlock item = new ItemBlock(block);
-		item.setRegistryName(block.getRegistryName());
-		GameRegistry.register(item);
-		GameRegistry.register(block);
-		proxy.registerItemModel(item);
-	}
-	
-	public void registerCosmeticBlock(Block block) {
-		ItemBlock item = null;
-		if (block instanceof BlockCosmeticPillar) item = new ItemBlockCosmeticPillar(block);
-		else item = new ItemBlockCosmetic(block);
-		item.setRegistryName(block.getRegistryName());
-		GameRegistry.register(item);
-		GameRegistry.register(block);
-		proxy.registerItemModel(item);
-	}
-
-	
-	public void registerItem(Item item) {
-		GameRegistry.register(item);
-		proxy.registerItemModel(item);
-	}
-	
-	public void registerFood(String name, int amount, float saturation, boolean forWolves) {
-		ItemFood food = new ItemFood(amount, saturation, forWolves);
-		food.setRegistryName(name);
-		food.setUnlocalizedName(name);
-		food.setCreativeTab(Engination.TAB_ENGINATION);
-		registerItem(food);
-	}
-	
-	public SoundEvent createSound(String loc) {
-		ResourceLocation rsrc = new ResourceLocation(Engination.MODID, loc);
-		SoundEvent sound = new SoundEvent(rsrc);
-		GameRegistry.register(sound, rsrc);
-		return sound;
-	}
-	
-	public void registerCraftingCircle(BlockCosmetic block) {
+	public void registerCraftingCircle(IForgeRegistry<IRecipe> registry, BlockCosmetic block) {
 		NonNullList<ItemStack> list = NonNullList.create();
 		block.getVarieties(Item.getItemFromBlock(block), list);
 		if (list.size()<2) return;
 		ItemStack first = list.remove(0);
 		ItemStack previous = first;
+		int i = 0;
 		for(ItemStack item : list) {
-			GameRegistry.addShapelessRecipe(item, previous);
+			registry.register(new ShapelessRecipes("engination:chisel", item, NonNullList.from(Ingredient.fromStacks(previous)))
+					.setRegistryName(block.getRegistryName()+"_"+i));
 			previous = item;
+			i++;
 		}
-		GameRegistry.addShapelessRecipe(first, list.get(list.size()-1));
+		registry.register(new ShapelessRecipes("engination:chisel", first, NonNullList.from(Ingredient.fromStacks(list.get(list.size()-1))))
+				.setRegistryName(block.getRegistryName()+"_"+i));
 	}
 	
 	public static Engination instance() {

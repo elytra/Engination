@@ -23,70 +23,39 @@
  */
 package io.github.elytra.engination.block;
 
-import io.github.elytra.engination.Engination;
-import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
-
-@ObjectHolder(Engination.MODID)
 public class EnginationBlocks {
-	@ObjectHolder("machine.conveyor.2")
-	public static final BlockConveyor CONVEYOR = null;
+	public static BlockConveyor CONVEYOR;
+	public static BlockConveyor CONVEYOR_FAST;
+	public static BlockConveyor CONVEYOR_ULTRAFAST;
 	
-	@ObjectHolder("machine.conveyor.4")
-	public static final BlockConveyor CONVEYOR_FAST = null;
+	public static BlockLauncher LAUNCHER;
+	public static BlockLauncher LAUNCHER_FORCEFUL;
+	public static BlockLauncher LAUNCHER_ULTRAFORCEFUL;
 	
-	@ObjectHolder("machine.conveyor.8")
-	public static final BlockConveyor CONVEYOR_ULTRAFAST = null;
+	public static BlockLandingPad LANDINGPAD;
 	
-	@ObjectHolder("machine.launcher.2")
-	public static final BlockLauncher LAUNCHER = null;
+	public static BlockGravityField GRAVITY_FIELD;
 	
-	@ObjectHolder("machine.launcher.3")
-	public static final BlockLauncher LAUNCHER_FORCEFUL = null;
+	public static BlockCosmetic COSMETIC_BAROQUE;
+	public static BlockCosmetic COSMETIC_CELESTITE;
+	public static BlockCosmetic COSMETIC_DOLOMITE;
+	public static BlockCosmetic COSMETIC_LAMP;
+	public static BlockCosmetic COSMETIC_LOOSESTONE;
+	public static BlockCosmetic COSMETIC_ONEUP;
+	public static BlockCosmetic COSMETIC_PERIDOT;
+	public static BlockCosmetic COSMETIC_PRESIDENTIAL;
+	public static BlockCosmetic COSMETIC_SANIC;
+	public static BlockCosmetic COSMETIC_SCRAPMETAL;
+	public static BlockCosmetic COSMETIC_TOURIAN;
+	public static BlockCosmetic COSMETIC_WINGFORTRESS;
+	public static BlockCosmetic COSMETIC_WOOD;
 	
-	@ObjectHolder("machine.launcher.5")
-	public static final BlockLauncher LAUNCHER_ULTRAFORCEFUL = null;
+	public static BlockCosmeticPillar COSMETIC_PILLAR_SCRAPMETAL;
+	public static BlockCosmeticPillar COSMETIC_PILLAR_BAROQUE;
 	
-	@ObjectHolder("machine.landingpad")
-	public static final BlockLandingPad LANDINGPAD = null;
+	public static BlockFallThrough DISAPPEARING_FALLTHROUGH;
+	public static BlockDisappearingMelee DISAPPEARING_MELEE;
+	public static BlockDisappearingSword DISAPPEARING_SWORD;
+	public static BlockDisappearingSpeed DISAPPEARING_SPEED;
 	
-	
-	
-	@ObjectHolder("cosmetic.baroque")
-	public static final BlockCosmetic COSMETIC_BAROQUE = null;
-	
-	@ObjectHolder("cosmetic.celestite")//
-	public static final BlockCosmetic COSMETIC_CELESTITE = null;
-	
-	@ObjectHolder("cosmetic.dolomite")//
-	public static final BlockCosmetic COSMETIC_DOLOMITE = null;
-	
-	@ObjectHolder("cosmetic.lamp")//
-	public static final BlockCosmetic COSMETIC_LAMP = null;
-	
-	@ObjectHolder("cosmetic.loosestone")//
-	public static final BlockCosmetic COSMETIC_LOOSESTONE = null;
-	
-	@ObjectHolder("cosmetic.oneup")//
-	public static final BlockCosmetic COSMETIC_ONEUP = null;
-	
-	@ObjectHolder("cosmetic.peridot")//
-	public static final BlockCosmetic COSMETIC_PERIDOT = null;
-	
-	@ObjectHolder("cosmetic.presidential")//
-	public static final BlockCosmetic COSMETIC_PRESIDENTIAL = null;
-	
-	@ObjectHolder("cosmetic.sanic")//
-	public static final BlockCosmetic COSMETIC_SANIC = null;
-	
-	@ObjectHolder("cosmetic.scrapmetal")//
-	public static final BlockCosmetic COSMETIC_SCRAPMETAL = null;
-	
-	@ObjectHolder("cosmetic.tourian")//
-	public static final BlockCosmetic COSMETIC_TOURIAN = null;
-	
-	@ObjectHolder("cosmetic.wingfortress")//
-	public static final BlockCosmetic COSMETIC_WINGFORTRESS = null;
-	
-	@ObjectHolder("cosmetic.wood")//
-	public static final BlockCosmetic COSMETIC_WOOD = null;
 }

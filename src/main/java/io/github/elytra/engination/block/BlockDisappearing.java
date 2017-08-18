@@ -38,6 +38,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -68,9 +69,11 @@ public class BlockDisappearing extends BlockCosmetic {
 	}
 
 	@Override
-	public void getSubBlocks(Item itemBlock, CreativeTabs tab, NonNullList<ItemStack> list) {
-		for(int i=0; i<7; i++) {
-			list.add(new ItemStack(itemBlock, 1, i));
+	public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list) {
+		if (getCreativeTabToDisplayOn().equals(tab)) {
+			for(int i=0; i<7; i++) {
+				list.add(new ItemStack(ItemBlock.getItemFromBlock(this), 1, i));
+			}
 		}
 	}
 	

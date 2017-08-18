@@ -32,10 +32,12 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -61,9 +63,11 @@ public class BlockCosmeticPillar extends BlockRotatedPillar {
 	}
 
 	@Override
-	public void getSubBlocks(Item itemBlock, CreativeTabs tab, NonNullList<ItemStack> list) {
-		for(int i=0; i<4; i++) {
-			list.add(new ItemStack(itemBlock, 1, i));
+	public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list) {
+		if (this.getCreativeTabToDisplayOn().equals(tab)) {
+			for(int i=0; i<4; i++) {
+				list.add(new ItemStack(ItemBlock.getItemFromBlock(this), 1, i));
+			}
 		}
 	}
 	
@@ -99,7 +103,7 @@ public class BlockCosmeticPillar extends BlockRotatedPillar {
 	public BlockCosmeticPillar setTip() { this.showTip=true; return this; }
 	
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
+	public void addInformation(ItemStack stack, World playerWorld, List<String> tooltip, ITooltipFlag advanced) {
 		if (showTip) tooltip.add(I18n.translateToLocal(this.getUnlocalizedName()+".tip"));
 	}
 }
