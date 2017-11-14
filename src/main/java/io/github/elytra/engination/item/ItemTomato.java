@@ -65,7 +65,7 @@ public class ItemTomato extends Item {
         
         if (!world.isRemote) {
             EntityTomato tomato = new EntityTomato(world, player);
-            tomato.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
+            tomato.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
             //Adjustments are because newly-aggressive clientside collisions were causing premature tomato-face
             tomato.posX += player.getLookVec().x*2f;
             tomato.posY += player.getLookVec().y*1.5f;

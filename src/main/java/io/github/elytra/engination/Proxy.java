@@ -28,9 +28,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class Proxy {
 	public void preInit() {}
-	
 	@SubscribeEvent
 	public void onModelRegister(ModelRegistryEvent e) {
-		
 	}
 }
