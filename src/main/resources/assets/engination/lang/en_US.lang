@@ -3,7 +3,8 @@ itemGroup.engination=Engination
 itemGroup.engination.cosmetic=Engination Cosmetic Blocks
 
 #Items
-item.tomato.name=Tomato
+item.engination.tomato.name=Tomato
+item.engination.tomato.creative.name="Creative" Tomato
 item.food.celery.name=Celery
 item.wand.relight.name=Chunk Relight Wand
 

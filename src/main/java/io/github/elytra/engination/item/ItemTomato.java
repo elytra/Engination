@@ -27,6 +27,7 @@ import java.util.List;
 
 import io.github.elytra.engination.Engination;
 import io.github.elytra.engination.entity.EntityTomato;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.dispenser.BehaviorProjectileDispense;
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.entity.IProjectile;
@@ -41,14 +42,18 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
 public class ItemTomato extends Item {
-	public ItemTomato() {
+	private boolean creative;
+	
+	public ItemTomato(boolean creative) {
+		this.creative = creative;
 		this.setCreativeTab(Engination.TAB_ENGINATION);
-		this.setUnlocalizedName("tomato");
-		this.setRegistryName("tomato");
+		this.setUnlocalizedName((creative) ? "engination.tomato.creative" : "engination.tomato");
+		this.setRegistryName((creative) ? "tomato.creative" : "tomato");
 		this.maxStackSize = 16;
 	}
 	
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
+	@Override
+	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
 		tooltip.add("Throw me!");
 	}
 	
@@ -56,7 +61,7 @@ public class ItemTomato extends Item {
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 		ItemStack item = player.getHeldItem(hand);
 		
-        if (!player.capabilities.isCreativeMode) {
+        if (!player.capabilities.isCreativeMode && !creative) {
         	item.shrink(1);
         	player.setHeldItem(hand, item);
             //--stack.stackSize;

@@ -201,9 +201,10 @@ public class Engination {
 			}
 		}
 		
-		EnginationItems.TOMATO       = item(r, new ItemTomato());
+		EnginationItems.TOMATO       = item(r, new ItemTomato(false));
+		EnginationItems.TOMATO_CREATIVE = item(r, new ItemTomato(true));
 		EnginationItems.WAND_RELIGHT = item(r, new ItemWandRelight());
-		EnginationItems.CELERY       = food(r, "food.celery", 0, 0, false);
+		EnginationItems.CELERY       = food(r, "food.celery", -1, 0, false);
 		
 		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(EnginationItems.TOMATO, new ItemTomato.BehaviorTomatoDispense());
 	}

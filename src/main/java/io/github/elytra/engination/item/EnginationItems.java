@@ -27,6 +27,7 @@ import net.minecraft.item.ItemFood;
 
 public class EnginationItems {
 	public static ItemTomato TOMATO;
+	public static ItemTomato TOMATO_CREATIVE;
 	public static ItemWandRelight WAND_RELIGHT;
 	public static ItemFood CELERY;
 }

@@ -27,7 +27,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 
 group = "io.github.elytra"
 archivesBaseName = "Engination"
-version = "MC1.12.2_ver1.07.02"
+version = "MC1.12.2_ver1.07.03"
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
