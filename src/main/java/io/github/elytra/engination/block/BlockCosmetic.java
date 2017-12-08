@@ -34,15 +34,12 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SuppressWarnings("deprecation")
 public class BlockCosmetic extends Block {
@@ -80,8 +77,9 @@ public class BlockCosmetic extends Block {
 	 * Behaves like getSubBlocks, but is available on the server
 	 */
 	public void getVarieties(Item itemBlock, NonNullList<ItemStack> list) {
+		//System.out.println("getVarieties: returning 16 blocks.");
 		for(int i=0; i<16; i++) {
-			list.add(new ItemStack(itemBlock, 1, i));
+			list.add(new ItemStack(this, 1, i));
 		}
 	}
 	

@@ -234,7 +234,6 @@ public class Engination {
 			ResourceLocation groupCosmetic = new ResourceLocation("engination:cosmetic");
 			
 			shapedOreRecipe(r, groupCosmetic,
-			//r.register(new ShapedOreRecipe( groupCosmetic,
 					new ItemStack(EnginationBlocks.COSMETIC_SCRAPMETAL, 32),
 					"SiS", "i i", "SiS",
 					'S', "stone",
@@ -242,7 +241,6 @@ public class Engination {
 					);//.setRegistryName(EnginationBlocks.COSMETIC_SCRAPMETAL.getRegistryName()));
 			
 			shapedOreRecipe(r, groupCosmetic,
-			//r.register(new ShapedOreRecipe( groupCosmetic,
 					new ItemStack(EnginationBlocks.COSMETIC_SANIC, 32),
 					"SiS", "ili", "SiS",
 					'S', "stone",
@@ -251,7 +249,6 @@ public class Engination {
 					);
 			
 			shapedOreRecipe(r, groupCosmetic,
-			//r.register(new ShapedOreRecipe( groupCosmetic,
 					new ItemStack(EnginationBlocks.COSMETIC_WINGFORTRESS, 32),
 					"SiS", "iii", "SiS",
 					'S', "stone",
@@ -259,7 +256,6 @@ public class Engination {
 					);
 			
 			shapedOreRecipe(r, groupCosmetic,
-			//r.register(new ShapedOreRecipe( groupCosmetic,
 					new ItemStack(EnginationBlocks.COSMETIC_TOURIAN, 32),
 					"SiS", "ici", "SiS",
 					'S', "stone",
@@ -270,7 +266,6 @@ public class Engination {
 			//Unrealistically expensive to account for the fact that it's really quite big.
 			//And you know what they say, big block, ...
 			shapedOreRecipe(r, groupCosmetic,
-			//r.register(new ShapedOreRecipe( groupCosmetic,
 					new ItemStack(EnginationBlocks.COSMETIC_PRESIDENTIAL, 1),
 					"GgG", "geg", "GgG",
 					'G', "blockGold",
@@ -279,7 +274,6 @@ public class Engination {
 					);
 			
 			shapedOreRecipe(r, groupCosmetic,
-			//r.register(new ShapedOreRecipe( groupCosmetic,
 					new ItemStack(EnginationBlocks.COSMETIC_WOOD, 32),
 					"WWW", "WsW", "WWW",
 					'W', "plankWood",
@@ -287,7 +281,6 @@ public class Engination {
 					);
 			
 			shapedOreRecipe(r, groupCosmetic,
-			//r.register(new ShapedOreRecipe( groupCosmetic,
 					new ItemStack(EnginationBlocks.COSMETIC_LOOSESTONE, 32),
 					"SCS", "C C", "SCS",
 					'S', "stone",
@@ -295,7 +288,6 @@ public class Engination {
 					);
 			
 			shapedOreRecipe(r, groupCosmetic,
-			//r.register(new ShapedOreRecipe( groupCosmetic,
 					new ItemStack(EnginationBlocks.COSMETIC_LAMP, 1),
 					"SgS", "g g", "SgS",
 					'S', "stone",
@@ -303,7 +295,6 @@ public class Engination {
 					);
 			
 			shapedOreRecipe(r, groupCosmetic,
-			//r.register(new ShapedOreRecipe( groupCosmetic,
 					new ItemStack(EnginationBlocks.COSMETIC_CELESTITE, 32),
 					"GcG", "c c", "GcG",
 					'G', "blockGlass",
@@ -311,7 +302,6 @@ public class Engination {
 					);
 			
 			shapedOreRecipe(r, groupCosmetic,
-			//r.register(new ShapedOreRecipe( groupCosmetic,
 					new ItemStack(EnginationBlocks.COSMETIC_DOLOMITE, 32),
 					"SDS", "DGD", "SDS",
 					'S', "stone",
@@ -321,7 +311,6 @@ public class Engination {
 			
 			//No listAllMushrooms entry exists :/
 			shapedOreRecipe(r, groupCosmetic,
-			//r.register(new ShapedOreRecipe( groupCosmetic,
 					new ItemStack(EnginationBlocks.COSMETIC_ONEUP, 32),
 					"SSS", "SMS", "SSS",
 					'S', "stone",
@@ -329,7 +318,6 @@ public class Engination {
 					);
 			
 			shapedOreRecipe(r, groupCosmetic,
-			//r.register(new ShapedOreRecipe( groupCosmetic,
 					new ItemStack(EnginationBlocks.COSMETIC_ONEUP, 32),
 					"SSS", "SMS", "SSS",
 					'S', "stone",
@@ -338,7 +326,6 @@ public class Engination {
 			
 			if (OreDictionary.doesOreNameExist("gemPeridot")) {
 				shapedOreRecipe(r, groupCosmetic,
-				//r.register(new ShapedOreRecipe( groupCosmetic,
 						new ItemStack(EnginationBlocks.COSMETIC_PERIDOT, 32),
 						"GGG", "GpG", "GGG",
 						'G', "blockGlass",
@@ -346,7 +333,6 @@ public class Engination {
 						);
 			} else {
 				shapedOreRecipe(r, groupCosmetic,
-				//r.register(new ShapedOreRecipe( groupCosmetic,
 						new ItemStack(EnginationBlocks.COSMETIC_PERIDOT, 16),
 						"SGS", "GlG", "SGS",
 						'S', "sand",
@@ -356,7 +342,6 @@ public class Engination {
 			}
 			
 			shapedOreRecipe(r, groupCosmetic,
-			//r.register(new ShapedOreRecipe( groupCosmetic,
 					new ItemStack(EnginationBlocks.COSMETIC_BAROQUE, 32),
 					"SSS", "SES", "SSS",
 					'S', "stone",
@@ -383,7 +368,7 @@ public class Engination {
 	
 	public ShapedOreRecipe shapedOreRecipe(IForgeRegistry<IRecipe> registry, ResourceLocation category, ItemStack out, Object... recipe) {
 		ShapedOreRecipe result = new ShapedOreRecipe(category, out, recipe);
-		result.setRegistryName(out.getItem().getRegistryName()+"_"+out.getItemDamage());
+		result.setRegistryName(out.getItem().getRegistryName().toString()+"."+out.getItemDamage());
 		registry.register(result);
 		return result;
 	}
@@ -415,21 +400,44 @@ public class Engination {
 	}
 	
 	
+	private String getDebugInfo(ItemStack stack) {
+		if (stack==null) return "null";
+		Item item = stack.getItem();
+		String itemName = (item==null) ? "null" : item.getRegistryName().toString();
+		String count = Integer.toString(stack.getCount());
+		String meta = Integer.toString(stack.getItemDamage());
+		
+		return itemName+":"+meta+"x"+count;
+	}
+	
 	public void registerCraftingCircle(IForgeRegistry<IRecipe> registry, BlockCosmetic block) {
+		LOG.info("Crafting Circle for "+block.getRegistryName());
 		NonNullList<ItemStack> list = NonNullList.create();
 		block.getVarieties(Item.getItemFromBlock(block), list);
 		if (list.size()<2) return;
 		ItemStack first = list.remove(0);
 		ItemStack previous = first;
+		LOG.info("First item is "+getDebugInfo(first));
+		
 		int i = 0;
 		for(ItemStack item : list) {
-			registry.register(new ShapelessRecipes("engination:chisel", item, NonNullList.from(Ingredient.fromStacks(previous)))
-					.setRegistryName(block.getRegistryName()+"_"+i));
+			String registryName = block.getRegistryName()+"_"+(i+1)+"_from_"+i;
+			Ingredient ingredient = Ingredient.fromStacks(previous.copy());
+			if (ingredient==Ingredient.EMPTY) {
+				LOG.warn("##### EMPTY INGREDIENT FOUND ####### THIS IS IT ########");
+				return;
+			}
+			
+			LOG.info("   engination:chisel["+registryName+"] - "+getDebugInfo(item)+" from "+getDebugInfo(previous));
+			registry.register(new ShapelessRecipes("engination:chisel", item.copy(), NonNullList.from(null, Ingredient.fromStacks(previous.copy())))
+					.setRegistryName(registryName));
 			previous = item;
 			i++;
 		}
-		registry.register(new ShapelessRecipes("engination:chisel", first, NonNullList.from(Ingredient.fromStacks(list.get(list.size()-1))))
-				.setRegistryName(block.getRegistryName()+"_"+i));
+		String registryName = block.getRegistryName()+"_0_from_"+(list.size());
+		LOG.info("   engination:chisel["+registryName+"]");
+		registry.register(new ShapelessRecipes("engination:chisel", first.copy(), NonNullList.from(null, Ingredient.fromStacks(list.get(list.size()-1).copy())))
+				.setRegistryName(registryName));
 	}
 	
 	public static Engination instance() {
