@@ -40,6 +40,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SuppressWarnings("deprecation")
 public class BlockCosmetic extends Block {
@@ -106,6 +108,7 @@ public class BlockCosmetic extends Block {
 	//public BlockCosmetic setTip() { this.showTip = true; return this; }
 	
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World playerWorld, List<String> tooltip, ITooltipFlag flags) {
 		//if (showTip)
 		tooltip.add(I18n.translateToLocal(this.getUnlocalizedName()+".tip"));

@@ -72,6 +72,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
@@ -348,22 +349,47 @@ public class Engination {
 					'E', new ItemStack(Blocks.SOUL_SAND)
 					);
 			
-			
-			//Circular crafting for varieties
-			registerCraftingCircle(r, EnginationBlocks.COSMETIC_BAROQUE);
-			registerCraftingCircle(r, EnginationBlocks.COSMETIC_CELESTITE);
-			registerCraftingCircle(r, EnginationBlocks.COSMETIC_DOLOMITE);
-			registerCraftingCircle(r, EnginationBlocks.COSMETIC_LAMP);
-			registerCraftingCircle(r, EnginationBlocks.COSMETIC_LOOSESTONE);
-			registerCraftingCircle(r, EnginationBlocks.COSMETIC_ONEUP);
-			registerCraftingCircle(r, EnginationBlocks.COSMETIC_PERIDOT);
-			registerCraftingCircle(r, EnginationBlocks.COSMETIC_PRESIDENTIAL);
-			registerCraftingCircle(r, EnginationBlocks.COSMETIC_SANIC);
-			registerCraftingCircle(r, EnginationBlocks.COSMETIC_SCRAPMETAL);
-			registerCraftingCircle(r, EnginationBlocks.COSMETIC_TOURIAN);
-			registerCraftingCircle(r, EnginationBlocks.COSMETIC_WINGFORTRESS);
-			registerCraftingCircle(r, EnginationBlocks.COSMETIC_WOOD);
 		}
+		
+		//Circular crafting for varieties
+		LOG.info("Registering crafting and chisel groups");
+		registerCraftingCircle(r, EnginationBlocks.COSMETIC_BAROQUE);
+		registerCraftingCircle(r, EnginationBlocks.COSMETIC_CELESTITE);
+		registerCraftingCircle(r, EnginationBlocks.COSMETIC_DOLOMITE);
+		registerCraftingCircle(r, EnginationBlocks.COSMETIC_LAMP);
+		registerCraftingCircle(r, EnginationBlocks.COSMETIC_LOOSESTONE);
+		registerCraftingCircle(r, EnginationBlocks.COSMETIC_ONEUP);
+		registerCraftingCircle(r, EnginationBlocks.COSMETIC_PERIDOT);
+		registerCraftingCircle(r, EnginationBlocks.COSMETIC_PRESIDENTIAL);
+		registerCraftingCircle(r, EnginationBlocks.COSMETIC_SANIC);
+		registerCraftingCircle(r, EnginationBlocks.COSMETIC_SCRAPMETAL);
+		registerCraftingCircle(r, EnginationBlocks.COSMETIC_TOURIAN);
+		registerCraftingCircle(r, EnginationBlocks.COSMETIC_WINGFORTRESS);
+		registerCraftingCircle(r, EnginationBlocks.COSMETIC_WOOD);
+		
+		registerChisel("engination.baroque", EnginationBlocks.COSMETIC_BAROQUE);
+		registerChisel("engination.celestite", EnginationBlocks.COSMETIC_CELESTITE);
+		registerChisel("engination.dolomite", EnginationBlocks.COSMETIC_DOLOMITE);
+		registerChisel("engination.lamp", EnginationBlocks.COSMETIC_LAMP);
+		registerChisel("engination.loosestone", EnginationBlocks.COSMETIC_LOOSESTONE);
+		registerChisel("engination.oneup", EnginationBlocks.COSMETIC_ONEUP);
+		registerChisel("engination.peridot", EnginationBlocks.COSMETIC_PERIDOT);
+		registerChisel("engination.presidential", EnginationBlocks.COSMETIC_PRESIDENTIAL);
+		registerChisel("engination.sanic", EnginationBlocks.COSMETIC_SANIC);
+		registerChisel("engination.scrapmetal", EnginationBlocks.COSMETIC_SCRAPMETAL);
+		registerChisel("engination.tourian", EnginationBlocks.COSMETIC_TOURIAN);
+		registerChisel("engination.wingfortress", EnginationBlocks.COSMETIC_WINGFORTRESS);
+		registerChisel("engination.wood", EnginationBlocks.COSMETIC_WOOD);
+	}
+	
+	public void registerChisel(String id, BlockCosmetic block) {
+		String resloc = block.getRegistryName().toString();
+		NonNullList<ItemStack> varieties = NonNullList.create();
+		block.getVarieties(Item.getItemFromBlock(block), varieties);
+		for(ItemStack stack : varieties) {
+			FMLInterModComms.sendMessage("chisel", "variation:add", id+"|"+resloc+"|"+stack.getMetadata());
+		}
+		
 	}
 	
 	public ShapedOreRecipe shapedOreRecipe(IForgeRegistry<IRecipe> registry, ResourceLocation category, ItemStack out, Object... recipe) {
@@ -375,7 +401,7 @@ public class Engination {
 	
 	@EventHandler
 	public void onPreInit(FMLPreInitializationEvent e) {
-		LOG = LogManager.getLogger(Engination.MODID);
+		LOG = LogManager.getLogger("Engination");
 		File config = e.getSuggestedConfigurationFile();
 		CONFIG = new Configuration(config);
 		
@@ -411,31 +437,31 @@ public class Engination {
 	}
 	
 	public void registerCraftingCircle(IForgeRegistry<IRecipe> registry, BlockCosmetic block) {
-		LOG.info("Crafting Circle for "+block.getRegistryName());
+		//LOG.info("Crafting Circle for "+block.getRegistryName());
 		NonNullList<ItemStack> list = NonNullList.create();
 		block.getVarieties(Item.getItemFromBlock(block), list);
 		if (list.size()<2) return;
 		ItemStack first = list.remove(0);
 		ItemStack previous = first;
-		LOG.info("First item is "+getDebugInfo(first));
+		//LOG.info("First item is "+getDebugInfo(first));
 		
 		int i = 0;
 		for(ItemStack item : list) {
 			String registryName = block.getRegistryName()+"_"+(i+1)+"_from_"+i;
 			Ingredient ingredient = Ingredient.fromStacks(previous.copy());
 			if (ingredient==Ingredient.EMPTY) {
-				LOG.warn("##### EMPTY INGREDIENT FOUND ####### THIS IS IT ########");
+				//LOG.warn("##### EMPTY INGREDIENT FOUND ####### THIS IS IT ########");
 				return;
 			}
 			
-			LOG.info("   engination:chisel["+registryName+"] - "+getDebugInfo(item)+" from "+getDebugInfo(previous));
+			//LOG.info("   engination:chisel["+registryName+"] - "+getDebugInfo(item)+" from "+getDebugInfo(previous));
 			registry.register(new ShapelessRecipes("engination:chisel", item.copy(), NonNullList.from(null, Ingredient.fromStacks(previous.copy())))
 					.setRegistryName(registryName));
 			previous = item;
 			i++;
 		}
 		String registryName = block.getRegistryName()+"_0_from_"+(list.size());
-		LOG.info("   engination:chisel["+registryName+"]");
+		//LOG.info("   engination:chisel["+registryName+"]");
 		registry.register(new ShapelessRecipes("engination:chisel", first.copy(), NonNullList.from(null, Ingredient.fromStacks(list.get(list.size()-1).copy())))
 				.setRegistryName(registryName));
 	}
