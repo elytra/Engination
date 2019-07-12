@@ -69,7 +69,7 @@ public class BlockDisappearing extends BlockCosmetic {
 
 	@Override
 	public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list) {
-		if (getCreativeTabToDisplayOn().equals(tab)) {
+		if (tab.equals(CreativeTabs.SEARCH) || getCreativeTabToDisplayOn().equals(tab)) {
 			for(int i=0; i<7; i++) {
 				list.add(new ItemStack(ItemBlock.getItemFromBlock(this), 1, i));
 			}

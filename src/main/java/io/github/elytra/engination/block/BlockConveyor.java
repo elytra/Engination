@@ -42,7 +42,7 @@ import net.minecraft.world.World;
 public class BlockConveyor extends Block {
 	public static PropertyDirection PROPERTY_FACING = PropertyDirection.create("facing");
 	
-	private double scale;
+	protected double scale;
 	
 	public BlockConveyor(int scale) {
 		super(Material.IRON);

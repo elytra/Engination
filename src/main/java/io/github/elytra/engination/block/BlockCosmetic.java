@@ -70,7 +70,7 @@ public class BlockCosmetic extends Block {
 
 	@Override
 	public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list) {
-		if (this.getCreativeTabToDisplayOn().equals(tab)) {
+		if (tab.equals(CreativeTabs.SEARCH) || this.getCreativeTabToDisplayOn().equals(tab)) {
 			getVarieties(ItemBlock.getItemFromBlock(this), list);
 		}
 	}

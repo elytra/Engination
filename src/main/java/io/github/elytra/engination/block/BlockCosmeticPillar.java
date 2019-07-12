@@ -66,7 +66,7 @@ public class BlockCosmeticPillar extends BlockRotatedPillar {
 
 	@Override
 	public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list) {
-		if (this.getCreativeTabToDisplayOn().equals(tab)) {
+		if (tab.equals(CreativeTabs.SEARCH) || this.getCreativeTabToDisplayOn().equals(tab)) {
 			for(int i=0; i<4; i++) {
 				list.add(new ItemStack(ItemBlock.getItemFromBlock(this), 1, i));
 			}
